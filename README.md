@@ -3,8 +3,6 @@ a school management platform based on meteor.
 
 <p>based on <a href="https://www.meteor.com/">meteor js</a></p>
 
-<img src="../../../buildingRating/blob/master/public/add.jpg" />
-
 #### Installation
 1. first install meteor from www.meteor.com and create a new meteor project.
 2. copy the files in this repository and overwrite the files in your new meteor project.
