@@ -1,0 +1,32 @@
+<template name="subjectDetail">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>{{subject.name}}</h3>
+        </div>
+        <div class="twelve-columns">
+            <p><strong>type:</strong> {{subject.type}}</p>
+            <p><strong>requirement:</strong> {{subject.requirement}}</p>
+
+            {{#unless subject.subjectMaster}}
+            {{else}}
+                <hr>
+                <p>
+                    <strong>subject master:</strong>
+                    {{#with FS.GetFile "teacherImages" subjectMasterImage}}
+                        <div class="teacher-profile" style="background-image: url({{url}});"></div>
+                    {{/with}}
+
+                    {{subjectMasterName}}
+                </p>
+            {{/unless}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+            <p></p>
+            <button class="delete-subject delete">delete subject</button>
+            <a href="/edit-subject/{{subject._id}}" class="button">edit</a>
+        </div>
+    </div>
+</template>

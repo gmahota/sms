@@ -1,0 +1,100 @@
+<template name="results">
+    <div class="row top-bar">
+        <div class="six columns">
+            <h3>Examination results</h3>
+        </div>
+        <div class="six columns right">
+            <a class="button button-primary" href="/add-result">enter student results</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="four columns">
+            <p>Filter to quickly find student's results</p>
+        </div>
+
+        <div class="four columns">
+            <select name="exam" id="exam" class="exam u-full-width">
+
+            </select>
+        </div>
+        <div class="four columns">
+            <select name="classRoom" id="classRoom" class="classRoom u-full-width">
+
+            </select>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width">
+                <thead>
+                    <th></th>
+                    <th>student's details</th>
+                    <th>exam</th>
+                    <th>subjects</th>
+                    <th>score</th>
+                    <th class="right">action</th>
+                </thead>
+                <tbody>
+                    <!-- {{#if searching}}
+                        <tr>
+                            <td colspan="2"><h1 class="placeholder">loading...</h1></td>
+                        </tr>
+                    {{else}} -->
+                        {{#each result}}
+                            <tr>
+                                <td>
+                                    {{#with FS.GetFile "studentImages" studentImage}}
+                        	            <div class="student-preview" style="background-image: url({{url}});"></div>
+                                    {{else}}
+                                        <div class="student-preview"></div>
+                        	        {{/with}}
+                                </td>
+                                <td>
+                                    <p class="capitalize">{{studentFirstName}} {{studentLastName}}</p>
+                                    <p><strong>reg:</strong> {{studentRegistrationNumber}}</p>
+                                    <p><strong>class:</strong> {{studentClassForm}}{{studentClassStreamName}}</p>
+                                </td>
+                                <td>
+                                    <p>{{examType}}</p>
+                                    <p>{{examTerm}}</p>
+                                    <p>{{examYear}}</p>
+                                </td>
+                                <td>
+                                    <p class="huuge">{{subjectCount}}</p>
+                                    <p>subjects</p>
+                                </td>
+                                <td>
+                                    <p><span class="huuge">{{overallGrade}}/</span>{{overallScore}}</p>
+                                </td>
+                                <td class="right">
+                                    <a href="/result/{{_id}}" class="button">details</a>
+                                </td>
+                            </tr>
+                        {{else}}
+                            <tr>
+                                <td colspan="13">
+                                    <h1 class="placeholder">no results found</h1>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    <!-- {{/if}} -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

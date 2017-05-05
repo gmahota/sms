@@ -1,0 +1,40 @@
+<template name="studentDetail">
+    <div class="row">
+        <div class="four columns">
+            {{#with FS.GetFile "studentImages" student.image}}
+                <div class="student-image" style="background-image: url({{url}});"></div>
+            {{else}}
+                <div class="student-image"></div>
+            {{/with}}
+        </div>
+        <div class="eight columns">
+            <h3 class="capitalize">{{student.firstName}} {{student.surname}}</h3>
+            <p><strong>registration number:</strong> {{student.registrationNumber}}</p>
+            <p><strong>class:</strong> {{className}}</p>
+            <p><strong>gender:</strong> {{student.gender}}</p>
+            <p><strong>admitted in:</strong> {{student.year}}</p>
+            <hr>
+            <p><strong>KCPE Results:</strong> {{student.kcpeResults}}</p>
+            <p><strong>religion: {{student.religion}}</strong></p>
+            <p><strong>Home address:</strong> {{student.homeAddress}}</p>
+            <hr>
+            <h4>Extracurricular activities</h4>
+            <p class="tags">
+                <strong>sports:</strong>
+                {{#each student.extraCurricular.sports}}
+                    <span class="tagstyle">{{sportName}}</span>
+                {{/each}}
+            </p>
+            <p class="tags">
+                <strong>clubs:</strong>
+                {{#each student.extraCurricular.clubs}}
+                    <span class="tagstyle">{{clubName}}</span>
+                {{/each}}
+            </p>
+            <hr>
+            <button class="delete-student delete">delete student</button>
+            <button class="generate-report">generate report card</button>
+            <a href="/edit-student/{{student._id}}" class="button">edit</a>
+        </div>
+    </div>
+</template>

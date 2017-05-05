@@ -1,0 +1,16 @@
+<template name="sportEdit">
+    <div class="row">
+        <div class="six columns">
+            <h3>{{sport.name}}</h3>
+        </div>
+        <div class="six columns right">
+            <a href="/sport/{{sport._id}}" class="button">cancel</a>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+        <div class="twelve columns">
+            {{> quickForm collection="Sports" type="update" id="updateClubId" doc=sport class="edit-sport-form" buttonContent="update sport"}}
+        </div>
+    </div>
+</template>

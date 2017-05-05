@@ -1,0 +1,140 @@
+body{
+    .right{
+        text-align: right;
+    }
+    .huuge{
+        font-size:2em;
+    }
+    .wide-container{
+        width:96%;
+        padding: 0;
+        max-width: 90%;
+    }
+    .teacher-profile{
+        height:30px;
+        width:30px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        background:#ccc;
+        background-size: cover;
+        display: inline-block;
+        margin: 0 .5em -.7em 2em;
+    }
+    .header{
+        background: #3BA9E8;
+        color: #fff;
+        position: fixed;
+        padding: .5em 0;
+        width: 100%;
+        top:0;
+        left:0;
+        z-index: 99;
+        h1, h2, h3, h4, p{
+            margin:0;
+            padding:0;
+        }
+        .header-text{
+            color:#fff;
+            text-decoraion:none;
+            &:hover{
+                
+            }
+        }
+    }
+    .placeholder{
+        color:#aaa;
+        margin: 1em 0;
+        text-align: center;
+    }
+    .body-container{
+        margin-top: 100px;
+        .sidebar{
+            border-right:1px solid #ddd;
+            .sidebar-menu{
+                list-style: none;
+                padding:0;
+                .menu-item{
+                    .button{
+                        width:90%;
+                    }
+                }
+            }
+        }
+
+        .top-bar{
+            h1, h2, h3, h4{
+                padding:0;
+                margin:0;
+            }
+        }
+
+        .content{
+            .universe-selectize.selectize-control.multi{
+                .selectize-input{
+                    height:auto;
+                }
+            }
+            input[type="date"]{
+                padding:1em;
+                border-radius:5px;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+            select, input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], input[type="date"], textarea {
+                width:100%;
+            }
+            .delete{
+                background:#cd0000;
+                color:white;
+                border:0;
+            }
+            .student-preview{
+                height:70px;
+                width:70px;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+                background-size: cover;
+            }
+
+            .student-image{
+                height:140px;
+                width:140px;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+                background-size: cover;
+            }
+            .capitalize{
+                text-transform: capitalize;
+            }
+            p{
+                margin-bottom:0;
+            }
+            table{
+                tbody{
+                    td{
+                        vertical-align: middle;
+                        a{
+                            margin:0;
+                        }
+                    }
+                }
+            }
+            strong{
+                color:#007BBB;
+            }
+            .tags{
+                margin-bottom:1em;
+                line-height: 1.5em;
+                .tagstyle{
+                    padding:.5em 1em;
+                    background: #777;
+                    color:#fff;
+                    margin: 0 .5em;
+                    border-radius:5px;
+                }
+            }
+        }
+
+    }
+
+}

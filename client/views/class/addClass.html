@@ -1,0 +1,12 @@
+<template name="addClass">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>
+                Add a new class
+            </h3>
+        </div>
+        <div class="twelve columns">
+            {{> quickForm collection="Classes" type="insert" id="insertClassForm" class="new-class-form" buttonContent="add this class"}}
+        </div>
+    </div>
+</template>

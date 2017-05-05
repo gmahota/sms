@@ -1,0 +1,51 @@
+<template name="sports">
+    <div class="row top-bar">
+        <div class="six columns">
+            <h3>sports</h3>
+        </div>
+        <div class="six columns right">
+            <a class="button button-primary" href="/add-sport">add a new sport</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twlve columns">
+            <input type="text" name="search" class="u-full-width searchbox" placeholder="Find a sport... click enter to search">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width">
+                <thead>
+                    <th>title</th>
+                    <th class="right">action</th>
+                </thead>
+                <tbody>
+                    {{#if searching}}
+                        <tr>
+                            <td colspan="2"><h1 class="placeholder">loading...</h1></td>
+                        </tr>
+                    {{else}}
+                        {{#each sport}}
+                            <tr>
+                                <td>
+                                    {{name}}
+                                </td>
+                                <td class="right">
+                                    <a href="/sport/{{_id}}" class="button">view sport</a>
+                                </td>
+                            </tr>
+                        {{else}}
+                            <tr>
+                                <td colspan="2">
+                                    <h1 class="placeholder">no sports found</h1>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

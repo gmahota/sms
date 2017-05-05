@@ -1,0 +1,18 @@
+<template name="clubDetail">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>{{club.name}}</h3>
+        </div>
+        <div class="twelve-columns">
+            {{{club.description}}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+            <p></p>
+            <button class="delete-club delete">delete club</button>
+            <a href="/edit-club/{{club._id}}" class="button">edit</a>
+        </div>
+    </div>
+</template>

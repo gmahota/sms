@@ -1,0 +1,16 @@
+<template name="teacherEdit">
+    <div class="row">
+        <div class="six columns">
+            <h3>{{teacher.name}}</h3>
+        </div>
+        <div class="six columns right">
+            <a href="/teacher/{{teacher._id}}" class="button">cancel</a>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+        <div class="twelve columns">
+            {{> quickForm collection="Teachers" type="update" id="updateClubId" doc=teacher class="edit-teacher-form" buttonContent="update teacher"}}
+        </div>
+    </div>
+</template>

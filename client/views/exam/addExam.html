@@ -1,0 +1,12 @@
+<template name="addExam">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>
+                Add a new exam
+            </h3>
+        </div>
+        <div class="twelve columns">
+            {{> quickForm collection="Exams" type="insert" id="insertExamForm" class="new-exam-form" buttonContent="add this exam"}}
+        </div>
+    </div>
+</template>

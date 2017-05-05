@@ -1,0 +1,12 @@
+<template name="addClub">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>
+                Add a new club
+            </h3>
+        </div>
+        <div class="twelve columns">
+            {{> quickForm collection="Clubs" type="insert" id="insertClubForm" class="new-club-form" buttonContent="add this club"}}
+        </div>
+    </div>
+</template>

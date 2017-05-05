@@ -1,0 +1,63 @@
+<template name="teachers">
+    <div class="row top-bar">
+        <div class="six columns">
+            <h3>teachers</h3>
+        </div>
+        <div class="six columns right">
+            <a class="button button-primary" href="/add-teacher">add a new teacher</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twlve columns">
+            <input type="text" name="search" class="u-full-width searchbox" placeholder="Find a teacher... click enter to search">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width">
+                <thead>
+                    <th></th>
+                    <th>title</th>
+                    <th>staff ID</th>
+                    <th class="right">action</th>
+                </thead>
+                <tbody>
+                    {{#if searching}}
+                        <tr>
+                            <td colspan="2"><h1 class="placeholder">loading...</h1></td>
+                        </tr>
+                    {{else}}
+                        {{#each teacher}}
+                            <tr>
+                                <td>
+                                    {{#with FS.GetFile "teacherImages" image}}
+                        	            <div class="student-preview" style="background-image: url({{url}});"></div>
+                                    {{else}}
+                                        <div class="student-preview"></div>
+                        	        {{/with}}
+                                </td>
+                                <td>
+                                    <p class="capitalize">{{firstName}} {{surname}}</p>
+                                </td>
+                                <td>
+                                    <p>{{staffId}}</p>
+                                </td>
+                                <td class="right">
+                                    <a href="/teacher/{{_id}}" class="button">view teacher</a>
+                                </td>
+                            </tr>
+                        {{else}}
+                            <tr>
+                                <td colspan="4">
+                                    <h1 class="placeholder">no teachers found</h1>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

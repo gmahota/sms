@@ -1,0 +1,13 @@
+<template name="classDetail">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>class: {{class.Form}} {{class.streamName}}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <button class="delete-class delete">delete class</button>
+            <a href="/edit-class/{{class._id}}" class="button">edit class</a>
+        </div>
+    </div>
+</template>

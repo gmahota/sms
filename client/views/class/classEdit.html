@@ -1,0 +1,17 @@
+<template name="classEdit">
+    <div class="row">
+        <div class="six columns">
+            <h3>class: {{class.Form}} {{class.streamName}}</h3>
+        </div>
+        <div class="six columns right">
+            <a href="/class/{{class._id}}" class="button">cancel</a>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+        <div class="twelve columns">
+            <hr>
+            {{> quickForm collection="Classes" type="update" id="updateClassId" doc=class class="edit-class-form" buttonContent="update class"}}
+        </div>
+    </div>
+</template>

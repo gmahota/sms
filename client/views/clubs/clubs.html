@@ -1,0 +1,51 @@
+<template name="clubs">
+    <div class="row top-bar">
+        <div class="six columns">
+            <h3>clubs</h3>
+        </div>
+        <div class="six columns right">
+            <a class="button button-primary" href="/add-club">add a new club</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twlve columns">
+            <input type="text" name="search" class="u-full-width searchbox" placeholder="Find a club... click enter to search">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width">
+                <thead>
+                    <th>title</th>
+                    <th class="right">action</th>
+                </thead>
+                <tbody>
+                    {{#if searching}}
+                        <tr>
+                            <td colspan="4"><h1 class="placeholder">loading...</h1></td>
+                        </tr>
+                    {{else}}
+                        {{#each club}}
+                            <tr>
+                                <td>
+                                    {{name}}
+                                </td>
+                                <td class="right">
+                                    <a href="/club/{{_id}}" class="button">view club</a>
+                                </td>
+                            </tr>
+                        {{else}}
+                            <tr>
+                                <td colspan="2">
+                                    <h1 class="placeholder">no clubs found</h1>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

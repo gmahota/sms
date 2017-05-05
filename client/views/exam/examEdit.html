@@ -1,0 +1,16 @@
+<template name="examEdit">
+    <div class="row">
+        <div class="six columns">
+            <h3>{{exam.type}}, {{exam.term}}, {{exam.year}}</h3>
+        </div>
+        <div class="six columns right">
+            <a href="/exam/{{exam._id}}" class="button">cancel</a>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+        <div class="twelve columns">
+            {{> quickForm collection="Exams" type="update" id="updateClubId" doc=exam class="edit-exam-form" buttonContent="update exam"}}
+        </div>
+    </div>
+</template>

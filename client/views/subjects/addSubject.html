@@ -1,0 +1,12 @@
+<template name="addSubject">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>
+                Add a new subject
+            </h3>
+        </div>
+        <div class="twelve columns">
+            {{> quickForm collection="Subjects" type="insert" id="insertSubjectForm" class="new-subject-form" buttonContent="add this subject"}}
+        </div>
+    </div>
+</template>

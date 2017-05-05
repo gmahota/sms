@@ -1,0 +1,12 @@
+<template name="addSport">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>
+                Add a new sport
+            </h3>
+        </div>
+        <div class="twelve columns">
+            {{> quickForm collection="Sports" type="insert" id="insertSportForm" class="new-sport-form" buttonContent="add this sport"}}
+        </div>
+    </div>
+</template>

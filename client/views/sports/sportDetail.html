@@ -1,0 +1,18 @@
+<template name="sportDetail">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>{{sport.name}}</h3>
+        </div>
+        <div class="twelve-columns">
+            {{{sport.description}}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+            <p></p>
+            <button class="delete-sport delete">delete sport</button>
+            <a href="/edit-sport/{{sport._id}}" class="button">edit</a>
+        </div>
+    </div>
+</template>

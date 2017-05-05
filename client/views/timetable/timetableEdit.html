@@ -1,0 +1,16 @@
+<template name="timetableEdit">
+    <div class="row">
+        <div class="six columns">
+            <h3>{{timetable.name}}</h3>
+        </div>
+        <div class="six columns right">
+            <a href="/timetable/{{timetable._id}}" class="button">cancel</a>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+        <div class="twelve columns">
+            {{> quickForm collection="Timetables" type="update" id="updateClubId" doc=timetable class="edit-timetable-form" buttonContent="update timetable"}}
+        </div>
+    </div>
+</template>

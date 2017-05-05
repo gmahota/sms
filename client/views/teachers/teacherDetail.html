@@ -1,0 +1,27 @@
+<template name="teacherDetail">
+    <div class="row">
+        <div class="four columns">
+            {{#with FS.GetFile "teacherImages" teacher.image}}
+                <div class="student-image" style="background-image: url({{url}});"></div>
+            {{else}}
+                <div class="student-image"></div>
+            {{/with}}
+        </div>
+        <div class="eight columns">
+            <h3 class="capitalize">{{teacher.firstName}} {{teacher.surname}}</h3>
+            <p><strong>staff Id:</strong> {{teacher.staffId}}</p>
+            <p><strong>gender:</strong> {{teacher.gender}}</p>
+            <hr>
+            <p class="tags">
+                <strong>subjects:</strong>
+                {{#each teacher.subjects}}
+                    <span class="tagstyle">{{subjectName}}</span>
+                {{/each}}
+            </p>
+            <p><strong>Home address:</strong> {{teacher.homeAddress}}</p>
+            <hr>
+            <button class="delete-teacher delete">delete teacher</button>
+            <a href="/edit-teacher/{{teacher._id}}" class="button">edit</a>
+        </div>
+    </div>
+</template>

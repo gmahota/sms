@@ -1,0 +1,34 @@
+<template name="sidebar">
+    <ul class="sidebar-menu">
+        <li class="menu-item">
+            <a href="/" class="button {{isActiveRoute class='active button-primary' name='home'}}">home</a>
+        </li>
+        <li class="menu-item">
+            <a href="/classes" class="button {{isActiveRoute class='active button-primary' name='classes'}} {{isActiveRoute class='active button-primary' name='addClass'}} {{isActiveRoute class='active button-primary' name='singleClass'}} {{isActiveRoute class='active button-primary' name='editSingleClass'}}">classes</a>
+        </li>
+        <li class="menu-item">
+            <a href="/clubs" class="button {{isActiveRoute class='active button-primary' name='clubs'}} {{isActiveRoute class='active button-primary' name='singleClub'}} {{isActiveRoute class='active button-primary' name='editSingleClub'}} {{isActiveRoute class='active button-primary' name='addClub'}}">clubs</a>
+        </li>
+        <li class="menu-item">
+            <a href="/exams" class="button {{isActiveRoute class='active button-primary' name='exams'}} {{isActiveRoute class='active button-primary' name='singleExam'}} {{isActiveRoute class='active button-primary' name='editSingleExam'}} {{isActiveRoute class='active button-primary' name='addExam'}}">exams</a>
+        </li>
+        <li class="menu-item">
+            <a href="/results" class="button {{isActiveRoute class='active button-primary' name='results'}} {{isActiveRoute class='active button-primary' name='singleResult'}} {{isActiveRoute class='active button-primary' name='addResult'}}{{isActiveRoute class='active button-primary' name='editSingleResult'}}">results</a>
+        </li>
+        <li class="menu-item">
+            <a href="/sports" class="button {{isActiveRoute class='active button-primary' name='sports'}} {{isActiveRoute class='active button-primary' name='singleSport'}} {{isActiveRoute class='active button-primary' name='editSingleSport'}} {{isActiveRoute class='active button-primary' name='addSport'}}">sports</a>
+        </li>
+        <li class="menu-item">
+            <a href="/students" class="button {{isActiveRoute class='active button-primary' name='students'}} {{isActiveRoute class='active button-primary' name='singleStudent'}} {{isActiveRoute class='active button-primary' name='editSingleStudent'}} {{isActiveRoute class='active button-primary' name='addStudent'}}">students</a>
+        </li>
+        <li class="menu-item">
+            <a href="/subjects" class="button {{isActiveRoute class='active button-primary' name='subjects'}} {{isActiveRoute class='active button-primary' name='singleSubject'}} {{isActiveRoute class='active button-primary' name='editSingleSubject'}} {{isActiveRoute class='active button-primary' name='addSubject'}}">subjects</a>
+        </li>
+        <li class="menu-item">
+            <a href="/teachers" class="button {{isActiveRoute class='active button-primary' name='teachers'}} {{isActiveRoute class='active button-primary' name='singleTeacher'}} {{isActiveRoute class='active button-primary' name='editSingleTeacher'}}{{isActiveRoute class='active button-primary' name='addTeacher'}}">teachers</a>
+        </li>
+        <!-- <li class="menu-item">
+            <a href="/timetables" class="button {{isActiveRoute class='active button-primary' name='timetables'}} {{isActiveRoute class='active button-primary' name='singleTimetable'}} {{isActiveRoute class='active button-primary' name='editSingleTimetable'}} {{isActiveRoute class='active button-primary' name='addTimetable'}}">timetables</a>
+        </li> -->
+    </ul>
+</template>

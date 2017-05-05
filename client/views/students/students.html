@@ -1,0 +1,63 @@
+<template name="students">
+    <div class="row top-bar">
+        <div class="six columns">
+            <h3>students</h3>
+        </div>
+        <div class="six columns right">
+            <a class="button button-primary" href="/add-student">add a new student</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twlve columns">
+            <input type="text" name="search" class="u-full-width searchbox" placeholder="Find a student... click enter to search">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width">
+                <thead>
+                    <th></th>
+                    <th>names</th>
+                    <th>registration number</th>
+                    <th class="right">action</th>
+                </thead>
+                <tbody>
+                    {{#if searching}}
+                        <tr>
+                            <td colspan="2"><h1 class="placeholder">loading...</h1></td>
+                        </tr>
+                    {{else}}
+                        {{#each student}}
+                            <tr>
+                                <td>
+                                    {{#with FS.GetFile "studentImages" image}}
+                        	            <div class="student-preview" style="background-image: url({{url}});"></div>
+                                    {{else}}
+                                        <div class="student-preview"></div>
+                        	        {{/with}}
+                                </td>
+                                <td>
+                                    <p class="capitalize">{{firstName}} {{surname}}</p>
+                                </td>
+                                <td>
+                                    <p>{{registrationNumber}}</p>
+                                </td>
+                                <td class="right">
+                                    <a href="/student/{{_id}}" class="button">student details</a>
+                                </td>
+                            </tr>
+                        {{else}}
+                            <tr>
+                                <td colspan="4">
+                                    <h1 class="placeholder">no students found</h1>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
