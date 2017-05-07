@@ -21,7 +21,7 @@ Template.clubs.helpers({
 		return Template.instance().searchQuery.get();
 	},
 	club: ()=> {
-		return Clubs.find().fetch().reverse();
+		return Clubs.find().fetch();
 	}
 });
 

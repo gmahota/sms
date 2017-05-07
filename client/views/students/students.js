@@ -2,6 +2,7 @@ Template.students.onCreated(function() {
 	var self = this;
 	self.autorun(function(){
 		self.subscribe('studentImages');
+		self.subscribe('classes');
 	});
 
 	let template = Template.instance();
@@ -26,21 +27,38 @@ Template.students.helpers({
 		return Template.instance().searchQuery.get();
 	},
 	student: ()=> {
-		return Students.find().fetch().reverse();
+		return Students.find().fetch();
+	},
+	classes: ()=> {
+		return Classes.find();
 	}
 });
 
 Template.students.events({
-  'keyup .searchbox' ( event, template ) {
-    let value = event.target.value.trim();
+	'keyup .searchbox' ( event, template ) {
+	    let value = event.target.value.trim();
 
-    if ( value !== '' && event.keyCode === 13 ) {
-      template.searchQuery.set( value );
-      template.searching.set( true );
-    }
+	    if ( value !== '' && event.keyCode === 13 ) {
+	      template.searchQuery.set( value );
+	      template.searching.set( true );
+	    }
 
-    if ( value === '' ) {
-      template.searchQuery.set( value );
-    }
-  }
+	    if ( value === '' ) {
+	      template.searchQuery.set( value );
+	    }
+	},
+	'change .class-sort': function (event, template) {
+		var myList = document.getElementById("class-sort");
+		var value = myList.options[myList.selectedIndex].value;
+		console.log(value);
+
+	    if ( value !== '') {
+	      template.searchQuery.set( value );
+	      template.searching.set( true );
+	    }
+
+	    if ( value === '' ) {
+	      template.searchQuery.set( value );
+	    }
+	}
 });

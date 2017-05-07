@@ -21,7 +21,7 @@ Template.sports.helpers({
 		return Template.instance().searchQuery.get();
 	},
 	sport: ()=> {
-		return Sports.find().fetch().reverse();
+		return Sports.find().fetch();
 	}
 });
 

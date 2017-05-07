@@ -20,6 +20,12 @@ Template.addResult.helpers({
 	subjectsAvailable: ()=> {
 		return Subjects.find().fetch().reverse();
 	},
+	minScore: function(){
+		return 0;
+	},
+	maxScore: function(){
+		return 100;
+	},
 	student: ()=> {
 		var examSelection = Template.instance().examSelection.get();
 		var classSelection = Template.instance().classSelection.get();
@@ -102,5 +108,14 @@ Template.addResult.events({
 				template.classSelection.set(true);
 			}
 		}
+	},
+	'click .save': function(e, event, template){
+		var studentId = $(e.target).attr('id');
+		if (studentId != null){
+			console.log(studentId);
+		} else {
+			Bert.alert("enter grades for the student", 'danger');
+		}
+
 	}
 });

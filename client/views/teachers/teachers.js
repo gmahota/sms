@@ -26,7 +26,7 @@ Template.teachers.helpers({
 		return Template.instance().searchQuery.get();
 	},
 	teacher: ()=> {
-		return Teachers.find().fetch().reverse();
+		return Teachers.find().fetch();
 	}
 });
 

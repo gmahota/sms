@@ -26,7 +26,7 @@ Template.subjects.helpers({
 		return Template.instance().searchQuery.get();
 	},
 	subject: ()=> {
-		return Subjects.find().fetch().reverse();
+		return Subjects.find().fetch();
 	}
 });
 

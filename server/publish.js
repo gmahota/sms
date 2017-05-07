@@ -1,10 +1,10 @@
 Meteor.publish('classes', function(){
-	return Classes.find();
+	return Classes.find({}, {sort: {Form: 1}});
 });
 Meteor.publish( 'classSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );
   let query = {},
-      projection = { limit: 10, sort: { streamName: 1 } };
+      projection = { limit: 10, sort: { Form: 1 } };
   if ( search ) {
     let regex = new RegExp( search, 'i' );
     query = {
@@ -54,7 +54,7 @@ Meteor.publish('exams', function(){
 Meteor.publish( 'examSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );
   let query = {},
-      projection = { limit: 10, sort: { type: 1 } };
+      projection = { limit: 10, sort: { year: 1, term: 1 } };
   if ( search ) {
     let regex = new RegExp( search, 'i' );
     query = {
@@ -121,6 +121,7 @@ Meteor.publish( 'studentSearch', function( search ) {
 		{ surname: regex },
 		{ registrationNumber: regex },
 		{ yearOfAdmission: regex },
+		{ class: regex },
         { _id: regex }
       ]
     };
