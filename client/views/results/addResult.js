@@ -57,6 +57,10 @@ Template.addResult.helpers({
 			return
 		}
 	},
+	colCount: function(){
+		var subjectCount = Subjects.find().count();
+		return (subjectCount + 2);
+	},
 	exam: ()=> {
 		return Exams.find().fetch().reverse();
 	},

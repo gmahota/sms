@@ -45,33 +45,52 @@
                         </thead>
                         <tbody>
                             {{#each student}}
-                                <tr id="{{_id}}">
-                                    <td>
-                                        <p class="capitalize">
-                                            {{firstName}} {{surname}}
-                                        </p>
-                                        <p>
-                                            <strong>reg:</strong>
-                                            {{registrationNumber}}
-                                        </p>
-                                    </td>
-                                    {{#each subjectsAvailable}}
+                                    <tr id="{{_id}}">
                                         <td>
-                                            <input type="text" class="u-full-width">
+                                            <p class="capitalize">
+                                                {{firstName}} {{surname}}
+                                            </p>
+                                            <p>
+                                                <strong>reg:</strong>
+                                                {{registrationNumber}}
+                                            </p>
                                         </td>
-                                    {{/each}}
-                                    <td>
-                                        <button class="save">
-                                            save
-                                        </button>
-                                    </td>
-                                </tr>
+                                        {{#each subjectsAvailable}}
+                                            <td>
+                                                <input type="number" min="{{minScore}}" max="{{maxScore}}" class="u-full-width" id="{{_id}}" />
+                                            </td>
+                                        {{/each}}
+                                        <td>
+                                            <button class="save">
+                                                save
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </form>
+                            {{else}}
+                            <tr>
+                                <td colspan="{{colCount}}">
+                                    <h1 class="placeholder">no students in this class</h1>
+                                </td>
+                            </tr>
                             {{/each}}
                         </tbody>
                     </table>
                     <!-- {{> quickForm collection="Results" type="insert" id="insertResultForm" class="new-result-form" buttonContent="add this result"}} -->
                 </div>
             </div>
+        {{else}}
+            <div class="row">
+                <div class="twelve columns">
+                    <h1 class="placeholder">select a class</h1>
+                </div>
+            </div>
         {{/if}}
+    {{else}}
+        <div class="row">
+            <div class="twelve columns">
+                <h1 class="placeholder">select an exam to add scores for</h1>
+            </div>
+        </div>
     {{/if}}
 </template>
