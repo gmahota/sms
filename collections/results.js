@@ -162,7 +162,7 @@ Meteor.methods({
 
           // PREPARE DATA
 
-            var result =Results.findOne({_id: id});
+            var result = Results.findOne({_id: id});
 
             var studentId = Results.findOne({_id: id}).student;
             var studentImage = Students.findOne({_id: studentId}).image;
@@ -207,8 +207,20 @@ Meteor.methods({
                     subject: subjId
                 });
             });
-            console.log(subjectsArray);
-            // var subjectName = Subjects.findOne({_id: myId}).name;
+
+            var studentGender = Students.findOne({_id: studentId}).gender;
+
+            var classMatesIds = Students.find({class: classId}).map(function(classmate){
+                return classmate._id;
+            });
+            var scores = Results.find({ exam: examId, student: {$in: classMatesIds}}).map(function(result){
+                return result.overallScore;
+            });
+            var pos = scores.sort(function(a, b){return b-a});
+    		var jsPosition = pos.indexOf(result.overallScore);
+    		var position = (jsPosition + 1);
+
+            var averageScore = result.overallScore / subjectCount;
 
             var data = {
                 result: result,
@@ -223,7 +235,10 @@ Meteor.methods({
                 examTerm: examTerm,
                 examYear: examYear,
                 subjectCount: subjectCount,
-                subjects: subjectsArray
+                subjects: subjectsArray,
+                studentGender: studentGender,
+                position: position,
+                averageScore: parseInt(averageScore)
             }
 
             var html_string = SSR.render('layout', {

@@ -85,12 +85,16 @@ Template.resultDetail.events({
     },
 	'click .print-result': function(e){
 		e.preventDefault();
+		$('.processing').addClass('show');
 		var id = FlowRouter.getParam('id');
 	 	Meteor.call('resultPdf', id, function(err, res) {
 	    	if (err) {
-				console.error(err);
+				$('.processing').removeClass('show');
+				Bert.alert(err.reason, 'danger');
 	      	} else if (res) {
-				window.open("data:application/pdf;base64, " + res);
+				$('.processing').removeClass('show');
+				Bert.alert('the file is ready', 'success');
+				window.open("data:application/pdf;base64, " + res, '_blank');
 	      	}
 	    })
 	}

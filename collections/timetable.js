@@ -72,7 +72,7 @@ TimetableSchema = new SimpleSchema({
         }
     },
     day: {
-        type: Number,
+        type: String,
         label: "the day of the week",
         autoform: {
             type: 'select2',
@@ -101,7 +101,7 @@ TimetableSchema = new SimpleSchema({
         }
     },
     year: {
-        type: Number,
+        type: String,
         label: "the year",
         autoform: {
             type: 'select2',

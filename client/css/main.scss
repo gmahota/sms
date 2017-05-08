@@ -175,5 +175,106 @@ body{
         }
 
     }
+    .processing{
+        background: rgba(0,0,0,0.8);
+        display: none;
+        position:fixed;
+        width:100%;
+        height:100%;
+        top:0;
+        right:0;
+        box-sixing: border-box;
+        z-index: 9999;
+        .modally{
+            opacity:0;
+            position: absolute;
+            z-index: 99999;
+            height: 200px;
+            width:300px;
+            background: #778899;
+            border-radius:2em;
+            padding: 2em;
+            box-sizing: border-box;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            margin: auto;
+            p{
+                color:white;
+                text-align: center;
+                margin-top: 50px;
+                font-size: 2em;
+            }
+            .loader {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                position: relative;
+                border: 4px solid #Fff;
+                top: 20px;
+                left: 100px;
+                animation: loader 2s infinite ease;
+                .loader-inner {
+                    vertical-align: top;
+                    display: inline-block;
+                    width: 100%;
+                    background-color: #fff;
+                    animation: loader-inner 2s infinite ease-in;
+                }
+            }
+        }
+        &.show{
+            display: block;
+            .modally{
+                opacity:1;
+            }
+        }
+    }
+}
 
+
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(180deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  75% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-inner {
+  0% {
+    height: 0%;
+  }
+
+  25% {
+    height: 0%;
+  }
+
+  50% {
+    height: 100%;
+  }
+
+  75% {
+    height: 100%;
+  }
+
+  100% {
+    height: 0%;
+  }
 }

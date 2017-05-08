@@ -4,7 +4,9 @@
             <h4>
                 Kiandangae Secondary School
             </h4>
-            <p>Results for {{examType}} exams, {{examTerm}}, {{examYear}}</p>
+            <p>P.O.Box 52, Kagio.</p>
+            <p class="spacer"></p>
+            <p>{{examType}} exams, {{examTerm}}, {{examYear}}</p>
             <hr>
         </div>
     </div>
@@ -24,11 +26,13 @@
                     <td><p><strong>admission number:</strong> {{studentRegistrationNumber}}</p></td>
                     <td><p><strong>class:</strong> {{studentClassForm}}{{studentClassStreamName}}</p></td>
                     <td><p><strong>admitted in:</strong> {{studentYear}}</p></td>
+                    <td><p><strong>gender:</strong> {{studentGender}}</p></td>
                 </tr>
                 <tr>
-                    <td><p>total score: <strong>{{result.overallScore}}</strong></p></td>
-                    <td><p>grade: <strong>{{result.overallGrade}}</strong></p></td>
-                    <td><p>class position: <strong>{{position}}</strong></p></td>
+                    <td><p><strong>total score: </strong>{{result.overallScore}}</p></td>
+                    <td><p><strong>grade: </strong>{{result.overallGrade}}</p></td>
+                    <td><p><strong>class position: </strong>{{position}}</p></td>
+                    <td><p><strong>average:</strong> {{averageScore}}</p></td>
                 </tr>
             </tbody>
         </table>
@@ -65,8 +69,7 @@
         <p>
             signature: ..........................    Date: ......../........../20.......
         </p>
-        <p></p>
-        <p></p>
+        <p class="spacer"></p>
         <p>
             <strong>Principal's remarks:</strong>...........................................................................................................................................................................................................................................................................................................................................................................
         </p>
