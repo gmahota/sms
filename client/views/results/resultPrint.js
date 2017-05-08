@@ -1,4 +1,4 @@
-Template.resultDetail.onCreated(function() {
+Template.resultPrint.onCreated(function() {
 	var self = this;
 	self.autorun(function(){
         var id = FlowRouter.getParam('id');
@@ -11,7 +11,7 @@ Template.resultDetail.onCreated(function() {
 	});
 });
 
-Template.resultDetail.helpers({
+Template.resultPrint.helpers({
 	result: ()=> {
         var id = FlowRouter.getParam('id');
 		return Results.findOne({_id: id});
@@ -78,20 +78,12 @@ Template.resultDetail.helpers({
     }
 });
 
-Template.resultDetail.events({
+Template.resultPrint.events({
     'click .delete-result': function(){
         var id = FlowRouter.getParam('id');
         Meteor.call('deleteResult', id);
     },
-	'click .print-result': function(e){
-		e.preventDefault();
-		var id = FlowRouter.getParam('id');
-	 	Meteor.call('resultPdf', id, function(err, res) {
-	    	if (err) {
-				console.error(err);
-	      	} else if (res) {
-				window.open("data:application/pdf;base64, " + res);
-	      	}
-	    })
+	'click .print-result': function(){
+
 	}
 });

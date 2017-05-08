@@ -1,4 +1,4 @@
-<template name="resultDetail">
+<template name="resultPrint">
     <div class="row">
         <div class="twelve columns">
             <h4>
@@ -72,7 +72,7 @@
         <div class="twelve columns">
             <hr>
             <button class="delete-result delete">delete result</button>
-            <button class="button-primary print-result">print</button>
+            <a href="/print-result/{{result._id}}" class="button button-primary print-result">print</a>
             <a href="/edit-result/{{result._id}}" class="button">edit</a>
         </div>
     </div>

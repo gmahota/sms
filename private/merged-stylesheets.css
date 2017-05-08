@@ -1,0 +1,166 @@
+
+hr {
+	height: 0px;
+	box-sizing: content-box;
+}
+table {
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+td, th {
+	padding: 0px;
+}
+* {
+	box-sizing: border-box;
+}
+::before, ::after {
+	box-sizing: border-box;
+}
+a {
+	color: rgb(51, 122, 183);
+	text-decoration: none;
+}
+hr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-width: 1px 0px 0px;
+	border-right-style: initial;
+	border-bottom-style: initial;
+	border-left-style: initial;
+	border-right-color: initial;
+	border-bottom-color: initial;
+	border-left-color: initial;
+	border-image: initial;
+	border-top-style: solid;
+	border-top-color: rgb(238, 238, 238);
+}
+p {
+	margin: 0px 0px 7px;
+}
+.container {
+	padding-right: 0;
+	padding-left: 0;
+	margin-right: auto;
+	margin-left: auto;
+}
+.row {
+	margin-right: 0;
+	margin-left: 0;
+}
+html {
+	font-family: sans-serif;
+}
+body {
+	margin: 0px;
+}
+a {
+	background-color: transparent;
+}
+b, strong {
+	font-weight: bold;
+}
+hr {
+	box-sizing: content-box;
+	height: 0px;
+}	font-weight: bold;
+table {
+	border-collapse: collapse;
+	border-spacing: 0px;
+}
+td, th {
+	padding: 0px;
+}
+.container {
+	position: relative;
+	width: 100%;
+	margin: 0px auto;
+	padding: 0px;
+	box-sizing: border-box;
+}
+body {
+	font-size: .7em;
+	line-height: 1;
+	font-weight: 400;
+	font-family: Raleway, HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: rgb(34, 34, 34);
+}
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 0px;
+	font-weight: 300;
+	margin-bottom: 10px;
+}
+h1 {
+	font-size: 4rem;
+}
+h2 {
+	font-size: 3.6rem;
+}
+h3 {
+	font-size: 3rem;
+}
+h4 {
+	font-size: 2.4rem;
+}
+h5 {
+	font-size: 1.8rem;
+	line-height: 1;
+	letter-spacing: -0.05rem;
+}
+h6 {
+	font-size: 1.2rem;
+}
+a {
+	color: rgb(30, 174, 219);
+}
+th, td {
+	padding: 7px 10px;
+	text-align: left;
+	border-bottom: 1px solid rgb(225, 225, 225);
+}
+th:first-child, td:first-child {
+	padding-left: 0px;
+}
+th:last-child, td:last-child {
+	padding-right: 0px;
+}
+table {
+	margin-bottom: 1em;
+}
+.u-full-width {
+	width: 100%;
+	box-sizing: border-box;
+}
+hr {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	border-width: 1px 0px 0px;
+	border-top-style: solid;
+	border-top-color: rgb(225, 225, 225);
+}
+body .wide-container {
+	width: 100%;
+	padding: 0px;
+	max-width: 100%;
+}
+body .body-container .top-bar h1, body .body-container .top-bar h2, body .body-container .top-bar h3, body .body-container .top-bar h4 {
+	padding: 0px;
+	margin: 0px;
+}
+body .body-container .content .capitalize {
+	text-transform: capitalize;
+}
+body .body-container .content p {
+	margin-bottom: 0px;
+}
+body .body-container .content table tbody td {
+	vertical-align: middle;
+}
+body .body-container .content table tbody td a {
+	margin: 0px;
+}
+body .body-container .content strong {
+	color: rgb(0, 123, 187);
+}
+.title{
+	text-align: center;
+}
