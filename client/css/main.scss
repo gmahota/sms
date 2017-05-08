@@ -1,4 +1,35 @@
 body{
+    .red{
+        color:#cd0000;
+    }
+    .field-red{
+        border: 2px solid #cd0000;
+    }
+    .results{
+        thead{
+            font-size: .8em;
+        }
+    }
+    .dash-data{
+        .columns{
+            border: 1px solid #ddd;
+            background: #8DA2AA;
+            padding: 2em;
+            box-sizing: border-box;
+            margin-bottom: 1.5em;
+            border-radius:1em;
+            h1{
+                color:#fff;
+                font-size: 6em;
+            }
+            p{
+                color:#eee;
+            }
+            &:hover{
+                background: #3BA9E8;
+            }
+        }
+    }
     .right{
         text-align: right;
     }
@@ -37,8 +68,15 @@ body{
             color:#fff;
             text-decoraion:none;
             &:hover{
-                
+
             }
+        }
+        .button{
+            margin-bottom:0;
+            font-size: 1.5em;
+        }
+        .teacher-profile{
+            margin: 0 .5em -.4em 2em;
         }
     }
     .placeholder{
@@ -56,6 +94,7 @@ body{
                 .menu-item{
                     .button{
                         width:90%;
+                        text-align: left;
                     }
                 }
             }

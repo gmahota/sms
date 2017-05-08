@@ -1,15 +1,26 @@
 <template name="addResult">
     <div class="row">
-        <div class="twelve columns">
+        <div class="eight columns">
             <h3>
                 enter student result
             </h3>
+        </div>
+        <div class="four columns right">
+            <a href="/results" class="button button-primary">
+                back to results
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
         </div>
     </div>
     <div class="row">
         <div class="six columns">
             <label for="examList">select the exam for these results</label>
             <select name="examList" id="examList" class="u-full-width exam-list">
+                <option value="">select an exam</option>
                 {{#each exam}}
                     <option value="{{_id}}">{{year}}, {{type}}, {{term}}</option>
                 {{/each}}
@@ -19,8 +30,9 @@
             <div class="six columns">
                 <label for="classList">select the class to edit</label>
                 <select name="classList" id="classList" class="u-full-width class-list">
+                    <option value="">select a class</option>
                     {{#each class}}
-                        <option value="{{_id}}">{{Form}}{{streamName}} </option>
+                        <option value="{{_id}}">{{Form}} {{streamName}} </option>
                     {{/each}}
                 </select>
             </div>
@@ -35,11 +47,11 @@
         {{#if classSelected}}
             <div class="row">
                 <div class="twelve columns">
-                    <table class="u-full-width">
+                    <table class="u-full-width results">
                         <thead>
                             <th>student</th>
                             {{#each subjectsAvailable}}
-                                <th>{{name}}</th>
+                                <th>{{name}}{{#if isRequired}}<span class="red">*</span>{{/if}}</th>
                             {{/each}}
                             <th></th>
                         </thead>
@@ -69,7 +81,7 @@
                             {{else}}
                             <tr>
                                 <td colspan="{{colCount}}">
-                                    <h1 class="placeholder">no students in this class</h1>
+                                    <h1 class="placeholder">no students to add results for</h1>
                                 </td>
                             </tr>
                             {{/each}}

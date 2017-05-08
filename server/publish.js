@@ -49,7 +49,7 @@ Meteor.publish('singleClub', function(id){
 
 
 Meteor.publish('exams', function(){
-	return Exams.find();
+	return Exams.find({}, {sort: {year: 1, term: 1}});
 });
 Meteor.publish( 'examSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );

@@ -1,3 +1,12 @@
 <template name="addTimetable">
-
+    <div class="row">
+        <div class="twelve columns">
+            <h3>
+                Add a new timetable
+            </h3>
+        </div>
+        <div class="twelve columns">
+            {{> quickForm collection="Timetables" type="insert" id="insertTimetableForm" class="new-timetable-form" buttonContent="add timetable"}}
+        </div>
+    </div>
 </template>

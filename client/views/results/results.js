@@ -8,6 +8,11 @@ Template.results.onCreated(function() {
         self.subscribe('classes');
         self.subscribe('results');
 	});
+
+	Session.set("examId", null);
+	Session.set("classId", null);
+	self.examSelection = new ReactiveVar(false);
+	self.classSelection = new ReactiveVar(false);
 });
 
 Template.results.helpers({
@@ -18,7 +23,30 @@ Template.results.helpers({
 		return Template.instance().searchQuery.get();
 	},
 	result: ()=> {
-		return Results.find().fetch().reverse();
+		var examSelection = Template.instance().examSelection.get();
+		var classSelection = Template.instance().classSelection.get();
+		var examId = Session.get('examId');
+		var classId = Session.get('classId');
+		if (examSelection){
+			if(examId){
+				if(classSelection){
+					if(classId){
+						var studentList = Students.find({class: classId}).map(function (student){
+							return student._id;
+						});
+						return Results.find({exam: examId, student: {$in: studentList }});
+					} else {
+						return Students.find({class: "123"});
+					}
+				} else {
+					return
+				}
+			} else {
+				return
+			}
+		} else {
+			return
+		}
 	},
     studentImage: function() {
         var resultId = this._id
@@ -70,20 +98,61 @@ Template.results.helpers({
     subjectCount: function(){
         var resultId = this._id
         return Results.findOne({_id: resultId}).subjects.length;
-    }
+    },
+	class: function() {
+		var examSelection = Template.instance().examSelection.get();
+		var examId = Session.get('examId');
+		if (examSelection){
+			if(examId){
+				var classIdArray = Exams.findOne({_id: examId}).classes;
+				return Classes.find({_id: { $in: classIdArray }}).fetch().reverse();
+			} else {
+				return
+			}
+		} else {
+			return
+		}
+	},
+	exam: ()=> {
+		return Exams.find().fetch().reverse();
+	},
+	examSelected: function(){
+		return Template.instance().examSelection.get();
+	},
+	classSelected: function(){
+		return Template.instance().classSelection.get();
+	}
 });
 
 Template.results.events({
-  'keyup .searchbox' ( event, template ) {
-    let value = event.target.value.trim();
-
-    if ( value !== '' && event.keyCode === 13 ) {
-      template.searchQuery.set( value );
-      template.searching.set( true );
-    }
-
-    if ( value === '' ) {
-      template.searchQuery.set( value );
-    }
-  }
+	'change .exam-list': function(event, template){
+		var myList = document.getElementById("examList");
+		var examSelected = Template.instance().examSelection.get();
+		var selectedValue = myList.options[myList.selectedIndex].value;
+		if (selectedValue) {
+			Session.set('examId', selectedValue );
+			Session.set('classId', null );
+			if (examSelected){
+				template.examSelection.set(false);
+				template.examSelection.set(true);
+			} else {
+				template.examSelection.set(true);
+			}
+			template.classSelection.set(false);
+		}
+	},
+	'change .class-list': function(event, template){
+		var myList = document.getElementById("classList");
+		var classSelected = Template.instance().examSelection.get();
+		var selectedValue = myList.options[myList.selectedIndex].value;
+		if (selectedValue) {
+			Session.set('classId', selectedValue );
+			if (classSelected){
+				template.classSelection.set(false);
+				template.classSelection.set(true);
+			} else {
+				template.classSelection.set(true);
+			}
+		}
+	}
 });

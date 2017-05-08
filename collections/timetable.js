@@ -22,7 +22,7 @@ TimeSchema = new SimpleSchema({
             options: function () {
                 var options = [];
                 Subjects.find({}).forEach(function (element) {
-                    var name = element.form + " " + element.streamName
+                    var name = element.name
                     options.push({
                         label: name, value: element._id
                     })
@@ -31,9 +31,25 @@ TimeSchema = new SimpleSchema({
             }
         }
     },
-    startTime: {
-        type: Date,
-
+    startTime:{
+        type: String,
+        autoform: {
+            type: 'ksrv:clockpicker',
+            iconLeft: true,
+            clockpickerOptions: {
+                autoclose: true
+            }
+        }
+    },
+    endTime:{
+        type: String,
+        autoform: {
+            type: 'ksrv:clockpicker',
+            iconLeft: true,
+            clockpickerOptions: {
+                autoclose: true
+            }
+        }
     }
 });
 
@@ -46,7 +62,7 @@ TimetableSchema = new SimpleSchema({
             options: function () {
                 var options = [];
                 Classes.find({}).forEach(function (element) {
-                    var name = element.form + " " + element.streamName
+                    var name = element.Form + " " + element.streamName
                     options.push({
                         label: name, value: element._id
                     })
@@ -86,7 +102,7 @@ TimetableSchema = new SimpleSchema({
     },
     year: {
         type: Number,
-        label: "the year of the exam",
+        label: "the year",
         autoform: {
             type: 'select2',
             options: [
@@ -104,6 +120,9 @@ TimetableSchema = new SimpleSchema({
                 {value:"2027", label: "2027"}
             ]
         }
+    },
+    sessions: {
+        type: [TimeSchema]
     },
 	createdAt: {
 		type: Date,

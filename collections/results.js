@@ -32,10 +32,11 @@ SubjectSchema = new SimpleSchema({
     },
     grade: {
         type: String,
-        // autoform: {
-		// 	type: "hidden"
-		// },
         label: "grade",
+    },
+    points: {
+        type: Number,
+        max: 12
     },
     score: {
         type: Number,
@@ -43,10 +44,10 @@ SubjectSchema = new SimpleSchema({
         min: 0,
         max: 100
     },
-    teacherRemarks: {
+    comments: {
         type: String,
         optional: true,
-        label: "The teacher's remarks (optional)"
+        label: "remarks (optional)"
     }
 });
 
@@ -109,9 +110,7 @@ ResultSchema = new SimpleSchema({
 	},
     overallScore: {
         type: Number,
-        min:0,
-        max: 500,
-        defaultValue: 0
+        min:0
     },
     overallGrade: {
         type: String,

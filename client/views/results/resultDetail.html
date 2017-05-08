@@ -17,11 +17,29 @@
         </div>
         <div class="eight columns">
             <h4 class="capitalize">
-                <strong>{{studentFirstName}} {{studentLastName}}</strong>
+                <a href="/student/{{result.student}}">
+                    <strong>{{studentFirstName}} {{studentLastName}}</strong>
+                </a>
             </h4>
             <p><strong>registration number:</strong> {{studentRegistrationNumber}}</p>
             <p><strong>class:</strong> {{studentClassForm}}{{studentClassStreamName}}</p>
             <p><strong>admitted in:</strong> {{studentYear}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="four columns">
+            <p>total score: <strong>{{result.overallScore}}</strong></p>
+        </div>
+        <div class="four columns">
+            <p>grade: <strong>{{result.overallGrade}}</strong></p>
+        </div>
+        <div class="four columns">
+            <p>class position: <strong>{{position}}</strong></p>
         </div>
     </div>
     <div class="row">
@@ -33,6 +51,7 @@
                     <th>subject</th>
                     <th>score</th>
                     <th>grade</th>
+                    <th>points</th>
                     <th>remarks</th>
                 </thead>
                 <tbody>
@@ -41,11 +60,17 @@
                             <td>{{subjectName}}</td>
                             <td>{{score}}</td>
                             <td>{{grade}}</td>
-                            <td>{{teacherRemarks}}</td>
+                            <td>{{points}}</td>
+                            <td>{{comments}}</td>
                         </tr>
                     {{/each}}
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
             <button class="delete-result delete">delete result</button>
             <a href="/edit-result/{{result._id}}" class="button">edit</a>
         </div>
