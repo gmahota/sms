@@ -4,6 +4,8 @@ Template.timetableDetail.onCreated(function() {
         var id = FlowRouter.getParam('id');
 		self.subscribe('singleTimetable', id);
         self.subscribe('classes');
+		self.subscribe('subjects');
+		self.subscribe('teachers');
 	});
 });
 
@@ -31,7 +33,7 @@ Template.timetableDetail.helpers({
         for (var i = 0; i < sessions.length; i++) {
             var startTime = sessions[i].startTime;
 
-            //var endTime = sessions[i].endTime;
+            var endTime = sessions[i].endTime;
             var dayOfWeek = sessions[i].dayOfWeek;
             var monday = false;
             var tuesday = false;
@@ -54,6 +56,10 @@ Template.timetableDetail.helpers({
             if (!groups[startTime]) {
                 groups[startTime] = [];
             }
+			var subject = Subjects.findOne({_id: sessions[i].subject}).name;
+			var firstName = Teachers.findOne({_id: sessions[i].teacher}).firstName;
+			var surname = Teachers.findOne({_id: sessions[i].teacher}).surname;
+
             groups[startTime].push({
                 dayOfWeek: dayOfWeek,
                 monday: monday,
@@ -61,13 +67,15 @@ Template.timetableDetail.helpers({
                 wednesday: wednesday,
                 thursday: thursday,
                 friday: friday,
-                subject: sessions[i].subject,
-                teacher: sessions[i].teacher,
+                subject: subject,
+                firstName: firstName,
+				surname: surname
             });
         }
         for (var startTime in groups) {
             timeObject.push({
                 group: startTime,
+				endTime: endTime,
                 isClass: true,
                 session: groups[startTime]
             });
