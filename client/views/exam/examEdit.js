@@ -14,7 +14,7 @@ Template.examEdit.helpers({
 	}
 });
 
-AutoForm.addHooks(['updateExamForm'], {
+AutoForm.addHooks(['updateExamId'], {
 	onSuccess: function(operation, result, template) {
 		FlowRouter.go('exams');
 	    Bert.alert("successfully updated", 'success');

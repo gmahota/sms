@@ -1,3 +1,104 @@
 <template name="timetableDetail">
+    <div class="row">
+        <div class="columns twelve">
+            <table class="u-full-width">
+                <tbody>
+                    <td>
+                        <p><strong>class:</strong> {{classForm}} {{classStreamName}}</p>
+                    </td>
+                    <td>
+                        <p><strong>term:</strong> {{timetable.term}}</p>
+                    </td>
+                    <td>
+                        <p><strong>year:</strong>{{timetable.year}}</p>
+                    </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="columns twelve">
+            <table class="u-full-width">
+                <thead>
+                    <th>
+                        <p>
+                            <strong>time:</strong>
+                        </p>
+                    </th>
+                    <th>
+                        monday
+                    </th>
+                    <th>
+                        tuesday
+                    </th>
+                    <th>
+                        wednesday
+                    </th>
+                    <th>
+                        thursday
+                    </th>
+                    <th>
+                        friday
+                    </th>
+                </thead>
+                <tbody>
+                    {{#each time}}
+                        <tr>
+                            <td>
+                                <h6>
+                                    <strong>{{startTime}} - {{endTime}}</strong>
+                                </h6>
+                            </td>
+                            {{#if isClass}}
+                                {{#each session}}
+                                    {{#if monday}}
+                                        <td>
+                                            <p><strong>{{className}}</strong></p>
+                                            <p>{{firstName}} {{surname}}</p>
+                                        </td>
+                                    {{/if}}
+                                    {{#if tuesday}}
+                                        <td>
+                                            <p><strong>{{className}}</strong></p>
+                                            <p>{{firstName}} {{surname}}</p>
+                                        </td>
+                                    {{/if}}
+                                    {{#if wednesday}}
+                                        <td>
+                                            <p><strong>{{className}}</strong></p>
+                                            <p>{{firstName}} {{surname}}</p>
+                                        </td>
+                                    {{/if}}
+                                    {{#if thursday}}
+                                        <td>
+                                            <p><strong>{{className}}</strong></p>
+                                            <p>{{firstName}} {{surname}}</p>
+                                        </td>
+                                    {{/if}}
+                                    {{#if friday}}
+                                        <td>
+                                            <p><strong>{{className}}</strong></p>
+                                            <p>{{firstName}} {{surname}}</p>
+                                        </td>
+                                    {{/if}}
+                                {{/each}}
+                            {{else}}
+                                <td colspan="5">
+                                    <h3 class="break">BREAK</h3>
+                                </td>
+                            {{/if}}
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <button class="button-primary delete-timetable">delete this timetable</button>
+            <button class="print-timetable">print</button>
+            <hr>
+        </div>
+    </div>
 
 </template>

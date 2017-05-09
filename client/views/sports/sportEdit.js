@@ -13,7 +13,7 @@ Template.sportEdit.helpers({
 	}
 });
 
-AutoForm.addHooks(['updateSportForm'], {
+AutoForm.addHooks(['updateSportId'], {
 	onSuccess: function(operation, result, template) {
 		FlowRouter.go('sports');
 	    Bert.alert("successfully updated", 'success');

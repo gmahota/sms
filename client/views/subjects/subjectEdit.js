@@ -14,7 +14,7 @@ Template.subjectEdit.helpers({
 	}
 });
 
-AutoForm.addHooks(['updateSubjectForm'], {
+AutoForm.addHooks(['updateSubjectId'], {
 	onSuccess: function(operation, result, template) {
 		FlowRouter.go('subjects');
 	    Bert.alert("successfully updated", 'success');

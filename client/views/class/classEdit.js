@@ -13,7 +13,7 @@ Template.classEdit.helpers({
 	}
 });
 
-AutoForm.addHooks(['updateClassForm'], {
+AutoForm.addHooks(['updateClassId'], {
 	onSuccess: function(operation, result, template) {
 		FlowRouter.go('classes');
 	    Bert.alert("successfully updated", 'success');

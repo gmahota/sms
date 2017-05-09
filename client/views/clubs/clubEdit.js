@@ -13,7 +13,7 @@ Template.clubEdit.helpers({
 	}
 });
 
-AutoForm.addHooks(['updateClubForm'], {
+AutoForm.addHooks('updateClubId', {
 	onSuccess: function(operation, result, template) {
 		FlowRouter.go('clubs');
 	    Bert.alert("successfully updated", 'success');

@@ -78,6 +78,7 @@ TeacherSchema = new SimpleSchema({
     image: {
         type: String,
         label: "image of the teacher",
+        optional: true,
         autoform: {
         	afFieldInput: {
         		type: "fileUpload",

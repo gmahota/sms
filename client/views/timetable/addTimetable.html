@@ -1,12 +1,169 @@
 <template name="addTimetable">
     <div class="row">
-        <div class="twelve columns">
+        <div class="six columns">
             <h3>
                 Add a new timetable
             </h3>
         </div>
+        <div class="six columns right">
+            <a href="/timetables" class="button button-primary">back to timetables</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="four columns">
+            <select name="class" id="class-list" class="u-full-width class-list">
+                <option value="">select the class</option>
+                {{#each class}}
+                    <option value="{{_id}}">{{Form}} {{streamName}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="four columns">
+            <select name="term" id="term-list" class="u-full-width term-list">
+                <option value="">select the term</option>
+                {{#each term}}
+                    <option value="{{termName}}">{{termName}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="four columns">
+            <select name="year" id="year-list" class="u-full-width year-list">
+                <option value="">select the year</option>
+                {{#each years}}
+                    <option value="{{year}}">{{year}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="twelve columns">
-            {{> quickForm collection="Timetables" type="insert" id="insertTimetableForm" class="new-timetable-form" buttonContent="add timetable"}}
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width timetable-entry">
+                <thead>
+                    <th>
+                        <p>
+                            <strong>time:</strong>
+                        </p>
+                    </th>
+                    <th>
+                        monday
+                    </th>
+                    <th>
+                        tuesday
+                    </th>
+                    <th>
+                        wednesday
+                    </th>
+                    <th>
+                        thursday
+                    </th>
+                    <th>
+                        friday
+                    </th>
+                </thead>
+                <tbody>
+                    {{#each classTimes}}
+                        {{#if break}}
+                            <tr class="grey-bg">
+                                <td><p><strong>{{startTime}} - {{endTime}}</strong></p></td>
+                                <td colspan="5"><h1 class="break">BREAK</h1></td>
+                            </tr>
+                        {{else}}
+                            <tr id="{{startTime}}" class="timeline">
+                                <td><p><strong>{{startTime}} - {{endTime}}</strong></p></td>
+
+                                <td id="Monday" class="timeline-date">
+                                    <select name="subject" id="subject-list" class="u-full-width subject-list">
+                                        <option value="">select subject</option>
+                                        {{#each subject}}
+                                            <option value="{{_id}}">{{name}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <select name="teacher" id="teacher-list" class="u-full-width teacher-list">
+                                        <option value="">select teacher</option>
+                                        {{#each teacher}}
+                                            <option value="{{_id}}">{{firstName}} {{surname}} | {{staffId}}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>
+
+                                <td id="Tuesday" class="timeline-date">
+                                    <select name="subject" id="subject-list" class="u-full-width subject-list">
+                                        <option value="">select subject</option>
+                                        {{#each subject}}
+                                            <option value="{{_id}}">{{name}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <select name="teacher" id="teacher-list" class="u-full-width teacher-list">
+                                        <option value="">select teacher</option>
+                                        {{#each teacher}}
+                                            <option value="{{_id}}">{{firstName}} {{surname}} | {{staffId}}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>
+
+                                <td id="Wednesday" class="timeline-date">
+                                    <select name="subject" id="subject-list" class="u-full-width subject-list">
+                                        <option value="">select subject</option>
+                                        {{#each subject}}
+                                            <option value="{{_id}}">{{name}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <select name="teacher" id="teacher-list" class="u-full-width teacher-list">
+                                        <option value="">select teacher</option>
+                                        {{#each teacher}}
+                                            <option value="{{_id}}">{{firstName}} {{surname}} | {{staffId}}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>
+
+                                <td id="Thursday" class="timeline-date">
+                                    <select name="subject" id="subject-list" class="u-full-width subject-list">
+                                        <option value="">select subject</option>
+                                        {{#each subject}}
+                                            <option value="{{_id}}">{{name}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <select name="teacher" id="teacher-list" class="u-full-width teacher-list">
+                                        <option value="">select teacher</option>
+                                        {{#each teacher}}
+                                            <option value="{{_id}}">{{firstName}} {{surname}} | {{staffId}}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>
+
+                                <td id="Friday" class="timeline-date">
+                                    <select name="subject" id="subject-list" class="u-full-width subject-list">
+                                        <option value="">select subject</option>
+                                        {{#each subject}}
+                                            <option value="{{_id}}">{{name}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <select name="teacher" id="teacher-list" class="u-full-width teacher-list">
+                                        <option value="">select teacher</option>
+                                        {{#each teacher}}
+                                            <option value="{{_id}}">{{firstName}} {{surname}} | {{staffId}}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>
+                            </tr>
+                        {{/if}}
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <button class="button-primary save-timetable">save this timetable</button>
+            <hr>
         </div>
     </div>
 </template>

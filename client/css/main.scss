@@ -192,7 +192,7 @@ body{
             height: 200px;
             width:300px;
             background: #778899;
-            border-radius:2em;
+            border-radius:5px;
             padding: 2em;
             box-sizing: border-box;
             left:0;
@@ -229,6 +229,19 @@ body{
             .modally{
                 opacity:1;
             }
+        }
+    }
+    .break{
+        color:#777;
+        letter-spacing: 3em;
+        text-align: center;
+        margin:0;
+        padding:0;
+    }
+    .grey-bg{
+        td{
+            border-top: 3px solid #ccc;
+            border-bottom: 3px solid #ccc;
         }
     }
 }

@@ -7,4 +7,119 @@
             <a class="button button-primary" href="/add-timetable">add a new timetable</a>
         </div>
     </div>
+    <div class="row">
+        <div class="four columns">
+            <select name="class" id="classList" class="u-full-width class-list">
+                <option value="">select the class</option>
+                {{#each class}}
+                    <option value="{{_id}}">{{Form}} {{streamName}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="four columns">
+            <select name="term" id="termList" class="u-full-width term-list">
+                <option value="">select the term</option>
+                {{#each terms}}
+                    <option value="{{termValue}}">{{termName}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="four columns">
+            <select name="year" id="yearList" class="u-full-width year-list">
+                <option value="">select the year</option>
+                {{#each years}}
+                    <option value="{{year}}">{{year}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width">
+                <thead>
+                    <th>
+                        class
+                    </th>
+                    <th>
+                        term
+                    </th>
+                    <th>
+                        year
+                    </th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {{#if classSelect}}
+                        {{#if termSelect}}
+                            {{#if yearSelect}}
+                                {{#each timetable}}
+                                    <tr>
+                                        <td>
+                                            <p>
+                                                <strong>
+                                                    {{classForm}} {{classStreamName}}
+                                                </strong>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p>
+                                                {{term}}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p>
+                                                {{year}}
+                                            </p>
+                                        </td>
+                                        <td class="right">
+                                            <a href="/timetable/{{_id}}" class="button">details</a>
+                                        </td>
+                                    </tr>
+                                {{else}}
+                                    <tr>
+                                        <td colspan="4">
+                                            <h1 class="placeholder">
+                                                no results found
+                                            </h1>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            {{else}}
+                                <tr>
+                                    <td colspan="4">
+                                        <h1 class="placeholder">
+                                            select the year
+                                        </h1>
+                                    </td>
+                                </tr>
+                            {{/if}}
+                        {{else}}
+                            <tr>
+                                <td colspan="4">
+                                    <h1 class="placeholder">
+                                        select the term
+                                    </h1>
+                                </td>
+                            </tr>
+                        {{/if}}
+                    {{else}}
+                        <tr>
+                            <td colspan="4">
+                                <h1 class="placeholder">
+                                    select a class
+                                </h1>
+                            </td>
+                        </tr>
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </template>

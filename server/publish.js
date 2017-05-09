@@ -198,7 +198,7 @@ Meteor.publish('singleTeacherImage', function(id){
   return TeacherImages.find({_id: id});
 });
 
-Meteor.publish('timetable', function(){
+Meteor.publish('timetables', function(){
 	return Timetables.find();
 });
 Meteor.publish('singleTimetable', function(id){

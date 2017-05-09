@@ -14,7 +14,7 @@ Template.teacherEdit.helpers({
 	}
 });
 
-AutoForm.addHooks(['updateTeacherForm'], {
+AutoForm.addHooks(['updateTeacherId'], {
 	onSuccess: function(operation, result, template) {
 		FlowRouter.go('teachers');
 	    Bert.alert("successfully updated", 'success');
