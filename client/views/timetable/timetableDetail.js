@@ -28,20 +28,52 @@ Template.timetableDetail.helpers({
         var timeObject = [];
 
         var groups = {};
-        for (var i = 0; i < timeObject.length; i++) {
+        for (var i = 0; i < sessions.length; i++) {
             var startTime = sessions[i].startTime;
+
+            //var endTime = sessions[i].endTime;
+            var dayOfWeek = sessions[i].dayOfWeek;
+            var monday = false;
+            var tuesday = false;
+            var wednesday = false;
+            var thursday = false;
+            var friday = false;
+
+            if(dayOfWeek == "Monday"){
+                monday = true;
+            } else if(dayOfWeek == "Tuesday"){
+                tuesday = true;
+            } else if(dayOfWeek == "Wednesday"){
+                wednesday = true;
+            } else if(dayOfWeek == "Thursday"){
+                thursday = true;
+            } else if(dayOfWeek == "Friday"){
+                friday = true;
+            }
+
             if (!groups[startTime]) {
                 groups[startTime] = [];
             }
-            groups[startTime].push(sessions[i].color);
+            groups[startTime].push({
+                dayOfWeek: dayOfWeek,
+                monday: monday,
+                tuesday: tuesday,
+                wednesday: wednesday,
+                thursday: thursday,
+                friday: friday,
+                subject: sessions[i].subject,
+                teacher: sessions[i].teacher,
+            });
         }
         for (var startTime in groups) {
             timeObject.push({
                 group: startTime,
-                color: groups[startTime]
+                isClass: true,
+                session: groups[startTime]
             });
         }
-
+        console.log(timeObject);
+        return timeObject;
     },
     studentImage: function() {
         var resultId = FlowRouter.getParam('id');

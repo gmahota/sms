@@ -144,6 +144,7 @@ Template.addTimetable.events({
 		var year = Session.get('year');
 		var term = Session.get('term');
 		var classId = Session.get('classId');
+		var classDetailsArray = [];
 
 		if (!year){
 			$('.year-list').addClass('field-red');
@@ -171,9 +172,7 @@ Template.addTimetable.events({
 			$('.term-list').removeClass('field-red');
 			$('.class-list').removeClass('field-red');
 
-			var classDetailsArray = [];
-
-			$('.timeline').each(function() {
+			$('tr.timeline').each(function() {
 				var row = this;
 				var startTime = $(this).attr('id');
 				$('.timeline-date').each(function(){
@@ -243,10 +242,22 @@ Template.addTimetable.events({
 				});
 			});
 
-			if (classDetailsArray.length >= 44){
+			//QUICK FIX
+			var noDupeObj = {}
+		    for (i = 0, n = classDetailsArray.length; i < n; i++) {
+		    	var item = classDetailsArray[i];
+		    	noDupeObj[item.dayOfWeek + "|" + item.startTime] = item;
+		    }
+		    var i = 0;
+		    var cleanData = [];
+		    for (var item in noDupeObj) {
+		    	cleanData[i++] = noDupeObj[item];
+		    }
+
+			if (cleanData.length == 45){
 				$('.processing').addClass('show');
 				if ($('.show.processing').length > 0){
-					Meteor.call('createTimetable', year, term, classId, classDetailsArray, function(err, res) {
+					Meteor.call('createTimetable', year, term, classId, cleanData, function(err, res) {
 				    	if (err) {
 							$('.processing').removeClass('show');
 							Bert.alert(err.reason, 'danger');
