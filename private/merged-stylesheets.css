@@ -53,6 +53,9 @@ html {
 body {
 	margin: 0px;
 }
+.right{
+	text-alight:right;
+}
 a {
 	background-color: transparent;
 }
@@ -166,4 +169,24 @@ body .body-container .content strong {
 }
 .spacer{
 	margin-bottom:20px;
+}
+
+.class-timetable tbody tr td p {
+	color: #aaa;
+}
+
+.class-timetable tbody tr td p.strong {
+	color: #333;
+}
+
+.class-timetable tbody tr td:nth-child(1) {
+	border-right: 2px solid #ccc;
+}
+
+.class-timetable tbody tr:nth-child(2) td, .class-timetable tbody tr:nth-child(4) td {
+	border-bottom: 2em solid #ccc;
+}
+
+.class-timetable tbody tr:nth-child(6) td {
+	border-bottom: 4em solid #777;
 }

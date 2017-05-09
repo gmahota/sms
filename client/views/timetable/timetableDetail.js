@@ -32,8 +32,6 @@ Template.timetableDetail.helpers({
         var groups = {};
         for (var i = 0; i < sessions.length; i++) {
             var startTime = sessions[i].startTime;
-
-            var endTime = sessions[i].endTime;
             var dayOfWeek = sessions[i].dayOfWeek;
             var monday = false;
             var tuesday = false;
@@ -73,20 +71,43 @@ Template.timetableDetail.helpers({
             });
         }
         for (var startTime in groups) {
+			var endTime = "";
+			if (startTime == "8:00"){
+				endTime = "8:40"
+			} else if (startTime == "8:40"){
+				endTime = "9:20"
+			} else if (startTime == "9:20"){
+				endTime = "9:30"
+			} else if (startTime == "9:30"){
+				endTime = "10:10"
+			} else if (startTime == "10:10"){
+				endTime = "10:50"
+			} else if (startTime == "10:50"){
+				endTime = "11:20"
+			} else if (startTime == "11:20"){
+				endTime = "12:00"
+			} else if (startTime == "12:00"){
+				endTime = "12:40"
+			} else if (startTime == "12:40"){
+				endTime = "13:20"
+			} else if (startTime == "13:20"){
+				endTime = "14:00"
+			} else if (startTime == "14:00"){
+				endTime = "14:40"
+			} else if (startTime == "14:40"){
+				endTime = "15:20"
+			} else if (startTime == "15:20"){
+				endTime = "16:00"
+			}
+
             timeObject.push({
                 group: startTime,
-				endTime: endTime,
                 isClass: true,
-                session: groups[startTime]
+                session: groups[startTime],
+				ending: endTime
             });
         }
-        console.log(timeObject);
         return timeObject;
-    },
-    studentImage: function() {
-        var resultId = FlowRouter.getParam('id');
-        var studentId = Results.findOne({_id: resultId}).student;
-        return Students.findOne({_id: studentId}).image;
     }
 });
 
@@ -94,5 +115,20 @@ Template.timetableDetail.events({
     'click .delete-timetable': function(){
         var id = FlowRouter.getParam('id');
         Meteor.call('deleteTimetable', id);
-    }
+    },
+	'click .print-timetable': function(e){
+		e.preventDefault();
+		$('.processing').addClass('show');
+		var id = FlowRouter.getParam('id');
+	 	Meteor.call('timetablePdf', id, function(err, res) {
+	    	if (err) {
+				$('.processing').removeClass('show');
+				Bert.alert(err.reason, 'danger');
+	      	} else if (res) {
+				$('.processing').removeClass('show');
+				Bert.alert('the file is ready', 'success');
+				window.open("data:application/pdf;base64, " + res, '_blank');
+	      	}
+	    })
+	}
 });

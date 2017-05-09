@@ -291,3 +291,32 @@ body{
     height: 0%;
   }
 }
+
+
+.class-timetable{
+    tbody{
+        tr{
+            td{
+                p{
+                    color:#aaa;
+                    &.strong{
+                        color:#333;
+                    }
+                }
+            }
+            td:nth-child(1){
+                border-right:2px solid #ccc;
+            }
+        }
+        tr:nth-child(2), tr:nth-child(4){
+            td{
+                border-bottom: 2em solid #ccc;
+            }
+        }
+        tr:nth-child(6){
+            td{
+                border-bottom: 4em solid #777;
+            }
+        }
+    }
+}

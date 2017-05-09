@@ -1,4 +1,4 @@
-<template name="timetableDetail">
+<div class="container">
     <div class="row">
         <div class="columns twelve">
             <table class="u-full-width">
@@ -6,11 +6,9 @@
                     <td>
                         <h5>Timetable for {{classForm}} {{classStreamName}}</h5>
                     </td>
-                    <td>
-                        <h5><strong>term:</strong> {{timetable.term}}</h5>
-                    </td>
-                    <td>
-                        <h5><strong>year:</strong>{{timetable.year}}</h5>
+                    <td class="right">
+                        <p><strong>term:</strong> {{timetable.term}}</p>
+                        <p><strong>year:</strong>{{timetable.year}}</p>
                     </td>
                 </tbody>
             </table>
@@ -93,12 +91,4 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="twelve columns">
-            <button class="button-primary delete-timetable">delete this timetable</button>
-            <button class="print-timetable">print</button>
-            <hr>
-        </div>
-    </div>
-
-</template>
+</div>
