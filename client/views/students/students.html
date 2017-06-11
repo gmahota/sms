@@ -4,7 +4,9 @@
             <h3>students</h3>
         </div>
         <div class="four columns right">
-            <a class="button button-primary u-full-width" href="/add-student">add a new student</a>
+            {{#if isInRole 'admin'}}
+                <a class="button button-primary u-full-width" href="/add-student">add a new student</a>
+            {{/if}}
         </div>
     </div>
 

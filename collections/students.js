@@ -120,6 +120,7 @@ StudentSchema = new SimpleSchema({
     gender: {
         type: String,
         label: "The gender of the student",
+        optional: true,
         autoform: {
             type: 'select2',
             options: [
@@ -132,6 +133,7 @@ StudentSchema = new SimpleSchema({
     religion: {
         type: String,
         label: "The religion of the student",
+        optional: true,
         autoform: {
             type: 'select2',
             options: [
@@ -146,16 +148,19 @@ StudentSchema = new SimpleSchema({
     },
     dateOfBirth: {
         type: Date,
+        optional: true,
         label: "The date of birth of the student"
     },
     extraCurricular: {
         type: extraCurricularSchema,
+        optional: true,
         label: "Extra Curricular"
     },
     kcpeResults: {
 		type: Number,
         min: 1,
         max: 500,
+        optional: true,
         label: "The student's K.C.P.E Results"
 	},
     class: {
@@ -178,6 +183,7 @@ StudentSchema = new SimpleSchema({
     yearOfAdmission: {
         type: Number,
         label: "the year of the student's admission",
+        optional: true,
         autoform: {
             type: 'select2',
             options: [
@@ -204,23 +210,26 @@ StudentSchema = new SimpleSchema({
 	},
     NextOfKin: {
         type: [NextOfKinSchema],
-        label: "Next of kin"
+        label: "Next of kin",
+        optional: true
     },
     image: {
         type: String,
-        label: "image of the student (optional)",
         optional: true,
+        label: "image of the student (optional)",
         autoform: {
-        	afFieldInput: {
-        		type: "fileUpload",
-		        collection: "studentImages",
-		        accept: 'image/*',
+            afFieldInput: {
+                type: "cfs-file",
+                collection: "studentImages",
+                accept: 'image/*',
                 label: "add student's image here"
-        	}
+            }
         }
     },
     homeAddress: {
-		type: String
+		type: String,
+        label: "home address",
+        optional: true
 	},
 	createdAt: {
 		type: Date,

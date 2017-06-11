@@ -1,16 +1,59 @@
 <template name="teacherEdit">
     <div class="row">
-        <div class="six columns">
-            <h3>{{teacher.name}}</h3>
+        <div class="twelve columns">
+            <h3>{{user.profile.firstname}} {{user.profile.lastname}}</h3>
+            <p>edit these account details</p>
+            <hr>
         </div>
-        <div class="six columns right">
-            <a href="/teacher/{{teacher._id}}" class="button">cancel</a>
+    </div>
+    {{#autoForm collection="Users" id="updateUserId" doc=user type="update" autosave=false}}
+    <div class="row">
+        <div class="six columns">
+            {{> afQuickField name='image'}}
+        </div>
+        <div class="six columns">
+            {{> afQuickField name='username'}}
         </div>
     </div>
     <div class="row">
-        <hr>
-        <div class="twelve columns">
-            {{> quickForm collection="Teachers" type="update" id="updateTeacherId" doc=teacher class="edit-teacher-form" buttonContent="update teacher"}}
+        <div class="six columns">
+            {{> afQuickField name='profile.firstname'}}
+        </div>
+        <div class="six columns">
+            {{> afQuickField name='profile.lastname'}}
         </div>
     </div>
+    <div class="row">
+        <div class="six columns">
+            <div class="email-edit">
+                {{> afQuickField name="emails"}}
+            </div>
+        </div>
+        <div class="six columns">
+            {{> afQuickField name='profile.personalPhone'}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="six columns">
+            {{> afQuickField name='profile.staffId'}}
+        </div>
+        <div class="six columns">
+            <div class="slim-select">
+                {{> afQuickField name='profile.gender'}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+            {{> afQuickField name='profile.subjects'}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+            <button type="submit" class="button button-primary update-profile">update details</button>
+        </div>
+    </div>
+    {{/autoForm}}
 </template>

@@ -18,27 +18,33 @@
         <div class="twelve columns">
             <table class="u-full-width">
                 <thead>
+                    <th>#</th>
                     <th>title</th>
+                    <th></th>
                     <th class="right">action</th>
                 </thead>
                 <tbody>
                     {{#if searching}}
                         <tr>
-                            <td colspan="2"><h1 class="placeholder">loading...</h1></td>
+                            <td colspan="4"><h1 class="placeholder">loading...</h1></td>
                         </tr>
                     {{else}}
                         {{#each subject}}
                             <tr>
+                                <td><p>{{order}}</p></td>
                                 <td>
-                                    {{name}}
+                                    <p><strong>{{name}}</strong></p>
                                 </td>
+                                <th>
+                                    <p>{{requirement}}</p>
+                                </th>
                                 <td class="right">
                                     <a href="/subject/{{_id}}" class="button">view subject</a>
                                 </td>
                             </tr>
                         {{else}}
                             <tr>
-                                <td colspan="2">
+                                <td colspan="4">
                                     <h1 class="placeholder">no subjects found</h1>
                                 </td>
                             </tr>

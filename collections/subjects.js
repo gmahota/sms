@@ -50,9 +50,9 @@ SubjectSchema = new SimpleSchema({
         autoform: {
         	type: 'select2',
             options: function () {
-                var options = [];
-                Teachers.find({}).forEach(function (element) {
-                    var name = element.firstName + " " + element.surname + " | " + element.staffId
+                var options = [{label: "select one", value: ""}];
+                Meteor.users.find({'roles.__global_roles__':'teacher'}).forEach(function (element) {
+                    var name = element.profile.firstname + " " + element.profile.lastname + " | " + element.profile.staffId
                     options.push({
                         label: name, value: element._id
                     })
@@ -62,6 +62,16 @@ SubjectSchema = new SimpleSchema({
         }
 
 	},
+    order: {
+        type: Number,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                var numberOfSubjects = Subjects.find({}).count();
+                return (numberOfSubjects + 1);
+            }
+        }
+    },
 	createdAt: {
 		type: Date,
 		autoValue: function() {

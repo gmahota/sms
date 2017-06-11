@@ -6,29 +6,46 @@
         <li class="menu-item">
             <a href="/classes" class="button {{isActiveRoute class='active button-primary' name='classes'}} {{isActiveRoute class='active button-primary' name='addClass'}} {{isActiveRoute class='active button-primary' name='singleClass'}} {{isActiveRoute class='active button-primary' name='editSingleClass'}}"><i class="fa fa-users" aria-hidden="true"></i> classes</a>
         </li>
-        <li class="menu-item">
-            <a href="/subjects" class="button {{isActiveRoute class='active button-primary' name='subjects'}} {{isActiveRoute class='active button-primary' name='singleSubject'}} {{isActiveRoute class='active button-primary' name='editSingleSubject'}} {{isActiveRoute class='active button-primary' name='addSubject'}}"><i class="fa fa-book" aria-hidden="true"></i> subjects</a>
-        </li>
-        <li class="menu-item">
-            <a href="/teachers" class="button {{isActiveRoute class='active button-primary' name='teachers'}} {{isActiveRoute class='active button-primary' name='singleTeacher'}} {{isActiveRoute class='active button-primary' name='editSingleTeacher'}}{{isActiveRoute class='active button-primary' name='addTeacher'}}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> teachers</a>
-        </li>
+        {{#if isInRole 'admin'}}
+            <li class="menu-item">
+                <a href="/subjects" class="button {{isActiveRoute class='active button-primary' name='subjects'}} {{isActiveRoute class='active button-primary' name='singleSubject'}} {{isActiveRoute class='active button-primary' name='editSingleSubject'}} {{isActiveRoute class='active button-primary' name='addSubject'}}"><i class="fa fa-book" aria-hidden="true"></i> subjects</a>
+            </li>
+            <li class="menu-item">
+                <a href="/teachers" class="button {{isActiveRoute class='active button-primary' name='teachers'}} {{isActiveRoute class='active button-primary' name='singleTeacher'}} {{isActiveRoute class='active button-primary' name='editSingleTeacher'}}{{isActiveRoute class='active button-primary' name='addTeacher'}}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> teachers</a>
+            </li>
+        {{/if}}
         <li class="menu-item">
             <a href="/students" class="button {{isActiveRoute class='active button-primary' name='students'}} {{isActiveRoute class='active button-primary' name='singleStudent'}} {{isActiveRoute class='active button-primary' name='editSingleStudent'}} {{isActiveRoute class='active button-primary' name='addStudent'}}"><i class="fa fa-user-circle" aria-hidden="true"></i> students</a>
         </li>
+        {{#if isInRole 'admin'}}
+            <li class="menu-item">
+                <a href="/clubs" class="button {{isActiveRoute class='active button-primary' name='clubs'}} {{isActiveRoute class='active button-primary' name='singleClub'}} {{isActiveRoute class='active button-primary' name='editSingleClub'}} {{isActiveRoute class='active button-primary' name='addClub'}}"><i class="fa fa-trophy" aria-hidden="true"></i> clubs</a>
+            </li>
+            <li class="menu-item">
+                <a href="/sports" class="button {{isActiveRoute class='active button-primary' name='sports'}} {{isActiveRoute class='active button-primary' name='singleSport'}} {{isActiveRoute class='active button-primary' name='editSingleSport'}} {{isActiveRoute class='active button-primary' name='addSport'}}"><i class="fa fa-futbol-o" aria-hidden="true"></i> sports</a>
+            </li>
+        {{/if}}
         <li class="menu-item">
-            <a href="/clubs" class="button {{isActiveRoute class='active button-primary' name='clubs'}} {{isActiveRoute class='active button-primary' name='singleClub'}} {{isActiveRoute class='active button-primary' name='editSingleClub'}} {{isActiveRoute class='active button-primary' name='addClub'}}"><i class="fa fa-trophy" aria-hidden="true"></i> clubs</a>
-        </li>
-        <li class="menu-item">
-            <a href="/sports" class="button {{isActiveRoute class='active button-primary' name='sports'}} {{isActiveRoute class='active button-primary' name='singleSport'}} {{isActiveRoute class='active button-primary' name='editSingleSport'}} {{isActiveRoute class='active button-primary' name='addSport'}}"><i class="fa fa-futbol-o" aria-hidden="true"></i> sports</a>
+            <a href="/timetables" class="button {{isActiveRoute class='active button-primary' name='timetables'}} {{isActiveRoute class='active button-primary' name='singleTimetable'}} {{isActiveRoute class='active button-primary' name='editSingleTimetable'}} {{isActiveRoute class='active button-primary' name='addTimetable'}}"> <i class="fa fa-calendar" aria-hidden="true"></i>timetables</a>
         </li>
         <li class="menu-item">
             <a href="/exams" class="button {{isActiveRoute class='active button-primary' name='exams'}} {{isActiveRoute class='active button-primary' name='singleExam'}} {{isActiveRoute class='active button-primary' name='editSingleExam'}} {{isActiveRoute class='active button-primary' name='addExam'}}"><i class="fa fa-balance-scale" aria-hidden="true"></i> exams</a>
         </li>
         <li class="menu-item">
-            <a href="/results" class="button {{isActiveRoute class='active button-primary' name='results'}} {{isActiveRoute class='active button-primary' name='singleResult'}} {{isActiveRoute class='active button-primary' name='addResult'}}{{isActiveRoute class='active button-primary' name='editSingleResult'}}"><i class="fa fa-id-card" aria-hidden="true"></i> results</a>
+            <a href="/results" class="button {{isActiveRoute class='active button-primary' name='results'}} {{isActiveRoute class='active button-primary' name='singleResult'}} {{isActiveRoute class='active button-primary' name='addResult'}}{{isActiveRoute class='active button-primary' name='editSingleResult'}}"><i class="fa fa-id-card" aria-hidden="true"></i>results</a>
+        </li>
+        {{#if isInRole 'admin'}}
+        <li class="menu-item">
+            <a href="/class-results" class="button {{isActiveRoute class='active button-primary' name='classResults'}}"><i class="fa fa-id-card" aria-hidden="true"></i>class results</a>
+        </li>
+        {{/if}}
+        {{#if isInRole 'admin'}}
+        <li class="menu-item">
+            <a href="/school/{{currentUser.profile.schoolId}}" class="button {{isActiveRoute class='active button-primary' name='school'}} {{isActiveRoute class='active button-primary' name='editSchool'}}"> <i class="fa fa-calendar" aria-hidden="true"></i>school</a>
         </li>
         <li class="menu-item">
-            <a href="/timetables" class="button {{isActiveRoute class='active button-primary' name='timetables'}} {{isActiveRoute class='active button-primary' name='singleTimetable'}} {{isActiveRoute class='active button-primary' name='editSingleTimetable'}} {{isActiveRoute class='active button-primary' name='addTimetable'}}"> <i class="fa fa-calendar" aria-hidden="true"></i>timetables</a>
+            <a href="/alumni" class="button {{isActiveRoute class='active button-primary' name='alumni'}} {{isActiveRoute class='active button-primary' name='singleAlumni'}}"> <i class="fa fa-calendar" aria-hidden="true"></i>alumni</a>
         </li>
+        {{/if}}
     </ul>
 </template>

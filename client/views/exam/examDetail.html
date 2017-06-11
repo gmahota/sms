@@ -13,12 +13,14 @@
             </p>
         </div>
     </div>
-    <div class="row">
-        <div class="twelve columns">
-            <hr>
-            <p></p>
-            <button class="delete-exam delete">delete exam</button>
-            <a href="/edit-exam/{{exam._id}}" class="button">edit</a>
+    {{#if isInRole 'admin'}}
+        <div class="row">
+            <div class="twelve columns">
+                <hr>
+                <p></p>
+                <button class="delete-exam delete">delete exam</button>
+                <a href="/edit-exam/{{exam._id}}" class="button">edit</a>
+            </div>
         </div>
-    </div>
+    {{/if}}
 </template>

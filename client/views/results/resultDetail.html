@@ -68,6 +68,7 @@
             </table>
         </div>
     </div>
+    {{#if isInRole 'admin'}}
     <div class="row">
         <div class="twelve columns">
             <hr>
@@ -75,4 +76,5 @@
             <button class="button-primary print-result">print</button>
         </div>
     </div>
+    {{/if}}
 </template>

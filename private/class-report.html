@@ -1,50 +1,66 @@
 <div class="container">
     <div class="row">
-        <div class="title">
-            <h4>
+        <div class="six columns">
+            <h2>
                 Kiandangae Secondary School
-            </h4>
-            <p>P.O.Box 52, Kagio.</p>
+            </h2>
+            <h4>P.O.Box 52, Kagio.</h4>
+            <p>
+                Examination Results
+            </p>
+        </div>
+        <div class="six columns right">
+            <p style="text-align:right; text-transform: capitalize">
+                {{examtype}} exams, {{examterm}}, {{examyear}}
+            </p>
+            <p style="text-align:right; text-transform: capitalize">
+                Class: {{classForm}} {{classStreamName}}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
             <hr>
         </div>
     </div>
     <div class="row">
         <div class="twelve columns">
-            <h6>
-                {{examtype}} exams, {{examterm}}, {{examyear}}
-            </h6>
-            <h6 class="capitalize">
-                class: <strong>{{classForm}} {{classStreamName}}</strong>
-            </h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="twelve columns">
-            <table class="u-full-width">
+            <table class="u-full-width class-results">
                 <thead>
-                    <th>student</th>
+                    <th><p>pos</p></th>
+                    <th><p>Student</p></th>
+                    <th>
+                        <p>Adm no</p>
+                    </th>
                     {{#each subject}}
-                        <th>{{name}}</th>
+                        <th><p>{{shortName}}</p></th>
                     {{/each}}
-                    <th>score</th>
-                    <th>grade</th>
+                    <th><p>score</p></th>
+                    <th><p>mean</p></th>
+                    <th><p>grade</p></th>
                 </thead>
                 <tbody>
                     {{#each result}}
                         <tr>
                             <td>
-                                <p><strong>{{studentFirstName}} {{studentLastName}}</strong></p>
-                                <p>{{studentRegistrationNumber}}</p>
+                                {{position}}
+                            </td>
+                            <td>
+                                <p style="text-transform: capitalize"><b>{{studentLastName}} {{studentFirstName}}.</b></p>
+                            </td>
+                            <td>
+                                <p><b>{{studentRegistrationNumber}}</b></p>
                             </td>
                             {{#each subjectData}}
                                 {{#if graded}}
-                                <td>{{subjectScore}}</td>
+                                <td><p>{{subjectScore}}</p></td>
                                 {{else}}
-                                <td>-</td>
+                                <td><p>-</p></td>
                                 {{/if}}
                             {{/each}}
-                            <td>{{overallScore}}</td>
-                            <td>{{overallGrade}}</td>
+                            <td><p>{{overallScore}}</p></td>
+                            <td><p>{{meanGrade}}</p></td>
+                            <td><p>{{overallGrade}}</p></td>
                         </tr>
                     {{/each}}
                 </tbody>

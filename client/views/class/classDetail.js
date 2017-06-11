@@ -4,6 +4,7 @@ Template.classDetail.onCreated(function() {
 		var id = FlowRouter.getParam('id');
 		self.subscribe('singleClass', id);
 		self.subscribe('exams');
+		self.subscribe('subjects');
 	});
 	Session.set('examId', null);
 });
@@ -15,6 +16,11 @@ Template.classDetail.helpers({
 	},
 	exams: function(){
 		return Exams.find();
+	},
+	subjects: function(){
+		var id = Meteor.userId();
+		var subjectIdArr = Meteor.users.findOne({_id: id}).profile.subjects;
+		return Subjects.find({_id: { $in: subjectIdArr }});
 	}
 });
 
@@ -28,6 +34,7 @@ Template.classDetail.events({
 		e.preventDefault();
 		$('.processing').addClass('show');
 		var classId = FlowRouter.getParam('id');
+		var subjectList = document.getElementById("examList");
 		var examId = Session.get('examId');
 		if (examId){
 			Meteor.call('classResultsPdf', classId, examId, function(err, res) {
@@ -43,6 +50,30 @@ Template.classDetail.events({
 		} else {
 			$('.processing').removeClass('show');
 			Bert.alert('select an exam', 'danger');
+		}
+
+	},
+	'click .generate-class-list': function(e){
+		e.preventDefault();
+		$('.processing').addClass('show');
+		var classId = FlowRouter.getParam('id');
+		var teacherId = Meteor.userId();
+		var subjectList = document.getElementById("subjectList");
+		var subjectId = subjectList.options[subjectList.selectedIndex].value;
+		if (subjectId){
+			Meteor.call('classListPdf', classId, teacherId, subjectId, function(err, res) {
+		    	if (err) {
+					$('.processing').removeClass('show');
+					Bert.alert(err.reason, 'danger');
+		      	} else if (res) {
+					$('.processing').removeClass('show');
+					Bert.alert('the file is ready', 'success');
+					window.open("data:application/pdf;base64, " + res, '_blank');
+		      	}
+		    })
+		} else {
+			$('.processing').removeClass('show');
+			Bert.alert('select the subject', 'danger');
 		}
 
 	},

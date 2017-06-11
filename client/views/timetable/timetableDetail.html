@@ -95,7 +95,9 @@
     </div>
     <div class="row">
         <div class="twelve columns">
-            <button class="button-primary delete-timetable">delete this timetable</button>
+            {{#if isInRole 'admin'}}
+                <button class="button-primary delete-timetable">delete this timetable</button>
+            {{/if}}
             <button class="print-timetable">print</button>
             <hr>
         </div>

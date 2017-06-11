@@ -4,7 +4,7 @@ Meteor.publish('classes', function(){
 Meteor.publish( 'classSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );
   let query = {},
-      projection = { limit: 10, sort: { Form: 1 } };
+      projection = { limit: 1000, sort: { Form: 1 } };
   if ( search ) {
     let regex = new RegExp( search, 'i' );
     query = {
@@ -29,7 +29,7 @@ Meteor.publish('clubs', function(){
 Meteor.publish( 'clubSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );
   let query = {},
-      projection = { limit: 10, sort: { name: 1 } };
+      projection = { limit: 1000, sort: { name: 1 } };
   if ( search ) {
     let regex = new RegExp( search, 'i' );
     query = {
@@ -54,7 +54,7 @@ Meteor.publish('exams', function(){
 Meteor.publish( 'examSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );
   let query = {},
-      projection = { limit: 10, sort: { year: 1, term: 1 } };
+      projection = { limit: 1000, sort: { year: 1, term: 1 } };
   if ( search ) {
     let regex = new RegExp( search, 'i' );
     query = {
@@ -88,7 +88,7 @@ Meteor.publish('sports', function(){
 Meteor.publish( 'sportSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );
   let query = {},
-      projection = { limit: 10, sort: { name: 1 } };
+      projection = { limit: 1000, sort: { name: 1 } };
   if ( search ) {
     let regex = new RegExp( search, 'i' );
     query = {
@@ -112,7 +112,7 @@ Meteor.publish('students', function(){
 Meteor.publish( 'studentSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );
   let query = {},
-      projection = { limit: 10, sort: { firstName: 1 } };
+      projection = { limit: 1000, sort: { firstName: 1 } };
   if ( search ) {
     let regex = new RegExp( search, 'i' );
     query = {
@@ -147,7 +147,7 @@ Meteor.publish('subjects', function(){
 Meteor.publish( 'subjectSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );
   let query = {},
-      projection = { limit: 10, sort: { name: 1 } };
+      projection = { limit: 1000, sort: { name: 1 } };
   if ( search ) {
     let regex = new RegExp( search, 'i' );
     query = {
@@ -165,38 +165,6 @@ Meteor.publish('singleSubject', function(id){
   return Subjects.find({_id: id});
 });
 
-Meteor.publish('teachers', function(){
-	return Teachers.find();
-});
-Meteor.publish( 'teacherSearch', function( search ) {
-  check( search, Match.OneOf( String, null, undefined ) );
-  let query = {},
-      projection = { limit: 10, sort: { firstName: 1 } };
-  if ( search ) {
-    let regex = new RegExp( search, 'i' );
-    query = {
-      $or: [
-        { firstName: regex },
-		{ surname: regex },
-		{ staffId: regex },
-        { _id: regex }
-      ]
-    };
-    projection.limit = 100;
-  }
-  return Teachers.find( query, projection );
-});
-Meteor.publish('teacherImages', function(){
-	return TeacherImages.find();
-});
-Meteor.publish('singleTeacher', function(id){
-  check(id, String);
-  return Teachers.find({_id: id});
-});
-Meteor.publish('singleTeacherImage', function(id){
-  check(id, String);
-  return TeacherImages.find({_id: id});
-});
 
 Meteor.publish('timetables', function(){
 	return Timetables.find();
@@ -204,4 +172,41 @@ Meteor.publish('timetables', function(){
 Meteor.publish('singleTimetable', function(id){
   check(id, String);
   return Timetables.find({_id: id});
+});
+
+
+
+//USERS
+Meteor.publish('allUsers', function(){
+	return Meteor.users.find({sort: { 'profile.firstname': 1 }});
+});
+Meteor.publish('teachers', function(){
+	return Meteor.users.find({'roles.__global_roles__':'teacher'});
+});
+Meteor.publish(null, function (){
+  return Meteor.roles.find()
+});
+Meteor.publish('singleUser', function(id){
+  check(id, String);
+  return Meteor.users.find({_id: id});
+});
+Meteor.publish('userImage', function(){
+  return UserImage.find();
+});
+
+
+//SCHOOL
+Meteor.publish('schools', function(){
+	return Schools.find({sort: { name: 1 }});
+});
+Meteor.publish('schoolImages', function(){
+  return SchoolImages.find();
+});
+Meteor.publish('singleSchool', function(id){
+  check(id, String);
+  return Schools.find({_id: id});
+});
+Meteor.publish('singleSchoolImage', function(id){
+  check(id, String);
+  return SchoolImages.find({_id: id});
 });

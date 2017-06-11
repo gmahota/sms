@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="six columns">
+            <h2>
+                Kiandangae Secondary School
+            </h2>
+            <h4>P.O.Box 52, Kagio.</h4>
+        </div>
+        <div class="six columns">
+            <p class="capitalize">
+                Subject: {{subjectName}}
+            </p>
+            <p class="capitalize">
+                Teacher: {{teacherFirstname}} {{teacherLastname}}
+            </p>
+            <p class="capitalize">
+                Class: <strong>{{classForm}} {{classStreamName}}</strong>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+            <div class="spacer"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width">
+                <thead>
+                    <th>Student</th>
+                    <th>Admission number</th>
+                    <th>Marks(%)</th>
+                </thead>
+                <tbody>
+                    {{#each student}}
+                        <tr>
+                            <td>
+                                <p class="capitalize">{{firstName}} {{surname}}</p>
+                            </td>
+                            <td><p>{{registrationNumber}}</p></td>
+                            <td><p></p></td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <div class="spacer"></div>
+            <p>Signature: .................................................................. Date: ...../...../.........</p>
+        </div>
+    </div>
+</div>

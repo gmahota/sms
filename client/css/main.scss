@@ -1,4 +1,119 @@
+$text-color: #3f517e;
+$tooltip-border: #c9e0ef;
+$tooltip-background: #fff;
+
+$background-color: #fff;
+
+// Tooltip Magic
+[data-tooltip][tabindex="0"] {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    display: none;
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    padding: 3px 5px;
+    max-width: 200px;
+    transform: translateX(-50%);
+    border: 1px solid $tooltip-border;
+    border-radius: 3px;
+    color: $text-color;
+    // You can also use a fixed width and ommit the white-sapce.
+    white-space: nowrap;
+    background-color: $tooltip-background;
+    // Make sure tooltips don't block each others trigger.
+    pointer-events: none;
+    content: attr(data-tooltip);
+  }
+
+  // Create a neat little arrow
+  &::before {
+    display: none;
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, 50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border: solid $tooltip-border;
+    border-width: 0 1px 1px 0;
+    background-color: $tooltip-background;
+    content: '';
+  }
+
+  // Activate tooltip
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+
+    &::after,
+    &::before {
+      display: block;
+    }
+  }
+
+  // Different directions
+  &[data-side="right"] {
+    &::after,
+    &::before {
+      bottom: 50%;
+      left: 100%;
+      margin-left: 10px;
+    }
+
+    &::after {
+      transform: translate(0, 50%);
+    }
+
+    &::before {
+      transform: translate(-50%, 50%) rotate(135deg);
+    }
+  }
+
+  &[data-side="bottom"] {
+    &::after,
+    &::before {
+      bottom: auto;
+      top: 110%;
+    }
+
+    &::after {
+      transform: translate(-50%, 0);
+    }
+
+    &::before {
+      transform: translate(-50%, -50%) rotate(225deg);
+    }
+  }
+
+  &[data-side="left"] {
+    &::after,
+    &::before {
+      right: 100%;
+      bottom: 50%;
+      left: auto;
+      margin-right: 10px;
+    }
+
+    &::after {
+      transform: translate(0, 50%);
+    }
+
+    &::before {
+      transform: translate(50%, 50%) rotate(315deg);
+    }
+  }
+}
+
+
 body{
+    .capitalize{
+        text-transform: capitalize;
+    }
     .red{
         color:#cd0000;
     }
@@ -6,9 +121,25 @@ body{
         border: 2px solid #cd0000;
     }
     .results{
-        thead{
-            font-size: .8em;
+        tbody{
+            td{
+                &:first-child{
+                    p{
+                        line-height: 1em;
+                    }
+                }
+            }
         }
+    }
+    table{
+        tbody{
+            input, button, .button{
+                margin-bottom: 0;
+            }
+        }
+    }
+    .hidden{
+        display: none;
     }
     .dash-data{
         .columns{
@@ -21,6 +152,9 @@ body{
             h1{
                 color:#fff;
                 font-size: 6em;
+            }
+            h3{
+                color: white;
             }
             p{
                 color:#eee;
@@ -47,6 +181,7 @@ body{
         border: 1px solid #ccc;
         border-radius: 50%;
         background:#ccc;
+        background-position: 50% 50%;
         background-size: cover;
         display: inline-block;
         margin: 0 .5em -.7em 2em;
@@ -73,10 +208,12 @@ body{
         }
         .button{
             margin-bottom:0;
-            font-size: 1.5em;
+            .fa{
+                font-size: 1.5em;
+            }
         }
         .teacher-profile{
-            margin: 0 .5em -.4em 2em;
+            margin: 0 .5em -1em 0;
         }
     }
     .placeholder{
@@ -166,10 +303,14 @@ body{
                 line-height: 1.5em;
                 .tagstyle{
                     padding:.5em 1em;
-                    background: #777;
+                    background: #aaa;
                     color:#fff;
                     margin: 0 .5em;
-                    border-radius:5px;
+                    font-size: .8em;
+                    border-radius:1em;
+                    &:hover{
+                        background: #777;
+                    }
                 }
             }
         }
@@ -243,6 +384,50 @@ body{
             border-top: 3px solid #ccc;
             border-bottom: 3px solid #ccc;
         }
+    }
+    .big-circle-profile-image{
+        width: 200px;
+        height:200px;
+        background: grey;
+        text-align: center;
+        border-radius: 10%;
+        color: white;
+        font-size: 3em;
+        padding: 1.3em 0.5em 0;
+        line-height: .8em;
+        background-position: 50% 50%;
+        background-size: cover;
+        border: 1px solid #cecece;
+    }
+    .email-edit{
+        .panel{
+            margin:0;
+            padding:0;
+            border:0;
+            box-shadow: none;
+            .panel-heading, .autoform-remove-item-wrap, .autoform-add-item{
+                display: none;
+            }
+            .list-group-item{
+                padding: 0;
+                border:0;
+            }
+            .panel-body{
+                padding: 0;
+            }
+        }
+    }
+    .slim-select{
+        .selectize-input{
+            padding:0;
+        }
+    }
+    .form-width{
+        max-width: 600px;
+        margin: 0px auto;
+    }
+    .centered-text{
+        text-align: center;
     }
 }
 

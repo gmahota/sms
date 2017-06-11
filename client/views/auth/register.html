@@ -1,0 +1,51 @@
+<template name="register">
+    <form class="teacher-register form-width">
+        <div class="row">
+            <div class="twelve columns">
+                <h1>Register</h1>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="twelve columns">
+                <label for="username">Your username</label>
+                <input class="u-full-width username" type="text" placeholder="username" id="username" name="username">
+            </div>
+        </div>
+        <div class="row">
+            <div class="six columns">
+                <label for="firstname">Your first name</label>
+                <input class="u-full-width firstname" type="text" placeholder="firstname" id="firstname" name="firstname">
+            </div>
+            <div class="six columns">
+                <label for="lastname">Your last name</label>
+                <input class="u-full-width lastname" type="text" placeholder="lastname" id="lastname" name="lastname">
+            </div>
+        </div>
+        <div class="row">
+            <div class="six columns">
+                <label for="phone-number">Your phone number</label>
+                <input class="u-full-width phone-number" type="text" placeholder="phone-number" id="phone-number" name="phoneNumber">
+            </div>
+            <div class="six columns">
+                <label for="email">Your email</label>
+                <input class="u-full-width email" type="email" placeholder="email" id="email" name="email">
+            </div>
+        </div>
+        <div class="row">
+            <div class="twelve columns">
+                <label for="password">Password</label>
+                <input class="u-full-width password" type="password" placeholder="password" id="password" name="password">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="twelve columns">
+                <button class="u-full-width register-button button-primary" type="submit">register</button>
+                <p>
+                    <a href="/login">have an account? login</a>
+                </p>
+            </div>
+        </div>
+    </form>
+</template>

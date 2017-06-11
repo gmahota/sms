@@ -7,18 +7,3 @@ Template.homepage.onCreated(function() {
         self.subscribe('teachers');
 	});
 });
-
-Template.homepage.helpers({
-	teachersCount: function() {
-		return Teachers.find().count();
-	},
-    classesCount: function() {
-		return Classes.find().count();
-	},
-    subjectsCount: function() {
-		return Subjects.find().count();
-	},
-    studentsCount: function() {
-		return Students.find().count();
-	}
-});

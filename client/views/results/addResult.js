@@ -21,6 +21,11 @@ Template.addResult.helpers({
 	subjectsAvailable: ()=> {
 		return Subjects.find().fetch().reverse();
 	},
+	teaching: function(){
+		var id = Meteor.userId();
+		var teachingSubjects = Meteor.users.findOne({_id: id}).profile.subjects;
+		return teachingSubjects.includes(this._id);
+	},
 	isRequired: function(){
 		var requiredStatus = Subjects.findOne({_id: this._id}).requirement;
 		if (requiredStatus == "mandatory"){
@@ -28,6 +33,10 @@ Template.addResult.helpers({
 		} else {
 			return false;
 		}
+	},
+	shortName: function(){
+		var name = Subjects.findOne({_id: this._id}).name;
+		return (name.substring(0, 3));
 	},
 	minScore: function(){
 		return 0;
@@ -285,6 +294,135 @@ Template.addResult.events({
 		            } else {
 		                Bert.alert('added successfully', 'success');
 		                // FlowRouter.go('verify-phone');
+		            }
+				});
+			}
+		} else {
+			Bert.alert("something's not right", 'danger');
+		}
+
+	},
+
+	'click .update': function(e, event, template){
+		var examId = Session.get('examId');
+		var studentId = $(e.target).attr('id');
+		if (studentId != null){
+			var trId = "tr#" + studentId;
+			var subjectObjectArray = [];
+			$(trId).each(function() {
+				var row = this;
+				$('input', this).each(function() {
+					var scoreVal = $(this).val();
+					var subjectId = $(this).attr('id');
+					var requirement = Subjects.findOne({_id: subjectId}).requirement;
+					var subjectName = Subjects.findOne({_id: subjectId}).name;
+
+					var score = 0;
+					var points = 0;
+					var grade = "X";
+					var comments = "";
+
+					if (scoreVal > 100 ) {
+						$(this).addClass('field-red');
+						var message = "scores for " + subjectName + " cannot be more than 100%";
+						Bert.alert(message, 'danger');
+						return;
+					} else if (scoreVal <= 100 && scoreVal >= 0.1 ){
+						$(this).removeClass('field-red');
+						if (scoreVal >= 80 && scoreVal <= 100){
+							score = scoreVal;
+							points = 12;
+							grade = "A";
+							comments = "EXCELLENT";
+						} else if (scoreVal >= 75 && scoreVal <= 79.99){
+							score = scoreVal;
+							points = 11;
+							grade = "A-";
+							comments = "EXCELLENT";
+						} else if (scoreVal >= 70 && scoreVal <= 74.99){
+							score = scoreVal;
+							points = 10;
+							grade = "B+";
+							comments = "V-GOOD";
+						} else if (scoreVal >= 65 && scoreVal <= 69.99){
+							score = scoreVal;
+							points = 9;
+							grade = "B";
+							comments = "GOOD";
+						} else if (scoreVal >= 60 && scoreVal <= 64.99){
+							score = scoreVal;
+							points = 8;
+							grade = "B-";
+							comments = "GOOD";
+						} else if (scoreVal >= 55 && scoreVal <= 59.99){
+							score = scoreVal;
+							points = 7;
+							grade = "C+";
+							comments = "FAIR";
+						} else if (scoreVal >= 50 && scoreVal <= 54.99){
+							score = scoreVal;
+							points = 6;
+							grade = "C";
+							comments = "FAIR";
+						} else if (scoreVal >= 45 && scoreVal <= 49.99){
+							score = scoreVal;
+							points = 5;
+							grade = "C-";
+							comments = "FAIR";
+						} else if (scoreVal >= 40 && scoreVal <= 44.99){
+							score = scoreVal;
+							points = 4;
+							grade = "D+";
+							comments = "TRIAL";
+						} else if (scoreVal >= 35 && scoreVal <= 39.99){
+							score = scoreVal;
+							points = 3;
+							grade = "D";
+							comments = "TRIAL";
+						} else if (scoreVal >= 30 && scoreVal <= 34.99){
+							score = scoreVal;
+							points = 2;
+							grade = "D-";
+							comments = "POOR";
+						} else if (scoreVal >= 0.1 && scoreVal <= 29.99){
+							score = scoreVal;
+							points = 1;
+							grade = "E";
+							comments = "V-POOR";
+						} else if(!scoreVal && requirement == "optional"){
+							score = 0;
+							points = 0;
+							grade = "X";
+							comments = "";
+						}
+						subjectObjectArray.push({
+							score: parseInt(score),
+							points: points,
+							grade: grade,
+							comments: comments,
+							subject: subjectId
+						});
+					}
+				});
+			});
+			$.each(subjectObjectArray, function(i, el){
+			    if (this.grade == "X"){
+			        subjectObjectArray.splice(i, 1);
+			    }
+			});
+
+			var subjectCount = subjectObjectArray.length;
+
+			if (subjectCount >= 1){
+				Results.insert({
+					student: studentId,
+					exam: examId,
+					subjects: subjectObjectArray
+				}, (error) => {
+					if (error){
+		                Bert.alert(error.reason, 'danger');
+		            } else {
+		                Bert.alert('added successfully', 'success');
 		            }
 				});
 			}

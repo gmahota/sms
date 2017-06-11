@@ -1,16 +1,7 @@
 <template name="teachers">
     <div class="row top-bar">
-        <div class="six columns">
+        <div class="twelve columns">
             <h3>teachers</h3>
-        </div>
-        <div class="six columns right">
-            <a class="button button-primary" href="/add-teacher">add a new teacher</a>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="twlve columns">
-            <input type="text" name="search" class="u-full-width searchbox" placeholder="Find a teacher... click enter to search">
         </div>
     </div>
 
@@ -32,17 +23,17 @@
                         {{#each teacher}}
                             <tr>
                                 <td>
-                                    {{#with FS.GetFile "teacherImages" image}}
+                                    {{#with FS.GetFile "userImage" image}}
                         	            <div class="student-preview" style="background-image: url({{url}});"></div>
                                     {{else}}
                                         <div class="student-preview"></div>
                         	        {{/with}}
                                 </td>
                                 <td>
-                                    <p class="capitalize">{{firstName}} {{surname}}</p>
+                                    <p class="capitalize">{{profile.firstName}} {{profile.surname}}</p>
                                 </td>
                                 <td>
-                                    <p>{{staffId}}</p>
+                                    <p>{{profile.staffId}}</p>
                                 </td>
                                 <td class="right">
                                     <a href="/teacher/{{_id}}" class="button">view teacher</a>

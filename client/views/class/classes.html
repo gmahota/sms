@@ -4,7 +4,9 @@
             <h3>classes</h3>
         </div>
         <div class="six columns right">
-            <a class="button button-primary" href="/add-class">add a new class</a>
+            {{#if isInRole 'admin'}}
+                <a class="button button-primary" href="/add-class">add a new class</a>
+            {{/if}}
         </div>
     </div>
 

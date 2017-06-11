@@ -4,7 +4,9 @@
             <h1>timetables</h1>
         </div>
         <div class="six columns right">
-            <a class="button button-primary" href="/add-timetable">add a new timetable</a>
+            {{#if isInRole 'admin'}}
+                <a class="button button-primary" href="/add-timetable">add a new timetable</a>
+            {{/if}}
         </div>
     </div>
     <div class="row">

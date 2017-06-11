@@ -51,18 +51,21 @@
                         <thead>
                             <th>student</th>
                             {{#each subjectsAvailable}}
-                                <th>{{name}}{{#if isRequired}}<span class="red">*</span>{{/if}}</th>
+                                <th>
+                                    <p data-tooltip="{{name}}" tabindex="0">
+                                        {{shortName}}{{#if isRequired}}<span class="red">*</span>{{/if}}
+                                    </p>
+                                </th>
                             {{/each}}
                             <th></th>
                         </thead>
                         <tbody>
                             {{#each student}}
+                                {{#if isInRole 'admin'}}
                                     <tr id="{{_id}}">
                                         <td>
                                             <p class="capitalize">
-                                                {{firstName}} {{surname}}
-                                            </p>
-                                            <p>
+                                                {{firstName}} {{surname}}<br>
                                                 <strong>reg:</strong>
                                                 {{registrationNumber}}
                                             </p>
@@ -78,6 +81,33 @@
                                             </button>
                                         </td>
                                     </tr>
+                                {{else}}
+                                    <tr id="{{_id}}">
+                                        <td>
+                                            <p class="capitalize">
+                                                {{firstName}} {{surname}}<br>
+                                                <strong>reg:</strong>
+                                                {{registrationNumber}}
+                                            </p>
+                                        </td>
+                                        {{#each subjectsAvailable}}
+                                            {{#if teaching}}
+                                            <td>
+                                                <input type="number" min="{{minScore}}" max="{{maxScore}}" class="u-full-width" id="{{_id}}" />
+                                            </td>
+                                            {{else}}
+                                            <td>
+                                                <p>-</p>
+                                            </td>
+                                            {{/if}}
+                                        {{/each}}
+                                        <td>
+                                            <button class="update" id="{{_id}}">
+                                                update
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {{/if}}
                             {{else}}
                             <tr>
                                 <td colspan="{{colCount}}">

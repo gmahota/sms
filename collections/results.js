@@ -110,10 +110,12 @@ ResultSchema = new SimpleSchema({
 	},
     overallScore: {
         type: Number,
+        optional: true,
         min:0
     },
     overallGrade: {
         type: String,
+        optional: true
     },
 	updatedAt: {
 		type: Date,

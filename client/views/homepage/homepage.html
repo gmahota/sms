@@ -1,23 +1,7 @@
 <template name="homepage">
-    <h1>The dashboard</h1>
-    <div class="row dash-data">
-        <div class="six columns">
-            <h1>{{studentsCount}}</h1>
-            <p>total number of students in this school</p>
-        </div>
-        <div class="six columns">
-            <h1>{{classesCount}}</h1>
-            <p>total number of classes in this school</p>
-        </div>
-    </div>
-    <div class="row dash-data">
-        <div class="six columns">
-            <h1>{{teachersCount}}</h1>
-            <p>total number of teachers in this school</p>
-        </div>
-        <div class="six columns">
-            <h1>{{subjectsCount}}</h1>
-            <p>total number of subjects in this school</p>
-        </div>
-    </div>
+    {{#if isInRole 'admin'}}
+        {{> adminInterface}}
+    {{else}}
+        {{> teacherInterface}}
+    {{/if}}
 </template>

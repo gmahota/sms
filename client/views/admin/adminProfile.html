@@ -1,0 +1,9 @@
+<template name="adminProfile">
+    <div class="row">
+        <div class="twelve columns">
+            <h1>Edit Profile</h1>
+            <hr>
+            {{> quickForm collection="Users" type="update" id="updateUserId" doc=user class="edit-user-form" buttonContent="update account details"}}
+        </div>
+    </div>
+</template>

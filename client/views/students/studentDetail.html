@@ -32,9 +32,11 @@
                 {{/each}}
             </p>
             <hr>
-            <button class="delete-student delete">delete student</button>
-            <button class="generate-report">generate report card</button>
-            <a href="/edit-student/{{student._id}}" class="button">edit</a>
+            {{#if isInRole 'admin'}}
+                <button class="delete-student delete">delete student</button>
+                <button class="generate-report">generate report card</button>
+                <a href="/edit-student/{{student._id}}" class="button">edit</a>
+            {{/if}}
         </div>
     </div>
 </template>

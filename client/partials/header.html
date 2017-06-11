@@ -2,15 +2,47 @@
     <div class="header">
         <div class="container">
             <div class="row">
-                <div class="six columns">
-                    <h4 class="u-full-width">
-                        <a href="/" class="header-text">school system</a>
-                    </h4>
-                </div>
-                <div class="six columns right">
-                    <!-- <div class="teacher-profile"></div> -->
-                    <a class="button button-primary"><i class="fa fa-cog" aria-hidden="true"></i></a>
-                </div>
+                {{#if currentUser}}
+                    <div class="six columns">
+                        <h4 class="u-full-width">
+                            <a href="/" class="header-text">school system</a>
+                        </h4>
+                    </div>
+                {{else}}
+                    <div class="twelve columns">
+                        <h4 class="u-full-width centered-text">
+                            <a href="/" class="header-text">school system</a>
+                        </h4>
+                    </div>
+                {{/if}}
+                {{#if currentUser}}
+                    <div class="six columns right">
+                        <p>
+                            {{#if isInRole 'admin'}}
+                                <a href="/admin/{{currentUser._id}}" class="button button-primary">
+                                    {{#if usrImageExists}}
+                                        {{#with FS.GetFile "userImage" usrImage}}
+                                            <div class="teacher-profile" style="background-image: url({{url}});"></div>
+                                        {{/with}}
+                                    {{/if}}
+                                    {{thisUser.username}}
+                                </a>
+                            {{else}}
+                            <a href="/teacher/{{currentUser._id}}" class="button button-primary">
+                                {{#if usrImageExists}}
+                                    {{#with FS.GetFile "userImage" usrImage}}
+                                        <div class="teacher-profile" style="background-image: url({{url}});"></div>
+                                    {{/with}}
+                                {{/if}}
+                                {{thisUser.username}}
+                            </a>
+                            {{/if}}
+                            <a class="logout button button-primary">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </a>
+                        </p>
+                    </div>
+                {{/if}}
             </div>
         </div>
     </div>

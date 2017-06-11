@@ -1,0 +1,31 @@
+<template name="teacherInterface">
+    <h1 class="capitalize">welcome <strong>{{currentUser.profile.firstname}} {{currentUser.profile.lastname}} </strong></h1>
+    <div class="row dash-data">
+        <div class="twelve columns">
+            <h3 class="subjects-teaching">My subjects</h3>
+            {{#if subjectsExist}}
+            <p class="tags">
+                {{#each subjectsTaught}}
+                    <span class="tagstyle white">{{subjectName}}</span>
+                {{/each}}
+            </p>
+            {{else}}
+                <p>
+                    <a href="/edit-teacher/{{currentUser._id}}" class="button button-primary">add subjects</a>
+                </p>
+            {{/if}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="six columns">
+            <p>
+                <a href="/classes" class="button button-primary u-full-width">generate class lists</a>
+            </p>
+        </div>
+        <div class="six columns">
+            <p>
+                <a href="/add-result" class="button button-primary u-full-width">enter exam results</a>
+            </p>
+        </div>
+    </div>
+</template>
