@@ -60,7 +60,6 @@ SubjectSchema = new SimpleSchema({
                 return options;
             }
         }
-
 	},
     order: {
         type: Number,
@@ -70,6 +69,14 @@ SubjectSchema = new SimpleSchema({
                 var numberOfSubjects = Subjects.find({}).count();
                 return (numberOfSubjects + 1);
             }
+        }
+    },
+    active: {
+        type: Boolean,
+        defaultValue: true,
+        optional: true,
+        autoform: {
+            type: "hidden"
         }
     },
 	createdAt: {

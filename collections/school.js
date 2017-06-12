@@ -4,7 +4,7 @@ SchoolImages = new FS.Collection('schoolImages', {
 });
 
 if ( Meteor.isServer ) {
-    Schools._ensureIndex( { name: 1, schoolNumber: 1, _id: 1 } );
+    Schools._ensureIndex( { name: 1, _id: 1 } );
 }
 
 Schools.allow({
@@ -40,19 +40,43 @@ StreamSchema = new SimpleSchema({
 SubjectConstraintSchema = new SimpleSchema({
     maximumSubjects: {
         type: Number,
+        autoValue: function() {
+			if (this.isInsert) {
+				return 11;
+			}
+        },
+        optional: true,
         label: "Maximum number of subjects a student can take"
     },
     minimumSubjects: {
         type: Number,
+        autoValue: function() {
+			if (this.isInsert) {
+				return 7;
+			}
+        },
+        optional: true,
         label: "Minimum number of subjects a student can take"
     },
     transitionForm: {
         type: Number,
+        autoValue: function() {
+			if (this.isInsert) {
+				return 2;
+			}
+        },
+        optional: true,
         label: "The form where a student can begin taking the minimum subject count"
     },
     transitionSession: {
         type: Number,
-        label: "The session at which a student beginst taking the minimum subjects"
+        autoValue: function() {
+			if (this.isInsert) {
+				return 3;
+			}
+        },
+        optional: true,
+        label: "The session at which a student begint taking the minimum subjects"
     }
 });
 ExamTypeSchema = new SimpleSchema({
@@ -64,6 +88,12 @@ ExamTypeSchema = new SimpleSchema({
 SessionsSchema = new SimpleSchema({
     numberSessions: {
         type: Number,
+        autoValue: function() {
+			if (this.isInsert) {
+				return 3;
+			}
+        },
+        optional: true,
         label: "Number of sessions (terms) in the year"
     }
 });
@@ -95,19 +125,21 @@ SchoolSchema = new SimpleSchema({
 	},
     address: {
 		type: String,
+        optional: true,
         label: "The postal address the school"
 	},
     email: {
 		type: String,
         label: "The email of the school"
 	},
-    dateOfRegistration: {
-        type: Date,
-        optional: true,
-        label: "The date of birth of the school"
-    },
     numberOfFormsAvailable: {
         type: Number,
+        optional: true,
+        autoValue: function() {
+			if (this.isInsert) {
+				return (4);
+			}
+        },
         label: "number of forms(grades) available in the school"
     },
     streams: {
@@ -116,13 +148,24 @@ SchoolSchema = new SimpleSchema({
         label: "Streams in the school"
     },
     subjectConstraints: {
-		type: SubjectConstraintSchema
+		type: SubjectConstraintSchema,
+        optional: true
 	},
     examType: {
-        type: [ExamTypeSchema]
+        type: [ExamTypeSchema],
+        optional: true
     },
     sessions: {
-        type: SessionsSchema
+        type: SessionsSchema,
+        optional: true
+    },
+    active: {
+        type: Boolean,
+        defaultValue: true,
+        optional: true,
+        autoform: {
+            type: "hidden"
+        }
     },
 	createdAt: {
 		type: Date,
@@ -155,11 +198,26 @@ SchoolSchema = new SimpleSchema({
 });
 
 Meteor.methods({
-	deleteSchool: function(id, imageId){
-		Schools.remove(id);
-		SchoolImages.remove(imageId);
-		FlowRouter.go('schools');
-	}
+    addDefaults: function(id){
+        check(id, String);
+        Schools.update(id, {
+            $set: {
+                examType: [
+                    {name: "term opening exams"},
+                    {name: "mid-term exams"},
+                    {name: "end of term exams"}
+                ]
+            }
+        });
+    },
+    deactivateSchool: function(id, activeState){
+        check(id, String);
+        Schools.update(id, {
+            $set: {
+                active: !activeState
+            }
+        });
+    }
 });
 
 Schools.attachSchema ( SchoolSchema );

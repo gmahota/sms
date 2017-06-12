@@ -44,7 +44,11 @@ ProfileSchema = new SimpleSchema({
         optional: true
     },
     schoolId: {
-        type: String
+        type: String,
+        optional: true,
+        autoform: {
+			type: "hidden"
+		}
     },
     gender: {
         type: String,
@@ -186,7 +190,7 @@ Meteor.methods({
             }
         });
     },
-    deactivate: function(id, activeState){
+    deactivateUser: function(id, activeState){
         check(id, String);
         Meteor.users.update(id, {
             $set: {
@@ -197,16 +201,53 @@ Meteor.methods({
     updateUser: function(id){
         Meteor.users.update(id);
     },
-    deleteUser: function(id, imageId){
-        Meteor.users.remove(id);
-        UserImage.remove(imageId);
-        FlowRouter.go('users');
-    },
+    // deleteUser: function(id, imageId){
+    //     Meteor.users.remove(id);
+    //     UserImage.remove(imageId);
+    //     FlowRouter.go('users');
+    // },
     sendVerificationLink: function() {
     var userId = Meteor.userId();
         if ( userId ) {
             return Accounts.sendVerificationEmail(userId);
         }
+    },
+    createAdmin: function(schoolId){
+        check(schoolId, String);
+
+        function randomString(length, chars) {
+            var result = '';
+            for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+            return result;
+        }
+        var rString = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        var schoolEmail = Schools.findOne({_id: schoolId}).email;
+        var schoolPhone = Schools.findOne({_id: schoolId}).phoneNumber;
+        var users = [
+            { username: rString, firstname: 'superadmin', email: schoolEmail, password: 'admin123', roles: ['admin'] }
+        ];
+        console.log(users);
+        // user creation
+        _.each(users, function(d) {
+            // return id for use in roles assignment below
+            var userId = Accounts.createUser({
+                username: d.username,
+                profile: {
+                    firstname: d.firstname,
+                    personalPhone: schoolPhone,
+                    schoolId: schoolId
+                },
+                email: d.email,
+                password: d.password,
+                active: true
+            });
+            // verify user email
+            Meteor.users.update({ _id: userId }, { $set: { 'emails.0.verified': true } });
+            // add roles to user
+            Roles.addUsersToRoles( userId, ['admin'], Roles.GLOBAL_GROUP);
+            console.log("done");
+        });
     }
 });
 

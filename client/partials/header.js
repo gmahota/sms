@@ -3,21 +3,58 @@ Template.header.onCreated(function() {
 	self.autorun(function() {
 		self.subscribe('allUsers');
 		self.subscribe('userImage');
+
+		//fix for race condition
+		const schoolId = Meteor.user() && Meteor.user().profile.schoolId;
+
+		if (schoolId){
+			self.subscribe('singleSchool', schoolId);
+		}
+		self.subscribe('schoolImages');
 	});
 });
 
 Template.header.helpers({
-	usrImageExists: function(){
-		var id = Meteor.userId();
-		if (Meteor.users.findOne({_id: id}).image != null){
-			return true;
+	schoolLogoExists: function(){
+		if (Meteor.user()){
+			var schoolId = Meteor.user().profile.schoolId;
+			var schoolData = Schools.findOne({_id: schoolId}).logo;
+			if (schoolData){
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
 	},
+	schoolLogo: function(){
+		if (Meteor.user()){
+			var schoolId = Meteor.user().profile.schoolId;
+			var schoolData = Schools.findOne({_id: schoolId}).logo;
+			return schoolData;
+		}
+	},
+	schoolName: function(){
+		if (Meteor.user()){
+			var schoolId = Meteor.user().profile.schoolId;
+			var schoolData = Schools.findOne({_id: schoolId}).name;
+			return schoolData;
+		}
+	},
+	usrImageExists: function(){
+		if (Meteor.user()){
+			if (Meteor.user().image != null){
+				return true;
+			} else {
+				return false;
+			}
+		}
+	},
 	usrImage: function(){
-		var id = Meteor.userId();
-		return Meteor.users.findOne({_id: id}).image;
+		if (Meteor.user()){
+			return Meteor.user().image;
+		}
 	},
     thisUser: function(){
         var id = Meteor.userId();
@@ -30,6 +67,7 @@ Template.header.events({
     'click .logout': function(event, error){
         event.preventDefault();
         Meteor.logout();
+		FlowRouter.go('login');
     },
     'click .sidebar-link': function(event){
     	var $lateral_menu_trigger = $('#menufy-menu-trigger'),

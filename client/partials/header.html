@@ -3,21 +3,47 @@
         <div class="container">
             <div class="row">
                 {{#if currentUser}}
+                    {{#if isInRole 'superAdmin'}}
                     <div class="six columns">
                         <h4 class="u-full-width">
-                            <a href="/" class="header-text">school system</a>
+                            <a href="/" class="header-text">
+                                <a href="/" class="header-text">
+                                    <img class="minerva-logo" src="/minerva-school.svg" height="30" alt="minerva for school">
+                                </a>
+                            </a>
                         </h4>
                     </div>
+                    {{else}}
+                        <div class="six columns">
+                            <h4 class="u-full-width">
+                                <a href="/" class="header-text">
+                                    {{#if schoolLogoExists}}
+                                        {{#with FS.GetFile "schoolImages" schoolLogo}}
+                                            <img class="school-logo" src="{{url}}" height="30" alt="school logo">
+                                        {{/with}}
+                                    {{/if}}
+                                    <span>{{schoolName}}</span>
+                                </a>
+                            </h4>
+                        </div>
+                    {{/if}}
                 {{else}}
                     <div class="twelve columns">
                         <h4 class="u-full-width centered-text">
-                            <a href="/" class="header-text">school system</a>
+                            <a href="/" class="header-text">
+                                <img class="minerva-logo" src="/minerva-school.svg" height="30" alt="minerva for school">
+                            </a>
                         </h4>
                     </div>
                 {{/if}}
                 {{#if currentUser}}
                     <div class="six columns right">
                         <p>
+                            {{#if isInRole 'superAdmin'}}
+                                <a href="/admin/{{currentUser._id}}" class="button button-primary">
+                                    The grand master
+                                </a>
+                            {{/if}}
                             {{#if isInRole 'admin'}}
                                 <a href="/admin/{{currentUser._id}}" class="button button-primary">
                                     {{#if usrImageExists}}
@@ -25,9 +51,10 @@
                                             <div class="teacher-profile" style="background-image: url({{url}});"></div>
                                         {{/with}}
                                     {{/if}}
-                                    {{thisUser.username}}
+                                    school admin
                                 </a>
-                            {{else}}
+                            {{/if}}
+                            {{#if isInRole 'teacher'}}
                             <a href="/teacher/{{currentUser._id}}" class="button button-primary">
                                 {{#if usrImageExists}}
                                     {{#with FS.GetFile "userImage" usrImage}}

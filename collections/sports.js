@@ -35,6 +35,14 @@ SportSchema = new SimpleSchema({
 	    	}
 	    }
 	},
+    active: {
+        type: Boolean,
+        defaultValue: true,
+        optional: true,
+        autoform: {
+            type: "hidden"
+        }
+    },
 	createdAt: {
 		type: Date,
 		autoValue: function() {
@@ -66,10 +74,18 @@ SportSchema = new SimpleSchema({
 });
 
 Meteor.methods({
-	deleteSport: function(id){
-		Sports.remove(id);
-		FlowRouter.go('sports');
-	}
+	// deleteSport: function(id){
+	// 	Sports.remove(id);
+	// 	FlowRouter.go('sports');
+	// },
+    deactivateSport: function(id, activeState){
+        check(id, String);
+        Sports.update(id, {
+            $set: {
+                active: !activeState
+            }
+        });
+    }
 });
 
 Sports.attachSchema ( SportSchema );

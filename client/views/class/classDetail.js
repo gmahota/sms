@@ -77,8 +77,8 @@ Template.classDetail.events({
 		}
 
 	},
-    'click .delete-class': function(){
+    'click .deactivate-class': function(){
 		var id = FlowRouter.getParam('id');
-		Meteor.call('deleteClass', id);
+		Meteor.call('deactivateClass', id);
 	}
 });

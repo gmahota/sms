@@ -1,3 +1,39 @@
 <template name="addSchool">
+    <div class="row">
+        <div class="twelve columns">
+            <h3>
+                Add a new school
+            </h3>
+            <p>
+                add a new school to the MINERVA FOR SCHOOLS® ecosystem. Add the details which will also generate the school's admin.
+            </p>
+            <hr>
+        </div>
+    </div>
+    <!-- {{> quickForm collection="Schools" type="insert" id="insertSchoolForm" class="new-school-form" buttonContent="add this school"}} -->
+    {{#autoForm collection="Schools" id="insertSchoolForm" class="new-school-form" type="insert"}}
+        <div class="row">
+            <div class="six columns">
+                {{> afQuickField name='name'}}
+            </div>
+            <div class="six columns">
+                {{> afQuickField name="schoolNumber"}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="six columns">
+                {{> afQuickField name='phoneNumber'}}
+            </div>
+            <div class="six columns">
+                {{> afQuickField name='email'}}
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="twelve columns">
+                <hr>
+                <button type="submit" class="button button-primary add-school">add this school</button>
+            </div>
+        </div>
+    {{/autoForm}}
 </template>

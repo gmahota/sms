@@ -196,8 +196,25 @@ Meteor.publish('userImage', function(){
 
 
 //SCHOOL
+Meteor.publish( 'schoolSearch', function( search ) {
+  check( search, Match.OneOf( String, null, undefined ) );
+  let query = {},
+      projection = { limit: 1000, sort: { name: 1 } };
+  if ( search ) {
+    let regex = new RegExp( search, 'i' );
+    query = {
+      $or: [
+        { name: regex },
+		{ schoolNumber: regex },
+        { _id: regex }
+      ]
+    };
+    projection.limit = 100;
+  }
+  return Schools.find( query, projection );
+});
 Meteor.publish('schools', function(){
-	return Schools.find({sort: { name: 1 }});
+	return Schools.find();
 });
 Meteor.publish('schoolImages', function(){
   return SchoolImages.find();
@@ -205,8 +222,4 @@ Meteor.publish('schoolImages', function(){
 Meteor.publish('singleSchool', function(id){
   check(id, String);
   return Schools.find({_id: id});
-});
-Meteor.publish('singleSchoolImage', function(id){
-  check(id, String);
-  return SchoolImages.find({_id: id});
 });

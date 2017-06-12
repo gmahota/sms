@@ -1,3 +1,26 @@
 <template name="schoolProfile">
-
+    <div class="row">
+        <div class="four columns">
+            {{#with FS.GetFile "schoolImages" school.logo}}
+                <div class="big-circle-profile-image" style="background-image: url({{url}});"></div>
+            {{else}}
+                <div class="big-circle-profile-image"></div>
+            {{/with}}
+        </div>
+        <div class="eight columns">
+            <h4>{{school.name}}</h4>
+            <p>school number: <strong>{{school.schoolNumber}}</strong></p>
+            <p>phone number: <strong>{{school.phoneNumber}}</strong></p>
+            <p>email: <strong>{{school.email}}</strong></p>
+            {{#if school.address}}
+                <p>address: <strong>{{school.address}}</strong></p>
+            {{/if}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+            <a href="/edit-school/{{school._id}}" class="button button-primary">edit school details</a>
+        </div>
+    </div>
 </template>

@@ -83,6 +83,14 @@ ExamSchema = new SimpleSchema({
             }
         }
     },
+    active: {
+        type: Boolean,
+        defaultValue: true,
+        optional: true,
+        autoform: {
+            type: "hidden"
+        }
+    },
 	createdAt: {
 		type: Date,
 		autoValue: function() {
@@ -114,10 +122,18 @@ ExamSchema = new SimpleSchema({
 });
 
 Meteor.methods({
-	deleteExam: function(id){
-		Exams.remove(id);
-		FlowRouter.go('exams');
-	}
+	// deleteExam: function(id){
+	// 	Exams.remove(id);
+	// 	FlowRouter.go('exams');
+	// },
+    deactivateExam: function(id, activeState){
+        check(id, String);
+        Exams.update(id, {
+            $set: {
+                active: !activeState
+            }
+        });
+    }
 });
 
 Exams.attachSchema ( ExamSchema );

@@ -15,7 +15,22 @@ Classes.allow({
 
 ClassSchema = new SimpleSchema({
     streamName: {
-		type: String
+        type: String,
+        label: "select the stream (defined under school settings)",
+        autoform: {
+        	type: 'select2',
+            options: function () {
+                var options = [{label: "select one", value: ""}];
+                var schoolId = Meteor.user().profile.schoolId;
+                Schools.findOne({_id: schoolId}).streams.forEach(function(item){
+                    var itemName = item.name;
+                    options.push({
+                        label: itemName, value: itemName
+                    })
+                });
+                return options;
+            }
+        }
 	},
     Form: {
         type: Number,
@@ -29,6 +44,14 @@ ClassSchema = new SimpleSchema({
                 {value:"3", label: "3"},
                 {value:"4", label: "4"}
             ]
+        }
+    },
+    active: {
+        type: Boolean,
+        defaultValue: true,
+        optional: true,
+        autoform: {
+            type: "hidden"
         }
     },
 	createdAt: {
@@ -63,9 +86,25 @@ ClassSchema = new SimpleSchema({
 
 Meteor.methods({
 	deleteClass: function(id){
-		Classes.remove(id);
-		FlowRouter.go('classes');
+        var studentCheck = Students.find({class: id}).count();
+        var examCheck = Exams.find({classes: {$eq: id}}).count();
+        var timetableCheck = Timetables.find({class: id}).count();
+
+        if (studentCheck > 0 || examCheck > 0 || timetableCheck > 0){
+            Bert.alert("you cannot delete this class. Disable the class insted", "danger");
+        } else {
+            Classes.remove(id);
+    		FlowRouter.go('classes');
+        }
 	},
+    deactivateClass: function(id, activeState){
+        check(id, String);
+        Classes.update(id, {
+            $set: {
+                active: !activeState
+            }
+        });
+    },
     'classResultsPdf': function(classId, examId) {
         if (Meteor.isServer) {
           // SETUP

@@ -1,0 +1,59 @@
+<template name="schools">
+    <div class="row top-bar">
+        <div class="six columns">
+            <h3>{{schoolCount}} schools</h3>
+        </div>
+        <div class="six columns right">
+            <a class="button button-primary" href="/add-school">add a new school</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twlve columns">
+            <input type="text" name="search" class="u-full-width searchbox" placeholder="Find a school... click enter to search">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width">
+                <thead>
+                    <th></th>
+                    <th>school name</th>
+                    <th class="right">action</th>
+                </thead>
+                <tbody>
+                    {{#if searching}}
+                        <tr>
+                            <td colspan="3"><h1 class="placeholder">loading...</h1></td>
+                        </tr>
+                    {{else}}
+                        {{#each schools}}
+                            <tr>
+                                <td>
+                                    {{#with FS.GetFile "userImage" usrImage}}
+                                        <div class="school-logo-table" style="background-image: url({{url}});"></div>
+                                    {{else}}
+                                        <div class="school-logo-table"></div>
+                                    {{/with}}
+                                </td>
+                                <td>
+                                    <p>{{name}}</p>
+                                </td>
+                                <td class="right">
+                                    <a href="/school/{{_id}}" class="button">view</a>
+                                </td>
+                            </tr>
+                        {{else}}
+                            <tr>
+                                <td colspan="3">
+                                    <h1 class="placeholder">no schools found</h1>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

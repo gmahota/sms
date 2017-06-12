@@ -1,14 +1,16 @@
 <template name="mainLayout">
 	{{> header}}
     <div class="container body-container">
-		<div class="row">
-			<div class="three columns sidebar">
-				{{> sidebar}}
+		{{#if currentUser}}
+			<div class="row">
+				<div class="three columns sidebar">
+					{{> sidebar}}
+				</div>
+				<div class="nine columns content">
+					{{> Template.dynamic template=main}}
+				</div>
 			</div>
-			<div class="nine columns content">
-				{{> Template.dynamic template=main}}
-			</div>
-		</div>
+		{{/if}}
     </div>
 	<div class="processing">
 		<div class="modally">

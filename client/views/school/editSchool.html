@@ -1,3 +1,16 @@
 <template name="editSchool">
-
+    <div class="row">
+        <div class="six columns">
+            <h3>Edit school details</h3>
+        </div>
+        <div class="six columns right">
+            <a href="/school/{{school._id}}" class="button">cancel</a>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+        <div class="twelve columns">
+            {{> quickForm collection="Schools" type="update" id="updateSchoolId" doc=school class="edit-school-form" buttonContent="update school"}}
+        </div>
+    </div>
 </template>

@@ -1,0 +1,32 @@
+//the sidebar
+.sidebar{
+    .sidebar-menu{
+        .menu-item{
+            margin-bottom:0;
+            .button, button{
+                margin-bottom:0;
+                border-radius: 0;
+                border-left:0;
+                border-right:0;
+                border-top: 0;
+                position: relative;
+                padding-left: 5em;
+                i, .fa{
+                    position: absolute;
+                    top: .9em;
+                    left:1em;
+                    font-size: 1.2em;
+                    color: #778191;
+                }
+                &.active{
+                    background: #778191;
+                    border-bottom: #778191;
+                    color:#fff;
+                    i{
+                        color:#fff;
+                    }
+                }
+            }
+        }
+    }
+}

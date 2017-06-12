@@ -4,7 +4,7 @@ Meteor.startup(function() {
     if(Meteor.users.find().count() < 1) {
       // users array
       var users = [
-        { username: 'admin', firstname: 'admin', email: 'admin@school.com', password: 'admin123', roles: ['admin'] }
+        { username: 'superadmin', firstname: 'superadmin', email: 'admin@minerva.com', password: 'superadmin123', roles: ['superAdmin'] }
       ];
       // user creation
       _.each(users, function(d) {
@@ -16,15 +16,15 @@ Meteor.startup(function() {
             },
             email: d.email,
             password: d.password,
-            active: true,
+            active: true
         });
         // verify user email
         Meteor.users.update({ _id: userId }, { $set: { 'emails.0.verified': true } });
         // add roles to user
-        Roles.addUsersToRoles( userId, ['admin'], Roles.GLOBAL_GROUP);
+        Roles.addUsersToRoles( userId, ['superAdmin'], Roles.GLOBAL_GROUP);
       });
   } else {
-      console.log("the admin exists");
+      console.log("long live the super admin!!");
   }
 }, 100);
 });

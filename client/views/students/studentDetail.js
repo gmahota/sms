@@ -37,9 +37,9 @@ Template.studentDetail.helpers({
 });
 
 Template.studentDetail.events({
-    'click .delete-student': function(){
+    'click .deactivate-student': function(){
 		var id = FlowRouter.getParam('id');
         var imageId = Students.findOne({_id: id}).image;
-		Meteor.call('deleteStudent', id, imageId);
+		Meteor.call('deactivateStudent', id, imageId);
 	}
 });

@@ -35,8 +35,8 @@ Template.teacherDetail.helpers({
 });
 
 Template.teacherDetail.events({
-    'click .delete-teacher': function(){
+    'click .deactivate-teacher': function(){
 		var id = FlowRouter.getParam('id');
-		Meteor.call('deleteTeacher', id);
+		Meteor.call('deactivateTeacher', id);
 	}
 });

@@ -28,8 +28,8 @@ Template.subjectDetail.helpers({
 });
 
 Template.subjectDetail.events({
-    'click .delete-subject': function(){
+    'click .deactivate-subject': function(){
 		var id = FlowRouter.getParam('id');
-		Meteor.call('deleteSubject', id);
+		Meteor.call('deactivateSubject', id);
 	}
 });

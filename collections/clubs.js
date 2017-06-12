@@ -35,6 +35,14 @@ ClubSchema = new SimpleSchema({
 	    	}
 	    }
 	},
+    active: {
+        type: Boolean,
+        defaultValue: true,
+        optional: true,
+        autoform: {
+            type: "hidden"
+        }
+    },
 	createdAt: {
 		type: Date,
 		autoValue: function() {
@@ -66,10 +74,18 @@ ClubSchema = new SimpleSchema({
 });
 
 Meteor.methods({
-	deleteClub: function(id){
-		Clubs.remove(id);
-		FlowRouter.go('clubs');
-	}
+	// deleteClub: function(id){
+	// 	Clubs.remove(id);
+	// 	FlowRouter.go('clubs');
+	// },
+    deactivateClub: function(id, activeState){
+        check(id, String);
+        Clubs.update(id, {
+            $set: {
+                active: !activeState
+            }
+        });
+    }
 });
 
 Clubs.attachSchema ( ClubSchema );

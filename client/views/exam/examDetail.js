@@ -14,8 +14,8 @@ Template.examDetail.helpers({
 });
 
 Template.examDetail.events({
-    'click .delete-exam': function(){
+    'click .deactivate-exam': function(){
 		var id = FlowRouter.getParam('id');
-		Meteor.call('deleteExam', id);
+		Meteor.call('deactivateExam', id);
 	}
 });

@@ -14,8 +14,8 @@ Template.clubDetail.helpers({
 });
 
 Template.clubDetail.events({
-    'click .delete-club': function(){
+    'click .deactivate-club': function(){
 		var id = FlowRouter.getParam('id');
-		Meteor.call('deleteClub', id);
+		Meteor.call('deactivateClub', id);
 	}
 });

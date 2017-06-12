@@ -231,6 +231,22 @@ StudentSchema = new SimpleSchema({
         label: "home address",
         optional: true
 	},
+    active: {
+        type: Boolean,
+        defaultValue: true,
+        optional: true,
+        autoform: {
+            type: "hidden"
+        }
+    },
+    alumni: {
+        type: Boolean,
+        defaultValue: false,
+        optional: true,
+        autoform: {
+            type: "hidden"
+        }
+    },
 	createdAt: {
 		type: Date,
 		autoValue: function() {
@@ -266,7 +282,28 @@ Meteor.methods({
 		Students.remove(id);
 		StudentImages.remove(imageId);
 		FlowRouter.go('students');
-	}
+	},
+    deactivateStudent: function(id, activeState){
+        check(id, String);
+        Students.update(id, {
+            $set: {
+                active: !activeState
+            }
+        });
+    },
+    convertAlumni: function(id, alumniState){
+        check(id, String);
+        var classId = Students.findOne({_id: id}).class;
+        var activeState = Students.findOne({_id: id}).active;
+        var classNum = Classes.findOne({_id: classId}).Form;
+        if (classNum == 4 && activeState == true){
+            Students.update(id, {
+                $set: {
+                    alumni: !alumniState
+                }
+            });
+        }
+    }
 });
 
 Students.attachSchema ( StudentSchema );
