@@ -147,7 +147,7 @@ Meteor.publish('subjects', function(){
 Meteor.publish( 'subjectSearch', function( search ) {
   check( search, Match.OneOf( String, null, undefined ) );
   let query = {},
-      projection = { limit: 1000, sort: { name: 1 } };
+      projection = { limit: 1000, sort: { order: 1 } };
   if ( search ) {
     let regex = new RegExp( search, 'i' );
     query = {

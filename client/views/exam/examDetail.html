@@ -2,6 +2,10 @@
     <div class="row">
         <div class="twelve columns">
             <h3>{{exam.type}}</h3>
+            {{#if exam.active}}
+            {{else}}
+                <p class="red">this exam is deactivated</p>
+            {{/if}}
         </div>
         <div class="twelve-columns">
             <p><strong>term:</strong> {{exam.term}}</p>
@@ -18,7 +22,11 @@
             <div class="twelve columns">
                 <hr>
                 <p></p>
-                <button class="deactivate-exam delete">deactivate exam</button>
+                {{#if exam.active}}
+                    <button class="deactivate-exam delete">deactivate exam</button>
+                {{else}}
+                    <button class="deactivate-exam">activate exam</button>
+                {{/if}}
                 <a href="/edit-exam/{{exam._id}}" class="button">edit</a>
             </div>
         </div>

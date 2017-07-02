@@ -2,6 +2,10 @@
     <div class="row">
         <div class="twelve columns">
             <h3>class: {{class.Form}} {{class.streamName}}</h3>
+            {{#if class.active}}
+            {{else}}
+                <p>this class has been <span class="red">deactivated</span></p>
+            {{/if}}
         </div>
     </div>
     {{#if isInRole 'admin'}}
@@ -29,7 +33,11 @@
         <div class="row">
             <div class="twelve columns">
                 <hr>
-                <button class="deactivate-class delete">deactivate class</button>
+                {{#if class.active}}
+                    <button class="deactivate-class delete">deactivate class</button>
+                {{else}}
+                    <button class="deactivate-class">activate class</button>
+                {{/if}}
                 <a href="/edit-class/{{class._id}}" class="button">edit class</a>
             </div>
         </div>

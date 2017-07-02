@@ -19,12 +19,17 @@ ExamSchema = new SimpleSchema({
         label: "the type of the exam",
         autoform: {
             type: 'select2',
-            options: [
-                {value: "", label: "select one"},
-                {value:"term-opening", label: "term opening exam"},
-                {value:"mid-term", label: "mid-term exam"},
-                {value:"end-term", label: "end-term exam"}
-            ]
+            options: function () {
+                var options = [{label: "select one", value: ""}];
+                var schoolId = Meteor.user().profile.schoolId;
+                Schools.findOne({_id: schoolId, active: true}).examType.forEach(function(item){
+                    var itemName = item.name;
+                    options.push({
+                        label: itemName, value: itemName
+                    })
+                });
+                return options;
+            }
         }
     },
     term: {
@@ -73,7 +78,7 @@ ExamSchema = new SimpleSchema({
 	      	},
             options: function () {
                 var options = [];
-                Classes.find({}).forEach(function (element) {
+                Classes.find({active: true}).forEach(function (element) {
                     var name = element.Form + " " + element.streamName
                     options.push({
                         label: name, value: element._id
@@ -122,17 +127,26 @@ ExamSchema = new SimpleSchema({
 });
 
 Meteor.methods({
-	// deleteExam: function(id){
-	// 	Exams.remove(id);
-	// 	FlowRouter.go('exams');
-	// },
+	deleteExam: function(id){
+		Exams.remove(id);
+		FlowRouter.go('exams');
+	},
     deactivateExam: function(id, activeState){
         check(id, String);
-        Exams.update(id, {
-            $set: {
-                active: !activeState
-            }
-        });
+        var status = Exams.findOne({_id: id}).active;
+        if(status == true){
+            Exams.update(id, {
+                $set: {
+                    active: false
+                }
+            });
+        } else {
+            Exams.update(id, {
+                $set: {
+                    active: true
+                }
+            });
+        }
     }
 });
 

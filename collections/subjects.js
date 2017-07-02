@@ -9,14 +9,290 @@ Subjects.allow({
 		return true;
 	},
 	update: function(userId, doc) {
-		return true;
+		return !!userId;
 	}
+});
+
+ScoreSchema = new SimpleSchema({
+    scoreAStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 80;
+            }
+        }
+    },
+    scoreA: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 100;
+            }
+        }
+    },
+    scoreAMinusStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 75;
+            }
+        }
+    },
+    scoreAMinus: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 79;
+            }
+        }
+    },
+    scoreBPlusStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 70;
+            }
+        }
+    },
+    scoreBPlus: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 74;
+            }
+        }
+    },
+    scoreBStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 65;
+            }
+        }
+    },
+    scoreB: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 69;
+            }
+        }
+    },
+    scoreBMinusStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 60;
+            }
+        }
+    },
+    scoreBMinus: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 64;
+            }
+        }
+    },
+    scoreCPlusStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 55;
+            }
+        }
+    },
+    scoreCPlus: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 59;
+            }
+        }
+    },
+    scoreCStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 50;
+            }
+        }
+    },
+    scoreC: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 54;
+            }
+        }
+    },
+    scoreCMinusStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 45;
+            }
+        }
+    },
+    scoreCMinus: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 49;
+            }
+        }
+    },
+    scoreDPlusStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 40;
+            }
+        }
+    },
+    scoreDPlus: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 44;
+            }
+        }
+    },
+    scoreDStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 35;
+            }
+        }
+    },
+    scoreD: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 39;
+            }
+        }
+    },
+    scoreDMinusStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 30;
+            }
+        }
+    },
+    scoreDMinus: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 34;
+            }
+        }
+    },
+    scoreEStart: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 0;
+            }
+        }
+    },
+    scoreE: {
+        type: Number,
+        min: 0,
+        max: 100,
+        optional: true,
+        autoValue: function(){
+            if (this.isInsert) {
+                return 29;
+            }
+        }
+    },
 });
 
 SubjectSchema = new SimpleSchema({
     name: {
 		type: String
 	},
+    subjectCode: {
+        type: String,
+        optional: true,
+        label: "Subject Code"
+    },
+    gradingScheme: {
+        type: ScoreSchema,
+        label: "The grading table for the subject"
+    },
     type: {
         type: String,
         label: "the type/group of the subject",
@@ -51,7 +327,7 @@ SubjectSchema = new SimpleSchema({
         	type: 'select2',
             options: function () {
                 var options = [{label: "select one", value: ""}];
-                Meteor.users.find({'roles.__global_roles__':'teacher'}).forEach(function (element) {
+                Meteor.users.find({'roles.__global_roles__':'teacher', active: true}).forEach(function (element) {
                     var name = element.profile.firstname + " " + element.profile.lastname + " | " + element.profile.staffId
                     options.push({
                         label: name, value: element._id
@@ -113,7 +389,24 @@ Meteor.methods({
 	deleteSubject: function(id){
 		Subjects.remove(id);
 		FlowRouter.go('subjects');
-	}
+	},
+    deactivateSubject: function(id){
+        check(id, String);
+        var status = Subjects.findOne({_id: id}).active;
+        if(status == true){
+            Subjects.update(id, {
+                $set: {
+                    active: false
+                }
+            });
+        } else {
+            Subjects.update(id, {
+                $set: {
+                    active: true
+                }
+            });
+        }
+    }
 });
 
 Subjects.attachSchema ( SubjectSchema );

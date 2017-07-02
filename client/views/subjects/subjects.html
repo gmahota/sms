@@ -33,10 +33,16 @@
                             <tr>
                                 <td><p>{{order}}</p></td>
                                 <td>
-                                    <p><strong>{{name}}</strong></p>
+                                    <p>
+                                        <strong>{{name}}</strong>
+                                    </p>
                                 </td>
                                 <th>
-                                    <p>{{requirement}}</p>
+                                    {{#if active}}
+                                        <p>{{requirement}}</p>
+                                    {{else}}
+                                        <p class="red">deactivated</p>
+                                    {{/if}}
                                 </th>
                                 <td class="right">
                                     <a href="/subject/{{_id}}" class="button">view subject</a>

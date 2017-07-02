@@ -1,0 +1,108 @@
+<div class="container">
+    <div class="row">
+        <div class="title">
+            <h2>
+                Kiandangae Secondary School
+            </h2>
+            <h4>P.O.Box 52, Kagio.</h4>
+            <p>{{term}}, {{year}} report card</p>
+            <p class="spacer"></p>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="u-full-width">
+            <tbody>
+                <tr>
+                    <td>
+                        <p class="capitalize">
+                            <strong>{{studentFirstName}} {{studentLastName}}</strong>
+                        </p>
+                    </td>
+                    <td><p>admission number:  {{studentRegistrationNumber}}</p></td>
+                    <td><p>class:  {{studentClassForm}} {{studentClassStreamName}}</p></td>
+                    <td><p>admitted in:  {{studentYear}}</p></td>
+                </tr>
+                <tr>
+                    <td><p>total score: {{overallScore}}</p></td>
+                    <td><p>grade: {{overallGrade}}</p></td>
+                    <td><p>average: {{averageScore}}</p></td>
+                    <td>
+                        {{#if kcpe}}
+                        <p>KCPE: {{kcpe}}</p>
+                        {{else}}
+                        <p>KCPE: n/a</p>
+                        {{/if}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <p class="spacer"></p>
+            <table class="u-full-width">
+                <thead>
+                    <th class="border-right">subject</th>
+                    {{#each availableExam}}
+                        <th colspan="2" class="border-right">{{examName}}</th>
+                    {{/each}}
+                    <th>score</th>
+                    <th>grade</th>
+                    <th>points</th>
+                    <th>remarks</th>
+                </thead>
+                <tbody>
+                    {{#each subjects}}
+                        <tr>
+                            <td class="border-right">{{subjectName}}</td>
+                            {{#each exam}}
+                                <td>{{score}}</td>
+                                <td class="border-right">{{grade}}</td>
+                            {{/each}}
+                            <td>{{averageScore}}</td>
+                            <td>{{averageGrade}}</td>
+                            <td>{{averagePoints}}</td>
+                            <td>{{comments}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="twelve columns">
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+            <h4>Remarks</h4>
+            <p class="spacer"></p>
+            <p>
+                Form master/ mistress:
+            </p>
+            <p class="spacer"></p>
+            <p>
+                 ...........................................................................................................................................................................................................................................................................................................................................................................
+            </p>
+            <p class="spacer"></p>
+            <p>
+                signature: ..........................    Date: ......../........../20.......
+            </p>
+            <p class="spacer"></p>
+            <p class="spacer"></p>
+            <p>
+                Principal's remarks:
+            </p>
+            <p class="spacer"></p>
+            <p>
+                 ...........................................................................................................................................................................................................................................................................................................................................................................
+            </p>
+            <p class="spacer"></p>
+            <p>
+                signature: ..........................    Date: ......../........../20.......
+            </p>
+        </div>
+    </div>
+</div>

@@ -27,10 +27,10 @@ Template.students.helpers({
 		return Template.instance().searchQuery.get();
 	},
 	student: ()=> {
-		return Students.find().fetch();
+		return Students.find({active: true}).fetch();
 	},
 	classes: ()=> {
-		return Classes.find();
+		return Classes.find({active: true});
 	}
 });
 

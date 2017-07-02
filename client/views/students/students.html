@@ -50,6 +50,10 @@
                                 </td>
                                 <td>
                                     <p class="capitalize">{{firstName}} {{surname}}</p>
+                                    {{#if active}}
+                                    {{else}}
+                                        <p class="label red">deactivated</p>
+                                    {{/if}}
                                 </td>
                                 <td>
                                     <p>{{registrationNumber}}</p>

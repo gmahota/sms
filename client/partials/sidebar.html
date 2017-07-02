@@ -49,16 +49,16 @@
     </li>
     {{#if isInRole 'admin'}}
     <li class="menu-item">
-        <a href="/class-results" class="button {{isActiveRoute class='active button-primary' name='classResults'}}"><i class="fa fa-id-card" aria-hidden="true"></i>class results</a>
+        <a href="/class-results" class="button {{isActiveRoute class='active button-primary' name='classResults'}}"><i class="fa fa-id-card" aria-hidden="true"></i>reports</a>
     </li>
     {{/if}}
     {{#if isInRole 'admin'}}
     <li class="menu-item">
         <a href="/school/{{currentUser.profile.schoolId}}" class="button {{isActiveRoute class='active button-primary' name='school'}} {{isActiveRoute class='active button-primary' name='editSchool'}}"> <i class="fa fa-calendar" aria-hidden="true"></i>school</a>
     </li>
-    <li class="menu-item">
+    <!-- <li class="menu-item">
         <a href="/alumni" class="button {{isActiveRoute class='active button-primary' name='alumni'}} {{isActiveRoute class='active button-primary' name='singleAlumni'}}"> <i class="fa fa-calendar" aria-hidden="true"></i>alumni</a>
-    </li>
+    </li> -->
     {{/if}}
 </template>
 

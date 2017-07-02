@@ -16,6 +16,13 @@ Template.sportDetail.helpers({
 Template.sportDetail.events({
     'click .deactivate-sport': function(){
 		var id = FlowRouter.getParam('id');
-		Meteor.call('deactivateSport', id);
+		Meteor.call('deactivateSport', id, function(err, res){
+			if (err) {
+				Bert.alert(err.reason, 'danger');
+			} else if (res){
+				Bert.alert('sport deactivated', 'danger');
+				FlowRouter.go('sports');
+			}
+		});
 	}
 });

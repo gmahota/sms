@@ -14,10 +14,30 @@ body{
         .school-logo{
             height:30px;
         }
+        .button-primary{
+            &.u.full-width{
+                width:100%;
+            }
+        }
         table{
             tr{
                 td{
                     vertical-align: middle;
+                }
+            }
+        }
+    }
+}
+svg.nvd3-svg {
+    width: auto;
+    margin: 0px auto;
+}
+.hidelabel{
+    tbody{
+        tr{
+            td{
+                label{
+                    display: none;
                 }
             }
         }

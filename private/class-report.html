@@ -27,13 +27,13 @@
         <div class="twelve columns">
             <table class="u-full-width class-results">
                 <thead>
-                    <th><p>pos</p></th>
+                    <th><p>#</p></th>
                     <th><p>Student</p></th>
-                    <th>
-                        <p>Adm no</p>
+                    <th class="border-right">
+                        <p>Adm</p>
                     </th>
                     {{#each subject}}
-                        <th><p>{{shortName}}</p></th>
+                        <th colspan="2" class="border-right light"><p>{{shortName}}</p></th>
                     {{/each}}
                     <th><p>score</p></th>
                     <th><p>mean</p></th>
@@ -48,14 +48,15 @@
                             <td>
                                 <p style="text-transform: capitalize"><b>{{studentLastName}} {{studentFirstName}}.</b></p>
                             </td>
-                            <td>
+                            <td class="border-right">
                                 <p><b>{{studentRegistrationNumber}}</b></p>
                             </td>
                             {{#each subjectData}}
                                 {{#if graded}}
                                 <td><p>{{subjectScore}}</p></td>
+                                <td class="border-right light"><p><strong>{{subjectGrade}}</strong></p></td>
                                 {{else}}
-                                <td><p>-</p></td>
+                                <td colspan="2" class="border-right light"><p>-</p></td>
                                 {{/if}}
                             {{/each}}
                             <td><p>{{overallScore}}</p></td>
@@ -63,6 +64,77 @@
                             <td><p>{{overallGrade}}</p></td>
                         </tr>
                     {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="six columns">
+            <table class="u-full-width">
+                <thead>
+                    <th><p><strong>grades:</strong></p></th>
+                    {{#each gradeAnalysis}}
+                        <th>
+                            <p>{{grade}}</p>
+                        </th>
+                    {{/each}}
+                    <th>
+                        <p>
+                            <strong>total students:</strong>
+                        </p>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><p><strong>total:</strong></p></td>
+                        {{#each gradeAnalysis}}
+                            <td>
+                                <p>{{total}}</p>
+                            </td>
+                        {{/each}}
+                        <td>
+                            <p>
+                                <strong>
+                                    {{totalStudents}}
+                                </strong>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="six columns">
+            <table class="u-full-width">
+                <thead>
+                    <th>
+                        <p>mean mark</p>
+                    </th>
+                    <th>
+                        <p>mean grade</p>
+                    </th>
+                    <th>
+                        <p>total score</p>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>{{classMeanScore}}</p>
+                        </td>
+                        <td>
+                            <p>{{classMeanGrade}}</p>
+                        </td>
+                        <td>
+                            <p>{{classMeanMark}}</p>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

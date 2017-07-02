@@ -44,7 +44,7 @@ extraCurricularSchema = new SimpleSchema({
 	      	},
             options: function () {
                 var options = [];
-                Clubs.find({}).forEach(function (element) {
+                Clubs.find({active: true}).forEach(function (element) {
                     options.push({
                         label: element.name, value: element._id
                     })
@@ -65,7 +65,7 @@ extraCurricularSchema = new SimpleSchema({
 	      	},
             options: function () {
                 var options = [];
-                Sports.find({}).forEach(function (element) {
+                Sports.find({active: true}).forEach(function (element) {
                     options.push({
                         label: element.name, value: element._id
                     })
@@ -120,7 +120,6 @@ StudentSchema = new SimpleSchema({
     gender: {
         type: String,
         label: "The gender of the student",
-        optional: true,
         autoform: {
             type: 'select2',
             options: [
@@ -170,7 +169,7 @@ StudentSchema = new SimpleSchema({
         	type: 'select2',
             options: function () {
                 var options = [];
-                Classes.find({}).forEach(function (element) {
+                Classes.find({active: true}).forEach(function (element) {
                     var name = element.Form + " " + element.streamName
                     options.push({
                         label: name, value: element._id
@@ -283,13 +282,22 @@ Meteor.methods({
 		StudentImages.remove(imageId);
 		FlowRouter.go('students');
 	},
-    deactivateStudent: function(id, activeState){
+    deactivateStudent: function(id){
         check(id, String);
-        Students.update(id, {
-            $set: {
-                active: !activeState
-            }
-        });
+        var status = Students.findOne({_id: id}).active;
+        if(status == true){
+            Students.update(id, {
+                $set: {
+                    active: false
+                }
+            });
+        } else {
+            Students.update(id, {
+                $set: {
+                    active: true
+                }
+            });
+        }
     },
     convertAlumni: function(id, alumniState){
         check(id, String);

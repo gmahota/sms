@@ -1,26 +1,20 @@
+html {
+	font-family: sans-serif;
+}
+body {
+	margin: 0px;
+	font-size: .65em;
+	font-family: Helvetica, Arial, sans-serif;
+	color: rgb(34, 34, 34);
+}
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 0px;
+	margin-bottom: 4px;
+}
 
 hr {
 	height: 0px;
 	box-sizing: content-box;
-}
-table {
-	border-spacing: 0px;
-	border-collapse: collapse;
-}
-td, th {
-	padding: 0px;
-}
-* {
-	box-sizing: border-box;
-}
-::before, ::after {
-	box-sizing: border-box;
-}
-a {
-	color: rgb(51, 122, 183);
-	text-decoration: none;
-}
-hr {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	border-width: 1px 0px 0px;
@@ -34,67 +28,10 @@ hr {
 	border-top-style: solid;
 	border-top-color: rgb(238, 238, 238);
 }
-p {
-	margin: 0px 0px 4px;
-}
-.container {
-	padding-right: 0;
-	padding-left: 0;
-	margin-right: auto;
-	margin-left: auto;
-}
-.row {
-	margin-right: 0;
-	margin-left: 0;
-	width:100%;
-}
-.columns {
-	width:100%;
-  float: left;
-  box-sizing: border-box; }
-.six{ width: 48%;}
-html {
-	font-family: sans-serif;
-}
-body {
-	margin: 0px;
-}
-.right{
-	text-alight:right;
-}
-a {
-	background-color: transparent;
-}
-b, strong {
-	font-weight: bold;
-}
-hr {
-	box-sizing: content-box;
-	height: 0px;
-}	font-weight: bold;
 table {
-	border-collapse: collapse;
 	border-spacing: 0px;
-}
-.container {
-	position: relative;
-	width: 100%;
-	margin: 0px auto;
-	padding: 0px;
-	box-sizing: border-box;
-}
-body {
-	font-size: .7em;
-	font-family: Helvetica, Arial, sans-serif;
-	color: rgb(34, 34, 34);
-}
-h1, h2, h3, h4, h5, h6 {
-	margin-top: 0px;
-	margin-bottom: 4px;
-}
-
-a, strong {
-	color: rgb(30, 174, 219);
+	border-collapse: collapse;
+	margin-bottom: 1em;
 }
 td {
 	padding: 5px;
@@ -112,13 +49,62 @@ th:first-child, td:first-child {
 th:last-child, td:last-child {
 	padding-right: 0px;
 }
-table {
-	margin-bottom: 1em;
+
+* {
+	box-sizing: border-box;
 }
+::before, ::after {
+	box-sizing: border-box;
+}
+a {
+	text-decoration: none;
+}
+b, strong {
+	font-weight: bold;
+}
+p {
+	margin: 0px 0px 4px;
+}
+.container {
+	padding-right: 0;
+	padding-left: 0;
+	margin-right: auto;
+	margin-left: auto;
+	position: relative;
+	width: 100%;
+	margin: 0px auto;
+	padding: 0px;
+	box-sizing: border-box;
+}
+.row {
+	margin-right: 0;
+	margin-left: 0;
+	width:100%;
+}
+.columns {
+	width:100%;
+	float: left;
+	box-sizing: border-box; }
+.six{
+	width: 48%;
+}
+
+.title{
+	text-align: center;
+}
+.spacer{
+	margin-bottom:20px;
+}
+
+.right{
+	text-alight:right;
+}
+
 .u-full-width {
 	width: 100%;
 	box-sizing: border-box;
 }
+
 
 body .wide-container {
 	width: 100%;
@@ -141,32 +127,14 @@ body .body-container .content table tbody td {
 body .body-container .content table tbody td a {
 	margin: 0px;
 }
-body .body-container .content strong {
-	color: rgb(0, 123, 187);
-}
-.title{
-	text-align: center;
-}
-.spacer{
-	margin-bottom:20px;
-}
 
-.class-timetable tbody tr td p {
-	color: #aaa;
-}
-
-.class-timetable tbody tr td p.strong {
-	color: #333;
-}
 
 .class-timetable tbody tr td:nth-child(1) {
 	border-right: 2px solid #ccc;
 }
-
 .class-timetable tbody tr:nth-child(2) td, .class-timetable tbody tr:nth-child(4) td {
 	border-bottom: 2em solid #ccc;
 }
-
 .class-timetable tbody tr:nth-child(6) td {
 	border-bottom: 4em solid #777;
 }
@@ -174,6 +142,13 @@ body .body-container .content strong {
 .class-results{
 	margin-top: 2em;
 }
-.class-results p {
-	font-size: .7em;
+.empty-list td, .empty-list th{
+	border-right: 1px solid #777;
+}
+
+.border-right{
+	border-right: 1px solid #333;
+}
+.border-right.light{
+	border-right: 1px solid #777;
 }

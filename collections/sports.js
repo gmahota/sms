@@ -74,17 +74,26 @@ SportSchema = new SimpleSchema({
 });
 
 Meteor.methods({
-	// deleteSport: function(id){
-	// 	Sports.remove(id);
-	// 	FlowRouter.go('sports');
-	// },
+	deleteSport: function(id){
+		Sports.remove(id);
+		FlowRouter.go('sports');
+	},
     deactivateSport: function(id, activeState){
         check(id, String);
-        Sports.update(id, {
-            $set: {
-                active: !activeState
-            }
-        });
+        var status = Sports.findOne({_id: id}).active;
+        if(status == true){
+            Sports.update(id, {
+                $set: {
+                    active: false
+                }
+            });
+        } else {
+            Sports.update(id, {
+                $set: {
+                    active: true
+                }
+            });
+        }
     }
 });
 

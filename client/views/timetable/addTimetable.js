@@ -84,7 +84,7 @@ Template.addTimetable.helpers({
 		return classTimes;
 	},
 	class: function(){
-		return Classes.find();
+		return Classes.find({active: true});
 	},
 	years: function(){
 		var yearsArr = [
@@ -114,7 +114,7 @@ Template.addTimetable.helpers({
 		return Subjects.find();
 	},
 	teacher: function(){
-		return Teachers.find();
+		return Meteor.users.find();
 	}
 });
 

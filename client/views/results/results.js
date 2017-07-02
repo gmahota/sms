@@ -105,7 +105,7 @@ Template.results.helpers({
 		if (examSelection){
 			if(examId){
 				var classIdArray = Exams.findOne({_id: examId}).classes;
-				return Classes.find({_id: { $in: classIdArray }}).fetch().reverse();
+				return Classes.find({_id: { $in: classIdArray }, active: true}).fetch().reverse();
 			} else {
 				return
 			}
@@ -114,7 +114,7 @@ Template.results.helpers({
 		}
 	},
 	exam: ()=> {
-		return Exams.find().fetch().reverse();
+		return Exams.find({active: true}).fetch().reverse();
 	},
 	examSelected: function(){
 		return Template.instance().examSelection.get();

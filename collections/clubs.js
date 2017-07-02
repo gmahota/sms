@@ -78,13 +78,22 @@ Meteor.methods({
 	// 	Clubs.remove(id);
 	// 	FlowRouter.go('clubs');
 	// },
-    deactivateClub: function(id, activeState){
+    deactivateClub: function(id){
         check(id, String);
-        Clubs.update(id, {
-            $set: {
-                active: !activeState
-            }
-        });
+        var status = Clubs.findOne({_id: id}).active;
+        if(status == true){
+            Clubs.update(id, {
+                $set: {
+                    active: false
+                }
+            });
+        } else {
+            Clubs.update(id, {
+                $set: {
+                    active: true
+                }
+            });
+        }
     }
 });
 

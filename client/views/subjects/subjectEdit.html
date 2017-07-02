@@ -10,7 +10,167 @@
     <div class="row">
         <hr>
         <div class="twelve columns">
-            {{> quickForm collection="Subjects" type="update" id="updateSubjectId" doc=subject class="edit-subject-form" buttonContent="update subject"}}
+            <!-- {{> quickForm collection="Subjects" type="update" id="updateSubjectId" doc=subject class="edit-subject-form" buttonContent="update subject"}} -->
+            {{#autoForm collection="Subjects" id="updateSubjectId" doc=subject type="update" class="edit-subject-form"}}
+                {{> afQuickField name='name'}}
+                {{> afQuickField name='subjectCode'}}
+                {{> afQuickField name='type'}}
+                {{> afQuickField name='requirement'}}
+                {{> afQuickField name='subjectMaster'}}
+
+                <hr>
+                <h3>Grading system</h3>
+                <p>Enter the approppriate grading system for this subject. Leaving the fields blank will apply the default grading system:</p>
+
+                <table class="u-full-width hidelabel">
+                    <thead>
+                        <th>
+                            <p><strong>Grade:</strong></p>
+                        </th>
+                        <th>
+                            <p><strong>Score from:</strong></p>
+                        </th>
+                        <th>
+                            <p><strong>Score to:</strong></p>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>A</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreAStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreA'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>A-</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreAMinusStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreAMinus'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>B+</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreBPlusStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreBPlus'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>B</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreBStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreB'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>B-</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreBMinusStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreBMinus'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>C+</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreCPlusStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreCPlus'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>C</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreCStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreC'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>C-</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreCMinusStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreCMinus'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>D+</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreDPlusStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreDPlus'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>D</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreDStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreD'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>D-</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreDMinusStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreDMinus'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>E</p>
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreEStart'}}
+                            </td>
+                            <td>
+                                {{> afQuickField name='gradingScheme.scoreE'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+	            <button type="submit" class="button-primary">update subject</button>
+            {{/autoForm}}
         </div>
     </div>
 </template>

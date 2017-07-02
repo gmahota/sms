@@ -31,5 +31,16 @@ Template.subjectDetail.events({
     'click .deactivate-subject': function(){
 		var id = FlowRouter.getParam('id');
 		Meteor.call('deactivateSubject', id);
+	},
+	'click .deactivate-subject': function(){
+		var id = FlowRouter.getParam('id');
+		Meteor.call('deactivateSubject', id, function(err, res){
+			if (err) {
+				Bert.alert(err.reason, 'danger');
+			} else if (res){
+				Bert.alert('subject has been deactivated', 'danger');
+				FlowRouter.go('classes');
+			}
+		});
 	}
 });

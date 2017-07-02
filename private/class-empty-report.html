@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <div class="six columns">
+            <h2>
+                Kiandangae Secondary School
+            </h2>
+            <h4>P.O.Box 52, Kagio.</h4>
+            <p>
+                Examination Results Sheet
+            </p>
+        </div>
+        <div class="six columns right">
+            <p style="text-align:right; text-transform: capitalize">
+                {{examtype}} exams, {{examterm}}, {{examyear}}
+            </p>
+            <p style="text-align:right; text-transform: capitalize">
+                Class: {{classForm}} {{classStreamName}}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width class-results empty-list">
+                <thead>
+                    <th><p>Student</p></th>
+                    <th class="border-right">
+                        <p>Adm</p>
+                    </th>
+                    {{#each subject}}
+                        <th><p>{{shortName}}</p></th>
+                    {{/each}}
+                </thead>
+                <tbody>
+                    {{#each result}}
+                        <tr>
+                            <td>
+                                <p style="text-transform: capitalize"><b>{{studentLastName}} {{studentFirstName}}.</b></p>
+                            </td>
+                            <td class="border-right">
+                                <p><b>{{studentRegistrationNumber}}</b></p>
+                            </td>
+                            {{#each subjectData}}
+                                <td></td>
+                            {{/each}}
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

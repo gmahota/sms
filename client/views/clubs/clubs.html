@@ -30,7 +30,13 @@
                         {{#each club}}
                             <tr>
                                 <td>
-                                    {{name}}
+                                    <p>
+                                        {{name}}
+                                        {{#if active}}
+                                        {{else}}
+                                            <span class="label red">deactivated</span>
+                                        {{/if}}
+                                    </p>
                                 </td>
                                 <td class="right">
                                     <a href="/club/{{_id}}" class="button">view club</a>

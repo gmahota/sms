@@ -78,7 +78,7 @@ ProfileSchema = new SimpleSchema({
 	      	},
             options: function () {
                 var options = [];
-                Subjects.find({}).forEach(function (element) {
+                Subjects.find({active: true}).forEach(function (element) {
                     options.push({
                         label: element.name, value: element._id
                     })

@@ -11,30 +11,91 @@
             <h3 class="capitalize">{{student.firstName}} {{student.surname}}</h3>
             <p><strong>registration number:</strong> {{student.registrationNumber}}</p>
             <p><strong>class:</strong> {{className}}</p>
-            <p><strong>gender:</strong> {{student.gender}}</p>
-            <p><strong>admitted in:</strong> {{student.year}}</p>
+            {{#if student.gender}}
+                <p><strong>gender:</strong> {{student.gender}}</p>
+            {{/if}}
+            {{#if student.year}}
+                <p><strong>admitted in:</strong> {{student.year}}</p>
+            {{/if}}
+            {{#if student.active}}
+            {{else}}
+                <p><strong class="red"><span class="red">STUDENT HAS BEEN DEACTIVADED</span></strong></p>
+            {{/if}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
             <hr>
-            <p><strong>KCPE Results:</strong> {{student.kcpeResults}}</p>
-            <p><strong>religion: {{student.religion}}</strong></p>
-            <p><strong>Home address:</strong> {{student.homeAddress}}</p>
+            {{#if student.kcpeResults}}
+                <p><strong>KCPE Results:</strong> {{student.kcpeResults}}</p>
+            {{/if}}
+            {{#if student.religion}}
+                <p><strong>religion: {{student.religion}}</strong></p>
+            {{/if}}
+            {{#if student.homeAddress}}
+                <p><strong>Home address:</strong> {{student.homeAddress}}</p>
+            {{/if}}
             <hr>
             <h4>Extracurricular activities</h4>
             <p class="tags">
                 <strong>sports:</strong>
                 {{#each student.extraCurricular.sports}}
                     <span class="tagstyle">{{sportName}}</span>
+                {{else}}
+                    <span>none</span>
                 {{/each}}
             </p>
             <p class="tags">
                 <strong>clubs:</strong>
                 {{#each student.extraCurricular.clubs}}
                     <span class="tagstyle">{{clubName}}</span>
+                {{else}}
+                    <span>none</span>
                 {{/each}}
             </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+            <h4>Generate a report card</h4>
+            <p>select the term and year to generate a student's report card:</p>
+            <p>.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="four columns">
+            <select name="term-selection" id="term-selection" class="term-selection">
+                <option value="">select a term</option>
+                {{#each term}}
+                    <option value="{{termValue}}">{{termValue}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="four columns">
+            <select name="year-selection" id="year-selection" class="year-selection">
+                <option value="">select a year</option>
+                {{#each yearSelection}}
+                    <option value="{{year}}">{{year}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="four columns">
+            <button class="generate-report">generate report</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
             <hr>
             {{#if isInRole 'admin'}}
-                <button class="deactivate-student delete">deactivate student</button>
-                <button class="generate-report">generate report card</button>
+                {{#if student.active}}
+                    <button class="deactivate-student delete">deactivate student</button>
+                {{else}}
+                    <button class="deactivate-student">activate student</button>
+                {{/if}}
                 <a href="/edit-student/{{student._id}}" class="button">edit</a>
             {{/if}}
         </div>

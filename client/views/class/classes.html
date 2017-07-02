@@ -32,7 +32,13 @@
                         {{#each class}}
                             <tr>
                                 <td>
-                                    {{Form}} {{streamName}}
+                                    <p>
+                                        {{Form}} {{streamName}}
+                                        {{#if isdeactivated}}
+                                            <span class="label red">deactivated</span>
+                                        {{/if}}
+                                    </p>
+
                                 </td>
                                 <td class="right">
                                     <a href="/class/{{_id}}" class="button">view class</a>

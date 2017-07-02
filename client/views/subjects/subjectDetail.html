@@ -5,13 +5,128 @@
         </div>
         <div class="twelve-columns">
             <p><strong>type:</strong> {{subject.type}}</p>
-            <p><strong>requirement:</strong> {{subject.requirement}}</p>
+            <p><strong>requirement:</strong>
+            {{#if subject.active}}
+                {{subject.requirement}}
+            {{else}}
+                <span class="red">deactivated</span>
+            {{/if}}
+            </p>
+
+            <hr>
+            <p>The grading table for the subject</p>
+            <p>.</p>
+
+            <table class="u-full-width">
+                <thead>
+                    <th><p><strong>Grade:</strong></p></th>
+                    <th><p><strong>Score range (in percentage %):</strong></p></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>A</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreAStart}} - {{subject.gradingScheme.scoreA}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>A-</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreAMinusStart}} - {{subject.gradingScheme.scoreAMinus}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>B+</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreBPlusStart}} - {{subject.gradingScheme.scoreBPlus}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>B</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreBStart}} - {{subject.gradingScheme.scoreB}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>B-</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreBMinusStart}} - {{subject.gradingScheme.scoreBMinus}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>C+</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreCPlusStart}} - {{subject.gradingScheme.scoreCPlus}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>C</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreCStart}} - {{subject.gradingScheme.scoreC}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>C-</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreCMinusStart}} - {{subject.gradingScheme.scoreCMinus}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>D+</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreDPlusStart}} - {{subject.gradingScheme.scoreDPlus}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>D</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreDStart}} - {{subject.gradingScheme.scoreD}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>D-</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreDMinusStart}} - {{subject.gradingScheme.scoreDMinus}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>E</p>
+                        </td>
+                        <td>
+                            <p>{{subject.gradingScheme.scoreEStart}} - {{subject.gradingScheme.scoreE}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
             {{#unless subject.subjectMaster}}
             {{else}}
                 <hr>
                 <p>
-                    <strong>subject master:</strong>
+                    <strong>Subject master:</strong>
                     {{#with FS.GetFile "teacherImages" subjectMasterImage}}
                         <div class="teacher-profile" style="background-image: url({{url}});"></div>
                     {{/with}}
@@ -25,7 +140,11 @@
         <div class="twelve columns">
             <hr>
             <p></p>
-            <button class="deactivate-subject delete">deactivate subject</button>
+            {{#if school.active}}
+                <button class="deactivate-subject delete">deactivate subject</button>
+            {{else}}
+                <button class="deactivate-subject">activate subject</button>
+            {{/if}}
             <a href="/edit-subject/{{subject._id}}" class="button">edit</a>
         </div>
     </div>

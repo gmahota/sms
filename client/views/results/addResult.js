@@ -19,7 +19,7 @@ Template.addResult.onCreated(function() {
 
 Template.addResult.helpers({
 	subjectsAvailable: ()=> {
-		return Subjects.find().fetch().reverse();
+		return Subjects.find().fetch();
 	},
 	teaching: function(){
 		var id = Meteor.userId();
@@ -56,7 +56,7 @@ Template.addResult.helpers({
 						var resultCheck = Results.find({ exam: examId }).map( function (result){
 							return result.student;
 						});
-						return Students.find({class: classId, _id: {$nin: resultCheck}});
+						return Students.find({class: classId, _id: {$nin: resultCheck}, active: true});
 					} else {
 						return Students.find({class: "123"});
 					}
@@ -76,7 +76,7 @@ Template.addResult.helpers({
 		if (examSelection){
 			if(examId){
 				var classIdArray = Exams.findOne({_id: examId}).classes;
-				return Classes.find({_id: { $in: classIdArray }}).fetch().reverse();
+				return Classes.find({_id: { $in: classIdArray }, active: true}).fetch().reverse();
 			} else {
 				return
 			}
@@ -89,7 +89,7 @@ Template.addResult.helpers({
 		return (subjectCount + 2);
 	},
 	exam: ()=> {
-		return Exams.find().fetch().reverse();
+		return Exams.find({active: true}).fetch().reverse();
 	},
 	examSelected: function(){
 		return Template.instance().examSelection.get();
@@ -290,11 +290,10 @@ Template.addResult.events({
 					overallGrade: grade
 				}, (error) => {
 					if (error){
-		                Bert.alert(error.reason, 'danger');
-		            } else {
-		                Bert.alert('added successfully', 'success');
-		                // FlowRouter.go('verify-phone');
-		            }
+						Bert.alert(error.reason, 'danger');
+					} else {
+						Bert.alert('added successfully', 'success');
+					}
 				});
 			}
 		} else {

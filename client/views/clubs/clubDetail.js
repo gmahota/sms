@@ -16,6 +16,13 @@ Template.clubDetail.helpers({
 Template.clubDetail.events({
     'click .deactivate-club': function(){
 		var id = FlowRouter.getParam('id');
-		Meteor.call('deactivateClub', id);
+		Meteor.call('deactivateClub', id, function(err, res){
+			if (err) {
+				Bert.alert(err.reason, 'danger');
+			} else if (res){
+				Bert.alert('club deactivated', 'danger');
+				FlowRouter.go('clubs');
+			}
+		});
 	}
 });
