@@ -1,5 +1,5 @@
 Meteor.methods({
-    'subjectCombinedExamReport': function(classId, examId, form, subjectId) {
+    'subjectClassReport': function(classId, examId, subjectId) {
         if (Meteor.isServer) {
           // SETUP
           // Grab required packages
@@ -9,7 +9,7 @@ Meteor.methods({
 
           var fut = new Future();
 
-          var fileName = "subject-combined-class-report.pdf";
+          var fileName = "subject-class-report.pdf";
 
           // GENERATE HTML STRING
           var css = Assets.getText('merged-stylesheets.css');
@@ -22,15 +22,18 @@ Meteor.methods({
             }
           });
 
-          SSR.compileTemplate('subject_combined_class_report', Assets.getText('subject-combined-class-report.html'));
+          SSR.compileTemplate('subject_class_report', Assets.getText('subject-class-report.html'));
             var examtype = Exams.findOne({_id: examId}).type;
             var examterm = Exams.findOne({_id: examId}).term;
             var examyear = Exams.findOne({_id: examId}).year;
 
+            var classForm = Classes.findOne({_id: classId}).Form;
+            var classStreamName = Classes.findOne({_id: classId}).streamName;
+
             var subjectName = Subjects.findOne({_id: subjectId}).name;
 
             var resultDataArray = [];
-            var studentIdArray = Students.find({class: {$in: classId}}).map(function(student){
+            var studentIdArray = Students.find({class: classId}).map(function(student){
                 return student._id;
             });
             var resultData = Results.find({exam: examId, student: {$in : studentIdArray}}).map(function(result){
@@ -40,8 +43,6 @@ Meteor.methods({
                 var studentFirstName = studentFirstNameLong.substring(0, 1);
                 var studentRegistrationNumber = Students.findOne({_id: result.student}).registrationNumber;
                 var studentGender = Students.findOne({_id: result.student}).gender;
-                var studentClassId = Students.findOne({_id: result.student}).class;
-                var stream = Classes.findOne({_id: studentClassId}).streamName;
 
                 var subjectScore = 0;
                 var subjectPoints = 0;
@@ -57,7 +58,6 @@ Meteor.methods({
                 });
                 resultDataArray.push({
                     resultId: resultId,
-                    stream: stream,
                     studentGender: studentGender,
                     studentFirstName: studentFirstNameLong,
                     studentLastName: studentLastName,
@@ -80,7 +80,6 @@ Meteor.methods({
 
                 resultArray.push({
                     resultId: data.resultId,
-                    stream: data.stream,
                     studentGender: data.studentGender,
                     studentFirstName: data.studentFirstName,
                     studentLastName: data.studentLastName,
@@ -97,128 +96,96 @@ Meteor.methods({
                 return parseFloat(a.position) - parseFloat(b.position);
             });
 
-            var availableGrades = [
-                {grade: "A"},
-                {grade: "A-"},
-                {grade: "B+"},
-                {grade: "B"},
-                {grade: "B-"},
-                {grade: "C+"},
-                {grade: "C"},
-                {grade: "C-"},
-                {grade: "D+"},
-                {grade: "D"},
-                {grade: "D-"},
-                {grade: "E"}
-            ];
+            var classMeanScore = resultArray.map(function(item){
+                return item.subjectScore;
+            }).reduce(function(a, b){
+                return a + b;
+            }, 0) / resultArray.length;
+
+            var classMeanGrade = function(){
+                if (classMeanScore >= 80 && classMeanScore <= 100){
+                     return "A";
+                } else if (classMeanScore >= 75 && classMeanScore <= 79.99){
+                     return "A-";
+                } else if (classMeanScore >= 70 && classMeanScore <= 74.99){
+                     return "B+";
+                } else if (classMeanScore >= 65 && classMeanScore <= 69.99){
+                     return "B";
+                } else if (classMeanScore >= 60 && classMeanScore <= 64.99){
+                     return "B-";
+                } else if (classMeanScore >= 55 && classMeanScore <= 59.99){
+                     return "C+";
+                } else if (classMeanScore >= 50 && classMeanScore <= 54.99){
+                     return "C";
+                } else if (classMeanScore >= 45 && classMeanScore <= 49.99){
+                     return "C-";
+                } else if (classMeanScore >= 40 && classMeanScore <= 44.99){
+                     return "D+";
+                } else if (classMeanScore >= 35 && classMeanScore <= 39.99){
+                     return "D";
+                } else if (classMeanScore >= 30 && classMeanScore <= 34.99){
+                     return "D-";
+                } else if (classMeanScore >= 0.1 && classMeanScore <= 29.99){
+                     return "E";
+                }
+            };
 
             var gradeDataArr = [];
             var gradeDataSrc = resultArray.forEach(function(result){
-                var resultStream = result.stream;
                 var resultGrade = result.subjectGrade;
-                var resultScore = result.subjectScore;
+                var resultGender = result.studentGender;
                 gradeDataArr.push({
-                    resultStream: resultStream,
                     resultGrade: resultGrade,
-                    resultScore: resultScore
+                    resultGender: resultGender
                 });
             });
-            gradeDataArr.sort(function(a, b) {
-                return parseFloat(a.resultStream) - parseFloat(b.resultStream);
-            });
+
+
             var gradeAnalysisData = [];
+
+            gradeDataArr.sort(function(a, b) {
+                return parseFloat(a.grade) - parseFloat(b.grade);
+            });
+
             gradeDataArr.forEach(function (a) {
-                if (!this[a.resultStream]) {
-                    this[a.resultStream] = { resultGrade: [], resultScore: [], resultStream: a.resultStream };
-                    gradeAnalysisData.push(this[a.resultStream]);
+                if (!this[a.resultGrade]) {
+                    this[a.resultGrade] = { resultGender: [], resultGrade: a.resultGrade };
+                    gradeAnalysisData.push(this[a.resultGrade]);
                 }
-                var grade = a.resultGrade;
-                this[a.resultStream].resultScore.push(a.resultScore);
-                this[a.resultStream].resultGrade.push(grade);
+                this[a.resultGrade].resultGender.push(a.resultGender);
             }, Object.create(null));
 
             var gradeAnalysis = [];
             gradeAnalysisData.map(function(data){
-                var stream = data.resultStream;
-                var gradeArray = data.resultGrade;
-                var gradeObj = [];
-                for (var g = 0; g < availableGrades.length; g++){
-                    var currentGrade = availableGrades[g].grade;
-                    var currentCount = 0;
-                    for (var b = 0; b < gradeArray.length; b++){
-                        if (currentGrade == gradeArray[b]){
-                            currentCount++;
-                        }
-                    }
-                    gradeObj.push({
-                        grade: currentGrade,
-                        total: currentCount
-                    });
-                }
-
-                var scoreArray = data.resultScore;
-                var scoreSum = 0;
-                for (var o = 0; o < scoreArray.length; o++){
-                    var currentScore = scoreArray[o];
-                    scoreSum = scoreSum + currentScore;
-                }
-                var meanScore = scoreSum / scoreArray.length;
-
-                var meanGrade = function(){
-                    if (meanScore >= 80 && meanScore <= 100){
-                         return "A";
-                    } else if (meanScore >= 75 && meanScore <= 79.99){
-                         return "A-";
-                    } else if (meanScore >= 70 && meanScore <= 74.99){
-                         return "B+";
-                    } else if (meanScore >= 65 && meanScore <= 69.99){
-                         return "B";
-                    } else if (meanScore >= 60 && meanScore <= 64.99){
-                         return "B-";
-                    } else if (meanScore >= 55 && meanScore <= 59.99){
-                         return "C+";
-                    } else if (meanScore >= 50 && meanScore <= 54.99){
-                         return "C";
-                    } else if (meanScore >= 45 && meanScore <= 49.99){
-                         return "C-";
-                    } else if (meanScore >= 40 && meanScore <= 44.99){
-                         return "D+";
-                    } else if (meanScore >= 35 && meanScore <= 39.99){
-                         return "D";
-                    } else if (meanScore >= 30 && meanScore <= 34.99){
-                         return "D-";
-                    } else if (meanScore >= 0.1 && meanScore <= 29.99){
-                         return "E";
-                    }
-                };
-
+                var grade = data.resultGrade;
+                var total = data.resultGender.length;
                 gradeAnalysis.push({
-                    stream: stream,
-                    grade: gradeObj,
-                    totalStudents: gradeArray.length,
-                    meanScore: meanScore.toFixed(1),
-                    meanGrade: meanGrade
-                })
+                    grade: grade,
+                    total: total
+                });
             });
 
             var data = {
                 examtype: examtype,
                 examterm: examterm,
                 examyear: examyear,
-                form: form,
+                classForm: classForm,
+                classStreamName: classStreamName,
                 subjectName: subjectName,
                 result: resultArray,
-                allGrades: availableGrades,
-                streamScore: gradeAnalysis
+                gradeAnalysis: gradeAnalysis,
+                totalStudents: resultArray.length,
+                classMeanScore: parseInt(classMeanScore),
+                classMeanGrade: classMeanGrade,
             }
 
             var html_string = SSR.render('layout', {
                 css: css,
-                template: "subject_combined_class_report",
+                template: "subject_class_report",
                 data: data
             });
 
-            console.log("everything is fine");
+            console.log(html_string);
             // Setup Webshot options
             var options = {
                 "paperSize": {

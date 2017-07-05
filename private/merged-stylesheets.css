@@ -3,10 +3,10 @@ html {
 }
 body {
 	margin: 0px;
-	font-size: .65em;
 	font-family: Helvetica, Arial, sans-serif;
 	color: rgb(34, 34, 34);
 }
+
 h1, h2, h3, h4, h5, h6 {
 	margin-top: 0px;
 	margin-bottom: 4px;
@@ -75,6 +75,10 @@ p {
 	margin: 0px auto;
 	padding: 0px;
 	box-sizing: border-box;
+	font-size: 80%;
+}
+.smaller{
+	font-size: 70%
 }
 .row {
 	margin-right: 0;
@@ -151,4 +155,10 @@ body .body-container .content table tbody td a {
 }
 .border-right.light{
 	border-right: 1px solid #777;
+}
+
+
+.dotted tbody tr td{
+	border:0;
+	border-bottom:1px dotted black;
 }

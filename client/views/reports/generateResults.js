@@ -14,7 +14,10 @@ Template.generateResults.onCreated(function() {
 
 Template.generateResults.helpers({
 	exams: function(){
-		return Exams.find({active: true});
+		var resultsExamsIds = Results.find().map(function(res){
+			return res.exam;
+		});
+		return Exams.find({_id: {$in: resultsExamsIds},active: true});
 	},
     examSelected: function(){
         var selection = Session.get('examId');
@@ -27,8 +30,11 @@ Template.generateResults.helpers({
     forms: function(){
         var examId = Session.get('examId');
         var formObj = [];
-        var classIdArr = Exams.findOne({_id: examId}).classes;
-        var classNumbers = Classes.find({_id: {$in: classIdArr}}).map(function(classObj){
+		var classCheck = Results.find({exam: examId}).map(function(result){
+			var studentId = result.student;
+			return Students.findOne({_id: studentId}).class;
+		});
+        var classNumbers = Classes.find({_id: {$in: classCheck}}).map(function(classObj){
             var form = classObj.Form;
             formObj.push({
                 formNumber: form
@@ -60,8 +66,11 @@ Template.generateResults.helpers({
         var examId = Session.get('examId');
         var form = Session.get('formNumber');
         var streamObj = [];
-        var classIdArr = Exams.findOne({_id: examId}).classes;
-        var classNumbers = Classes.find({_id: {$in: classIdArr}}, { Form: form}).map(function(classObj){
+		var classCheck = Results.find({exam: examId}).map(function(result){
+			var studentId = result.student;
+			return Students.findOne({_id: studentId}).class;
+		});
+        var classNumbers = Classes.find({_id: {$in: classCheck}}, { Form: form}).map(function(classObj){
             var strName = classObj.streamName;
             streamObj.push({
                 streamName: strName
@@ -319,6 +328,55 @@ Template.generateResults.events({
 			$('.processing').removeClass('show');
 			Bert.alert('select the exam and class', 'danger');
 		}
+	},
 
+	'click .print-subject-results': function(e){
+		e.preventDefault();
+		$('.processing').addClass('show');
+		var subjectList = document.getElementById("examList");
+		var examId = Session.get('examId');
+        var classIdArr = Exams.findOne({_id: examId}).classes;
+        var form = Session.get('formNumber');
+        var stream = Session.get('streamName');
+		var subjectId = $('[name=subject-list]').val();
+
+		if (examId && form && stream ){
+            if (subjectId){
+				if (stream == "combined") {
+	                var classId = Classes.find({_id: {$in: classIdArr}}, {Form: form}).map(function(classObject){
+	                    return classObject._id;
+	                });
+	                Meteor.call('subjectCombinedExamReport', classId, examId, form, subjectId, function(err, res) {
+	    		    	if (err) {
+	    					$('.processing').removeClass('show');
+	    					Bert.alert(err.reason, 'danger');
+	    		      	} else if (res) {
+	    					$('.processing').removeClass('show');
+	    					Bert.alert('the file is ready', 'success');
+	    					window.open("data:application/pdf;base64, " + res, '_blank');
+	    		      	}
+	    		    })
+	            } else {
+	                var classObj = Classes.findOne({"_id": {$in: classIdArr}, "streamName": stream, "Form": (form * 1)});
+	                var classId = classObj._id;
+	                Meteor.call('subjectClassReport', classId, examId, subjectId, function(err, res) {
+	    		    	if (err) {
+	    					$('.processing').removeClass('show');
+	    					Bert.alert(err.reason, 'danger');
+	    		      	} else if (res) {
+	    					$('.processing').removeClass('show');
+	    					Bert.alert('the file is ready', 'success');
+	    					window.open("data:application/pdf;base64, " + res, '_blank');
+	    		      	}
+	    		    })
+	            }
+			} else {
+				$('.processing').removeClass('show');
+				Bert.alert('select the subject', 'danger');
+			}
+		} else {
+			$('.processing').removeClass('show');
+			Bert.alert('select the exam and class', 'danger');
+		}
 	}
 });

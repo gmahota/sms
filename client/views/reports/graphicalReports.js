@@ -66,6 +66,9 @@ Template.graphicalReports.onRendered( function(){
             total: total
         });
     });
+    gradeAnalysis.sort(function(a, b) {
+        return parseFloat(a.grade) - parseFloat(b.grade);
+    });
 
 
     var boysResultsData = [];
@@ -125,8 +128,8 @@ Template.graphicalReports.onRendered( function(){
     // boysVsGirls = [];
 
 
-    var width = 600;
-    var height = 600;
+    var width = 700;
+    var height = 700;
 
     nv.addGraph(function() {
         var chart = nv.models.pie()

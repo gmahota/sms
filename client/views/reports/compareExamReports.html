@@ -1,0 +1,129 @@
+<template name="compareExamReports">
+    <div class="row">
+        <div class="six columns">
+            <p><a href="/class-results" class="button u-full-width">single exam reports</a></p>
+        </div>
+        <div class="six columns">
+            <p><a href="/compare-reports" class="button button-primary u-full-width">multiple exam reports</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <h3>Multiple exam reports</h3>
+            <p>select the year, term and class(es) below and print the class performance for the exam.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="six columns">
+            <select name="year" id="yearList" class="u full-width year-list">
+                <option value="">select a year</option>
+                {{#each year}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="six columns">
+            <select name="term" id="termList" class="u full-width term-list">
+                <option value="">select a term</option>
+                {{#each term}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+        {{#if termSelected}}
+            <div class="row">
+                <div class="six columns">
+                    <select name="form" id="formList" class="u full-width form-list">
+                        <option value="">select a form</option>
+                        {{#each forms}}
+                            <option value="{{formNumber}}">Form {{formNumber}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                {{#if formSelected}}
+                    <div class="six columns">
+                        <select name="stream-list" id="streamList" class="u full-width stream-list">
+                            <option value="">select a class stream</option>
+                            {{#each classStream}}
+                                <option value="{{streamName}}">{{streamName}}</option>
+                            {{/each}}
+                            <option value="combined">combined</option>
+                        </select>
+                    </div>
+                {{/if}}
+            </div>
+        {{#if streamSelected}}
+            <div class="row">
+                {{#if isCombined}}
+                    <div class="six columns">
+                        <button class="button-primary u full-width print-class-results">print combined results</button>
+                    </div>
+                    <div class="six columns">
+                    </div>
+                {{else}}
+                <div class="six columns">
+                    <button class="button-primary u full-width print-class-results">print class results</button>
+                </div>
+                    <div class="six columns">
+                        <button class="button-primary u full-width print-empty-results">print empty result sheet</button>
+                    </div>
+                {{/if}}
+            </div>
+            <div class="row">
+                <div class="twelve columns">
+                    <hr>
+                    <p class="centered">print student results by gender: <br></p>
+                    <p>.</p>
+                </div>
+            </div>
+            <div class="row">
+                {{#if isCombined}}
+                <div class="six columns">
+                    <button class="button-primary u full-width print-male-combined-results">print results for <strong>male students</strong></button>
+                </div>
+                <div class="six columns">
+                    <button class="button-primary u full-width print-female-combined-results">print results for <strong>female students</strong></button>
+                </div>
+                {{else}}
+                <div class="six columns">
+                    <button class="button-primary u full-width print-male-results">print results for <strong>male students</strong></button>
+                </div>
+                <div class="six columns">
+                    <button class="button-primary u full-width print-female-results">print results for <strong>female students</strong></button>
+                </div>
+                {{/if}}
+            </div>
+            <div class="row">
+                <div class="twelve columns">
+                    <hr>
+                    <p>Select a subject and generate subject specific results:</p>
+                    <p>.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <select name="subject-list" id="subjectList" class="u full-width subject-list">
+                        <option value="">select a subject</option>
+                        {{#each subjects}}
+                            <option value="{{_id}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="six columns">
+                    <button class="button-primary u full-width print-subject-results">print subject results</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="twelve columns">
+                    <hr>
+                </div>
+            </div>
+        {{/if}}
+    {{/if}}
+</template>

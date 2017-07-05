@@ -9,6 +9,8 @@ Template.studentDetail.onCreated(function() {
 		self.subscribe('singleClass', classId);
 		self.subscribe('clubs');
 		self.subscribe('sports');
+		self.subscribe('studentResults', id);
+		self.subscribe('exams');
 	});
 });
 
@@ -35,28 +37,44 @@ Template.studentDetail.helpers({
 		return Sports.findOne({_id: obj}).name;
 	},
 	yearSelection: function(){
-		var data = [
-			{year:"2017"},
-			{year:"2018"},
-			{year:"2019"},
-			{year:"2020"},
-			{year:"2021"},
-			{year:"2022"},
-			{year:"2023"},
-			{year:"2024"},
-			{year:"2025"},
-			{year:"2026"},
-			{year:"2027"}
-		];
-		return data;
+		var resultsExamsIds = Results.find({}).map(function(res){
+			return res.exam;
+		});
+		var data = Exams.find({_id: {$in: resultsExamsIds},active: true}).map(function(exam){
+			return exam.year;
+		});
+
+		var noDupeObj = {}
+        for (i = 0, n = data.length; i < n; i++) {
+            var item = data[i];
+            noDupeObj[item] = item;
+        }
+        var i = 0;
+        var cleanData = [];
+        for (var item in noDupeObj) {
+            cleanData[i++] = noDupeObj[item];
+        }
+        return cleanData
 	},
 	term: function(){
-		var data = [
-			{termValue:"first-term"},
-			{termValue:"second-term"},
-			{termValue:"third-term"}
-		];
-		return data;
+		var resultsExamsIds = Results.find({}).map(function(res){
+			return res.exam;
+		});
+		var data = Exams.find({_id: {$in: resultsExamsIds},active: true}).map(function(exam){
+			return exam.term;
+		});
+		
+		var noDupeObj = {}
+        for (i = 0, n = data.length; i < n; i++) {
+            var item = data[i];
+            noDupeObj[item] = item;
+        }
+        var i = 0;
+        var cleanData = [];
+        for (var item in noDupeObj) {
+            cleanData[i++] = noDupeObj[item];
+        }
+        return cleanData
 	}
 });
 

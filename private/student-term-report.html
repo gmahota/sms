@@ -22,19 +22,15 @@
                     </td>
                     <td><p>admission number:  {{studentRegistrationNumber}}</p></td>
                     <td><p>class:  {{studentClassForm}} {{studentClassStreamName}}</p></td>
-                    <td><p>admitted in:  {{studentYear}}</p></td>
+                    <!-- <td><p>class position: {{classPosition}}</p></td> -->
                 </tr>
                 <tr>
                     <td><p>total score: {{overallScore}}</p></td>
                     <td><p>grade: {{overallGrade}}</p></td>
                     <td><p>average: {{averageScore}}</p></td>
-                    <td>
-                        {{#if kcpe}}
-                        <p>KCPE: {{kcpe}}</p>
-                        {{else}}
-                        <p>KCPE: n/a</p>
-                        {{/if}}
-                    </td>
+                    <!-- <td>
+                        stream position: {{streamPosition}}
+                    </td> -->
                 </tr>
             </tbody>
         </table>

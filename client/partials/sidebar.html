@@ -44,12 +44,12 @@
     <li class="menu-item">
         <a href="/exams" class="button {{isActiveRoute class='active button-primary' name='exams'}} {{isActiveRoute class='active button-primary' name='singleExam'}} {{isActiveRoute class='active button-primary' name='editSingleExam'}} {{isActiveRoute class='active button-primary' name='addExam'}}"><i class="fa fa-balance-scale" aria-hidden="true"></i> exams</a>
     </li>
+    {{#if isInRole 'admin'}}
     <li class="menu-item">
         <a href="/results" class="button {{isActiveRoute class='active button-primary' name='results'}} {{isActiveRoute class='active button-primary' name='singleResult'}} {{isActiveRoute class='active button-primary' name='addResult'}}{{isActiveRoute class='active button-primary' name='editSingleResult'}}"><i class="fa fa-id-card" aria-hidden="true"></i>results</a>
     </li>
-    {{#if isInRole 'admin'}}
     <li class="menu-item">
-        <a href="/class-results" class="button {{isActiveRoute class='active button-primary' name='classResults'}}"><i class="fa fa-id-card" aria-hidden="true"></i>reports</a>
+        <a href="/class-results" class="button {{isActiveRoute class='active button-primary' name='classResults'}} {{isActiveRoute class='active button-primary' name='compareReports'}}"><i class="fa fa-id-card" aria-hidden="true"></i>reports</a>
     </li>
     {{/if}}
     {{#if isInRole 'admin'}}

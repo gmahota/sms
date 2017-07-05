@@ -67,18 +67,18 @@
 
     <div class="row">
         <div class="four columns">
-            <select name="term-selection" id="term-selection" class="term-selection">
-                <option value="">select a term</option>
-                {{#each term}}
-                    <option value="{{termValue}}">{{termValue}}</option>
+            <select name="year-selection" id="year-selection" class="year-selection">
+                <option value="">select a year</option>
+                {{#each yearSelection}}
+                    <option value="{{this}}">{{this}}</option>
                 {{/each}}
             </select>
         </div>
         <div class="four columns">
-            <select name="year-selection" id="year-selection" class="year-selection">
-                <option value="">select a year</option>
-                {{#each yearSelection}}
-                    <option value="{{year}}">{{year}}</option>
+            <select name="term-selection" id="term-selection" class="term-selection">
+                <option value="">select a term</option>
+                {{#each term}}
+                    <option value="{{this}}">{{this}}</option>
                 {{/each}}
             </select>
         </div>

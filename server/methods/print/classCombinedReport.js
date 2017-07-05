@@ -1,8 +1,6 @@
 Meteor.methods({
     'combinedResultsPdf': function(classId, examId, form) {
         if (Meteor.isServer) {
-          // SETUP
-          // Grab required packages
           var webshot = Meteor.npmRequire('webshot');
           var fs      = Npm.require('fs');
           var Future = Npm.require('fibers/future');
@@ -11,7 +9,6 @@ Meteor.methods({
 
           var fileName = "combined-report.pdf";
 
-          // GENERATE HTML STRING
           var css = Assets.getText('merged-stylesheets.css');
 
           SSR.compileTemplate('layout', Assets.getText('layout.html'));
@@ -23,8 +20,6 @@ Meteor.methods({
           });
 
           SSR.compileTemplate('combined_report', Assets.getText('combined-report.html'));
-
-          // PREPARE DATA
 
             var examtype = Exams.findOne({_id: examId}).type;
             var examterm = Exams.findOne({_id: examId}).term;
@@ -100,84 +95,15 @@ Meteor.methods({
                     overallGrade: overallGrade,
                     meanGrade: meanGrade,
                     position: position,
-                    streamName: streamName
+                    streamName: streamName,
+                    streamNameLong: streamNameLong
                 });
             });
             resultArray.sort(function(a, b) {
                 return parseFloat(a.position) - parseFloat(b.position);
             });
 
-            var streamArrDump = resultArray.map(function(data){
-                return data.streamName;
-            });
-            var noDupeObj = {}
-            for (i = 0, n = streamArrDump.length; i < n; i++) {
-                var item = streamArrDump[i];
-                noDupeObj[item] = item;
-            }
-            var i = 0;
-            var streamArray = [];
-            for (var item in noDupeObj) {
-                streamArray[i++] = noDupeObj[item];
-            }
-
-            var classScore = [];
-            // var classScore = [
-            //     {
-            //         class: "east",
-            //         availableGrade [
-            //             {score: 2, grade: "A"},
-            //             {score: 2, grade: "A-"},
-            //             {score: 2, grade: "B+"},
-            //             {score: 2, grade: "B"},
-            //             {score: 2, grade: "B-"},
-            //             {score: 2, grade: "C+"},
-            //             {score: 2, grade: "C"},
-            //             {score: 2, grade: "C-"},
-            //             {score: 2, grade: "D+"},
-            //             {score: 2, grade: "D"},
-            //             {score: 2, grade: "D-"},
-            //             {score: 2, grade: "E"}
-            //         ],
-            //         classMeanScore: 21,
-            //         classMeanGrade: D,
-            //         classMeanMark: 256,
-            //         totalStudents: 12
-            //     }
-            // ];
-
-
-
-            // for (var x = 0; x < streamArray.length; x++) {
-            //
-            //     var gradeAnalysis = [];
-            //     var copy = resultArray.slice(0);
-            // 	for (var i = 0; i < resultArray.length; i++) {
-            // 		var myCount = 0;
-            //         var myGrade = "";
-            // 		for (var w = 0; w < copy.length; w++) {
-            // 			if (resultArray[i].resultGrade == copy[w].resultGrade) {
-            //                 myGrade = copy[w].resultGrade;
-            // 				myCount++;
-            // 				delete copy[w].resultGrade;
-            // 			}
-            // 		}
-            // 		if (myCount > 0) {
-            // 			var a = new Object();
-            // 			a.grade = myGrade;
-            // 			a.total = myCount;
-            // 			gradeAnalysis.push(a);
-            // 		}
-            // 	}
-            // }
-            //
-            //
-            // gradeDataArr.sort(function(a, b) {
-            //     return parseFloat(a.grade) - parseFloat(b.grade);
-            // });
-
-
-            var availableGrade = [
+            var availableGrades = [
                 {grade: "A"},
                 {grade: "A-"},
                 {grade: "B+"},
@@ -192,8 +118,96 @@ Meteor.methods({
                 {grade: "E"}
             ];
 
+            var gradeDataArr = [];
+            var gradeDataSrc = resultArray.forEach(function(result){
+                var resultStream = result.streamNameLong;
+                var resultGrade = result.overallGrade;
+                var resultScore = result.overallScore;
+                gradeDataArr.push({
+                    resultStream: resultStream,
+                    resultGrade: resultGrade,
+                    resultScore: resultScore
+                });
+            });
+            gradeDataArr.sort(function(a, b) {
+                return parseFloat(a.resultStream) - parseFloat(b.resultStream);
+            });
+            var gradeAnalysisData = [];
+            gradeDataArr.forEach(function (a) {
+                if (!this[a.resultStream]) {
+                    this[a.resultStream] = { resultGrade: [], resultScore: [], resultStream: a.resultStream };
+                    gradeAnalysisData.push(this[a.resultStream]);
+                }
+                var grade = a.resultGrade;
+                this[a.resultStream].resultGrade.push(grade);
+                this[a.resultStream].resultScore.push(a.resultScore);
+            }, Object.create(null));
+
+            var gradeAnalysis = [];
+            gradeAnalysisData.map(function(data){
+                var stream = data.resultStream;
+                var gradeArray = data.resultGrade;
+                var scoreArray = data.resultScore;
+                var gradeObj = [];
+                for (var g = 0; g < availableGrades.length; g++){
+                    var currentGrade = availableGrades[g].grade;
+                    var currentCount = 0;
+                    for (var b = 0; b < gradeArray.length; b++){
+                        if (currentGrade == gradeArray[b]){
+                            currentCount++;
+                        }
+                    }
+                    gradeObj.push({
+                        grade: currentGrade,
+                        total: currentCount
+                    });
+                }
+                var scoreSum = 0;
+                for (var o = 0; o < scoreArray.length; o++){
+                    var currentScore = scoreArray[o];
+                    scoreSum = scoreSum + currentScore;
+                }
+                var meanMarks = scoreSum / scoreArray.length;
+                var meanScore = meanMarks / subject.length;
+
+                var meanGrade = function(){
+                    if (meanScore >= 80 && meanScore <= 100){
+                         return "A";
+                    } else if (meanScore >= 75 && meanScore <= 79.99){
+                         return "A-";
+                    } else if (meanScore >= 70 && meanScore <= 74.99){
+                         return "B+";
+                    } else if (meanScore >= 65 && meanScore <= 69.99){
+                         return "B";
+                    } else if (meanScore >= 60 && meanScore <= 64.99){
+                         return "B-";
+                    } else if (meanScore >= 55 && meanScore <= 59.99){
+                         return "C+";
+                    } else if (meanScore >= 50 && meanScore <= 54.99){
+                         return "C";
+                    } else if (meanScore >= 45 && meanScore <= 49.99){
+                         return "C-";
+                    } else if (meanScore >= 40 && meanScore <= 44.99){
+                         return "D+";
+                    } else if (meanScore >= 35 && meanScore <= 39.99){
+                         return "D";
+                    } else if (meanScore >= 30 && meanScore <= 34.99){
+                         return "D-";
+                    } else if (meanScore >= 0.1 && meanScore <= 29.99){
+                         return "E";
+                    }
+                };
 
 
+                gradeAnalysis.push({
+                    stream: stream,
+                    grade: gradeObj,
+                    totalStudents: gradeArray.length,
+                    meanMarks: meanMarks.toFixed(1),
+                    meanScore: meanScore.toFixed(1),
+                    meanGrade: meanGrade
+                })
+            });
 
             var data = {
                 examtype: examtype,
@@ -202,8 +216,8 @@ Meteor.methods({
                 classForm: form,
                 subject: subject,
                 result: resultArray,
-                availableGrade: availableGrade,
-                classScore: classScore
+                allGrades: availableGrades,
+                streamScore: gradeAnalysis
             }
 
             var html_string = SSR.render('layout', {

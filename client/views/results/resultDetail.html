@@ -4,6 +4,10 @@
             <h4>
                 results for {{examType}} exams, {{examTerm}}, {{examYear}}
             </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
             <hr>
         </div>
     </div>
@@ -39,7 +43,7 @@
             <p>grade: <strong>{{result.overallGrade}}</strong></p>
         </div>
         <div class="four columns">
-            <p>class position: <strong>{{position}}</strong></p>
+            <button class="button-primary print-result u-full-width">print</button>
         </div>
     </div>
     <div class="row">
@@ -73,7 +77,6 @@
         <div class="twelve columns">
             <hr>
             <button class="delete-result delete">delete result</button>
-            <button class="button-primary print-result">print</button>
         </div>
     </div>
     {{/if}}

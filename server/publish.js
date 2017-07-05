@@ -82,6 +82,11 @@ Meteor.publish('singleResult', function(id){
   return Results.find({_id: id});
 });
 
+Meteor.publish('studentResults', function(id){
+  check(id, String);
+  return Results.find({student: id});
+});
+
 Meteor.publish('sports', function(){
 	return Sports.find();
 });

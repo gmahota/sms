@@ -77,12 +77,27 @@ Meteor.methods({
             var classMatesIds = Students.find({class: classId}).map(function(classmate){
                 return classmate._id;
             });
+
+
             var scores = Results.find({ exam: examId, student: {$in: classMatesIds}}).map(function(result){
                 return result.overallScore;
             });
             var pos = scores.sort(function(a, b){return b-a});
     		var jsPosition = pos.indexOf(result.overallScore);
     		var position = (jsPosition + 1);
+
+            var streamClasses = Classes.find({Form: (studentClassForm * 1)}).map(function(cl){
+                return cl._id;
+            });
+            var streamMatesIds = Students.find({class: streamClasses}).map(function(classmate){
+                return classmate._id;
+            });
+            var streamScores = Results.find({ exam: examId, student: {$in: streamMatesIds}}).map(function(result){
+                return result.overallScore;
+            });
+            var streamPos = streamScores.sort(function(a, b){return b-a});
+    		var jsStreamPosition = streamPos.indexOf(result.overallScore);
+    		var streamPosition = (jsStreamPosition + 1);
 
             var averageScore = result.overallScore / subjectCount;
 
@@ -102,6 +117,7 @@ Meteor.methods({
                 subjects: subjectsArray,
                 studentGender: studentGender,
                 position: position,
+                streamPosition: position,
                 averageScore: parseInt(averageScore)
             }
 
@@ -115,7 +131,7 @@ Meteor.methods({
             // Setup Webshot options
             var options = {
                 "paperSize": {
-                    "format": "Letter",
+                    "format": "A4",
                     "orientation": "portrait",
                     "margin": "1cm"
                 },

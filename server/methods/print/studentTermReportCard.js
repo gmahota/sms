@@ -207,7 +207,7 @@ Meteor.methods({
             // Setup Webshot options
             var options = {
                 "paperSize": {
-                    "format": "Letter",
+                    "format": "A4",
                     "orientation": "portrait",
                     "margin": "1cm"
                 },

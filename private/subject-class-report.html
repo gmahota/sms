@@ -5,9 +5,9 @@
                 Kiandangae Secondary School
             </h2>
             <h4>P.O.Box 52, Kagio.</h4>
-            <p>
-                Examination Results for {{gender}} students
-            </p>
+            <h3>
+                {{subjectName}} exam Results
+            </h3>
         </div>
         <div class="six columns right">
             <p style="text-align:right; text-transform: capitalize">
@@ -32,12 +32,9 @@
                     <th class="border-right">
                         <p>Adm</p>
                     </th>
-                    {{#each subject}}
-                        <th colspan="2" class="border-right light"><p>{{shortName}}</p></th>
-                    {{/each}}
-                    <th><p>score</p></th>
-                    <th><p>mean</p></th>
-                    <th><p>grade</p></th>
+                    <th class="border-right light"><p>score</p></th>
+                    <th class="border-right light"><p>points</p></th>
+                    <th class="border-right light"><p>grade</p></th>
                 </thead>
                 <tbody>
                     {{#each result}}
@@ -51,17 +48,13 @@
                             <td class="border-right">
                                 <p><b>{{studentRegistrationNumber}}</b></p>
                             </td>
-                            {{#each subjectData}}
-                                {{#if graded}}
-                                <td><p>{{subjectScore}}</p></td>
+                            {{#if graded}}
+                                <td class="border-right light"><p>{{subjectScore}}</p></td>
+                                <td class="border-right light"><p>{{subjectPoints}}</p></td>
                                 <td class="border-right light"><p><strong>{{subjectGrade}}</strong></p></td>
-                                {{else}}
+                            {{else}}
                                 <td colspan="2" class="border-right light"><p>-</p></td>
-                                {{/if}}
-                            {{/each}}
-                            <td><p>{{overallScore}}</p></td>
-                            <td><p>{{meanGrade}}</p></td>
-                            <td><p>{{overallGrade}}</p></td>
+                            {{/if}}
                         </tr>
                     {{/each}}
                 </tbody>
@@ -114,13 +107,10 @@
             <table class="u-full-width">
                 <thead>
                     <th>
-                        <p>mean mark</p>
+                        <p>mean score</p>
                     </th>
                     <th>
                         <p>mean grade</p>
-                    </th>
-                    <th>
-                        <p>total score</p>
                     </th>
                 </thead>
                 <tbody>
@@ -130,9 +120,6 @@
                         </td>
                         <td>
                             <p>{{classMeanGrade}}</p>
-                        </td>
-                        <td>
-                            <p>{{classMeanMark}}</p>
                         </td>
                     </tr>
                 </tbody>
