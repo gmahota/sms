@@ -346,29 +346,56 @@ Template.generateResults.events({
 	                var classId = Classes.find({_id: {$in: classIdArr}}, {Form: form}).map(function(classObject){
 	                    return classObject._id;
 	                });
-	                Meteor.call('subjectCombinedExamReport', classId, examId, form, subjectId, function(err, res) {
-	    		    	if (err) {
-	    					$('.processing').removeClass('show');
-	    					Bert.alert(err.reason, 'danger');
-	    		      	} else if (res) {
-	    					$('.processing').removeClass('show');
-	    					Bert.alert('the file is ready', 'success');
-	    					window.open("data:application/pdf;base64, " + res, '_blank');
-	    		      	}
-	    		    })
+					if (subjectId == "all"){
+						Meteor.call('subjectComparisonCombinedExamReport', classId, examId, form, function(err, res) {
+		    		    	if (err) {
+		    					$('.processing').removeClass('show');
+		    					Bert.alert(err.reason, 'danger');
+		    		      	} else if (res) {
+		    					$('.processing').removeClass('show');
+		    					Bert.alert('the file is ready', 'success');
+		    					window.open("data:application/pdf;base64, " + res, '_blank');
+		    		      	}
+		    		    })
+					} else {
+						Meteor.call('subjectCombinedExamReport', classId, examId, form, subjectId, function(err, res) {
+		    		    	if (err) {
+		    					$('.processing').removeClass('show');
+		    					Bert.alert(err.reason, 'danger');
+		    		      	} else if (res) {
+		    					$('.processing').removeClass('show');
+		    					Bert.alert('the file is ready', 'success');
+		    					window.open("data:application/pdf;base64, " + res, '_blank');
+		    		      	}
+		    		    });
+					}
+
 	            } else {
 	                var classObj = Classes.findOne({"_id": {$in: classIdArr}, "streamName": stream, "Form": (form * 1)});
 	                var classId = classObj._id;
-	                Meteor.call('subjectClassReport', classId, examId, subjectId, function(err, res) {
-	    		    	if (err) {
-	    					$('.processing').removeClass('show');
-	    					Bert.alert(err.reason, 'danger');
-	    		      	} else if (res) {
-	    					$('.processing').removeClass('show');
-	    					Bert.alert('the file is ready', 'success');
-	    					window.open("data:application/pdf;base64, " + res, '_blank');
-	    		      	}
-	    		    })
+					if (subjectId == "all"){
+						Meteor.call('subjectComparisonClassReport', classId, examId, function(err, res) {
+		    		    	if (err) {
+		    					$('.processing').removeClass('show');
+		    					Bert.alert(err.reason, 'danger');
+		    		      	} else if (res) {
+		    					$('.processing').removeClass('show');
+		    					Bert.alert('the file is ready', 'success');
+		    					window.open("data:application/pdf;base64, " + res, '_blank');
+		    		      	}
+		    		    });
+					} else {
+						Meteor.call('subjectClassReport', classId, examId, subjectId, function(err, res) {
+		    		    	if (err) {
+		    					$('.processing').removeClass('show');
+		    					Bert.alert(err.reason, 'danger');
+		    		      	} else if (res) {
+		    					$('.processing').removeClass('show');
+		    					Bert.alert('the file is ready', 'success');
+		    					window.open("data:application/pdf;base64, " + res, '_blank');
+		    		      	}
+		    		    });
+					}
 	            }
 			} else {
 				$('.processing').removeClass('show');

@@ -6,6 +6,8 @@
             </h2>
             <h4>P.O.Box 52, Kagio.</h4>
             <p>{{term}}, {{year}} report card</p>
+            <p class="white">.</p>
+            <p class="white">.</p>
             <p class="spacer"></p>
             <hr>
         </div>
@@ -22,15 +24,17 @@
                     </td>
                     <td><p>admission number:  {{studentRegistrationNumber}}</p></td>
                     <td><p>class:  {{studentClassForm}} {{studentClassStreamName}}</p></td>
-                    <!-- <td><p>class position: {{classPosition}}</p></td> -->
+                    <td>
+                        <p>class position: <strong>{{position}}</strong> of {{classNumber}}</p>
+                    </td>
                 </tr>
                 <tr>
                     <td><p>total score: {{overallScore}}</p></td>
                     <td><p>grade: {{overallGrade}}</p></td>
                     <td><p>average: {{averageScore}}</p></td>
-                    <!-- <td>
-                        stream position: {{streamPosition}}
-                    </td> -->
+                    <td>
+                        <p>stream position: <strong>{{streamPosition}}</strong> of {{streamNumber}}</p>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -38,29 +42,53 @@
     <div class="row">
         <div class="twelve columns">
             <p class="spacer"></p>
+            <p class="white">.</p>
+            <p class="white">.</p>
             <table class="u-full-width">
                 <thead>
                     <th class="border-right">subject</th>
                     {{#each availableExam}}
                         <th colspan="2" class="border-right">{{examName}}</th>
                     {{/each}}
-                    <th>score</th>
-                    <th>grade</th>
-                    <th>points</th>
-                    <th>remarks</th>
+                    <th>
+                        <p>score</p>
+                    </th>
+                    <th>
+                        <p>grade</p>
+                    </th>
+                    <th>
+                        <p>points</p>
+                    </th>
+                    <th>
+                        <p>remarks</p>
+                    </th>
                 </thead>
                 <tbody>
                     {{#each subjects}}
                         <tr>
-                            <td class="border-right">{{subjectName}}</td>
+                            <td class="border-right">
+                                <p>{{subjectName}}</p>
+                            </td>
                             {{#each exam}}
-                                <td>{{score}}</td>
-                                <td class="border-right">{{grade}}</td>
+                                <td>
+                                    <p>{{score}}</p>
+                                </td>
+                                <td class="border-right">
+                                    <p>{{grade}}</p>
+                                </td>
                             {{/each}}
-                            <td>{{averageScore}}</td>
-                            <td>{{averageGrade}}</td>
-                            <td>{{averagePoints}}</td>
-                            <td>{{comments}}</td>
+                            <td>
+                                <p>{{averageScore}}</p>
+                            </td>
+                            <td>
+                                <p>{{averageGrade}}</p>
+                            </td>
+                            <td>
+                                <p>{{averagePoints}}</p>
+                            </td>
+                            <td>
+                                <p>{{comments}}</p>
+                            </td>
                         </tr>
                     {{/each}}
                 </tbody>
@@ -99,6 +127,14 @@
             <p>
                 signature: ..........................    Date: ......../........../20.......
             </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <h4>Fee payment details</h4>
+            <p><strong>Account name:</strong> kiandangae secondary school</p>
+            <p><strong>A/c no:</strong> 0420290807847</p>
+            <p>Equity bank kagio branch</p>
         </div>
     </div>
 </div>

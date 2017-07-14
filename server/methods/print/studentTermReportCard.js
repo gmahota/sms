@@ -11,7 +11,7 @@ Meteor.methods({
           var fileName = "student-term-report.pdf";
           var css = Assets.getText('merged-stylesheets.css');
 
-          SSR.compileTemplate('layout', Assets.getText('layout.html'));
+          SSR.compileTemplate('layout', Assets.getText('layoutPortrait.html'));
 
           Template.layout.helpers({
             getDocType: function() {
@@ -180,6 +180,66 @@ Meteor.methods({
                 overallGrade = "E";
             }
 
+            //=============POSITION CALCULATION==========================
+            var posExamArray = Exams.find({term: termName, year: year, active: true}).map(function(exam){
+                return exam._id;
+            });
+            var posClassStudents = Students.find({class: classId}).map(function(cla){
+                return cla._id;
+            });
+            var posResultsArray = Results.find({exam: {$in: posExamArray}, student: {$in: posClassStudents}});
+            var posResultBreakdown = [];
+            for(var c = 0; c < posClassStudents.length; c++){
+                var currentStudentId = posClassStudents[c];
+                var totalMarksData = 0;
+                var examsCountData = 0;
+                for(var r = 0; r < posResultsArray.length; r++){
+                    if(posResultsArray[r].student == currentStudentId){
+                        totalMarksData = totalMarksData + posResultsArray[r].overallScore;
+                        examsCountData++;
+                    }
+                }
+                posResultBreakdown.push({
+                    studentId: currentStudentId,
+                    score: totalMarksData / posExamArray.length
+                });
+            }
+            posResultBreakdown.sort(function(a, b) {
+                return parseFloat(b.score) - parseFloat(a.score);
+            });
+            var position = posResultBreakdown.findIndex(x => x.studentId == id);
+
+
+            //=============STREAM POSITION CALCULATION==========================
+            var streamClassArray = Classes.find({Form: (studentClassForm * 1)}).map(function(clas){
+                return clas._id;
+            });
+            var streamPosClassStudents = Students.find({class: {$in: streamClassArray}}).map(function(cla){
+                return cla._id;
+            });
+            var streamPosResultsArray = Results.find({exam: {$in: posExamArray}, student: {$in: streamPosClassStudents}});
+            var streamPosResultBreakdown = [];
+            for(var c = 0; c < streamPosClassStudents.length; c++){
+                var currentStudentId = streamPosClassStudents[c];
+                var totalMarksData = 0;
+                var examsCountData = 0;
+                for(var r = 0; r < streamPosResultsArray.length; r++){
+                    if(streamPosResultsArray[r].student == currentStudentId){
+                        totalMarksData = totalMarksData + streamPosResultsArray[r].overallScore;
+                        examsCountData++;
+                    }
+                }
+                streamPosResultBreakdown.push({
+                    studentId: currentStudentId,
+                    score: totalMarksData / posExamArray.length
+                });
+            }
+            streamPosResultBreakdown.sort(function(a, b) {
+                return parseFloat(b.score) - parseFloat(a.score);
+            });
+            var streamPosition = streamPosResultBreakdown.findIndex(x => x.studentId == id);
+
+            //=================================================================
             var data = {
                 term: term,
                 year: yearSelection,
@@ -194,7 +254,11 @@ Meteor.methods({
                 overallScore: overallScore,
                 overallGrade: overallGrade,
                 averageScore: overallAverage,
-                kcpe: kcpe
+                kcpe: kcpe,
+                position: position,
+                classNumber: posResultBreakdown.length,
+                streamPosition: streamPosition,
+                streamNumber: streamPosResultBreakdown.length
             }
 
             var html_string = SSR.render('layout', {
@@ -203,15 +267,14 @@ Meteor.methods({
                 data: data
             });
 
-            console.log(html_string);
+            console.log("all is good");
             // Setup Webshot options
             var options = {
                 "paperSize": {
-                    "format": "A4",
-                    "orientation": "portrait",
-                    "margin": "1cm"
+                    "width": "2480px",
+                    "height": "3508px",
+                    "margin": "150px"
                 },
-                //phantomPath: require('phantomjs').path,
                 "phantomPath": "/usr/local/bin/phantomjs",
                 siteType: 'html'
             };

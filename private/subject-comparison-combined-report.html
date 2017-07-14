@@ -1,0 +1,72 @@
+<div class="container smaller">
+    <div class="row">
+        <div class="six columns">
+            <h2>
+                Kiandangae Secondary School
+            </h2>
+            <h4>P.O.Box 52, Kagio.</h4>
+            <p>
+                Examination Results
+            </p>
+        </div>
+        <div class="six columns right">
+            <p style="text-align:right; text-transform: capitalize">
+                {{examtype}} exams, {{examterm}}, {{examyear}}
+            </p>
+            <p style="text-align:right; text-transform: capitalize">
+                form {{classForm}}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width class-results">
+                <thead>
+                    <th><p>subject</p></th>
+                    <th class="border-right"><p>subject number</p></th>
+                    {{#each availableGrade}}
+                        <th class="border-right light"><p>{{grade}}</p></th>
+                    {{/each}}
+                    <th><p>total students</p></th>
+                    <th><p>score</p></th>
+                    <th><p>points</p></th>
+                    <th><p>grade</p></th>
+                </thead>
+                <tbody>
+                    {{#each subject}}
+                        <tr>
+                            <td>
+                                <p><strong>{{subjectName}}</strong></p>
+                            </td>
+                            <td class="border-right">
+                                <p><strong>{{subjectNumber}}</strong></p>
+                            </td>
+                            {{#each gradeData}}
+                                <td class="border-right light">
+                                    <p>{{count}}</p>
+                                </td>
+                            {{/each}}
+                            <td>
+                                <p>{{studentCount}}</p>
+                            </td>
+                            <td>
+                                <p>{{score}}</p>
+                            </td>
+                            <td>
+                                <p>{{points}}</p>
+                            </td>
+                            <td>
+                                <p>{{grade}}</p>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

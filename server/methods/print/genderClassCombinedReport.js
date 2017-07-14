@@ -26,132 +26,194 @@ Meteor.methods({
 
           // PREPARE DATA
 
-            var examtype = Exams.findOne({_id: examId}).type;
-            var examterm = Exams.findOne({_id: examId}).term;
-            var examyear = Exams.findOne({_id: examId}).year;
+          var examtype = Exams.findOne({_id: examId}).type;
+          var examterm = Exams.findOne({_id: examId}).term;
+          var examyear = Exams.findOne({_id: examId}).year;
 
-            var subject = [];
-            var subjectObj = Subjects.find().map(function(sub){
-                var name = sub.name;
-                var shortName = name.substring(0, 3);
-                subject.push({
-                    name: name,
-                    shortName: shortName
-                });
-            });
-            var studentIdArray = Students.find({class: {$in: classId}}).map(function(student){
-                return student._id;
-            });
-            var resultArray = [];
-            var resultData = Results.find({exam: examId, student: {$in : studentIdArray}}).map(function(result){
-                var resultId = result._id;
-                var studentFirstNameLong = Students.findOne({_id: result.student}).firstName;
-                var studentLastName = Students.findOne({_id: result.student}).surname;
-                var classIdStud = Students.findOne({_id: result.student}).class;
-                var streamNameLong = Classes.findOne({_id: classIdStud}).streamName;
-                var streamName = streamNameLong.substring(0, 1)
-                var studentFirstName = studentFirstNameLong.substring(0, 1);
-                var studentRegistrationNumber = Students.findOne({_id: result.student}).registrationNumber;
-                var studentGender = Students.findOne({_id: result.student}).gender;
-                var overallScore = result.overallScore;
-                var overallGrade = result.overallGrade;
-                var meanGrade = parseInt((overallScore / result.subjects.length) * 1);
-                var subjectData = [];
-                var subjectMainData = Subjects.find().map(function(subj){
-                    var subjectId = subj._id;
-                    var doneSubjects = result.subjects;
-                    console.log('here boogoe', doneSubjects);
-                    var graded = false;
-                    var score = 0;
-                    var grade = "";
+          var subject = [];
+          var subjectObj = Subjects.find().map(function(sub){
+              var name = sub.name;
+              var shortName = name.substring(0, 3);
+              subject.push({
+                  name: name,
+                  shortName: shortName
+              });
+          });
+          var studentIdArray = Students.find({class: {$in: classId}, gender: gender}).map(function(student){
+              return student._id;
+          });
+          var resultArray = [];
+          var resultData = Results.find({exam: examId, student: {$in : studentIdArray}}).map(function(result){
+              var resultId = result._id;
+              var studentFirstNameLong = Students.findOne({_id: result.student}).firstName;
+              var studentLastName = Students.findOne({_id: result.student}).surname;
+              var classIdStud = Students.findOne({_id: result.student}).class;
+              var streamNameLong = Classes.findOne({_id: classIdStud}).streamName;
+              var streamName = streamNameLong.substring(0, 1)
+              var studentFirstName = studentFirstNameLong.substring(0, 1);
+              var studentRegistrationNumber = Students.findOne({_id: result.student}).registrationNumber;
+              var overallScore = result.overallScore;
+              var overallGrade = result.overallGrade;
+              var meanGrade = parseInt((overallScore / result.subjects.length) * 1);
+              var subjectData = [];
+              var subjectMainData = Subjects.find().map(function(subj){
+                  var subjectId = subj._id;
+                  var doneSubjects = result.subjects;
+                  var graded = false;
+                  var score = 0;
+                  var grade = "";
 
-                    var sense = doneSubjects.map(function(dsub){
-                        if (dsub){
-                            if (subjectId == dsub.subject){
-                                graded = true;
-                                score = dsub.score;
-                                grade = dsub.grade;
-                            }
-                        }
-                    });
+                  var sense = doneSubjects.map(function(dsub){
+                      if (dsub){
+                          if (subjectId == dsub.subject){
+                              graded = true;
+                              score = dsub.score;
+                              grade = dsub.grade
+                          }
+                      }
+                  });
 
-                    subjectData.push({
-                        graded: graded,
-                        subjectScore: score,
-                        subjectGrade: grade
-                    });
-                });
+                  subjectData.push({
+                      graded: graded,
+                      subjectScore: score,
+                      subjectGrade: grade
+                  });
+              });
 
-                var classMatesIds = Students.find({class: {$in: classId}}).map(function(classmate){
-                    return classmate._id;
-                });
-                var scores = Results.find({ exam: examId, student: {$in: classMatesIds}}).map(function(result){
-                    return result.overallScore;
-                });
-                var pos = scores.sort(function(a, b){return b-a});
-        		var jsPosition = pos.indexOf(result.overallScore);
-        		var position = (jsPosition + 1);
+              var classMatesIds = Students.find({class: {$in: classId}}).map(function(classmate){
+                  return classmate._id;
+              });
+              var scores = Results.find({ exam: examId, student: {$in: classMatesIds}}).map(function(result){
+                  return result.overallScore;
+              });
+              var pos = scores.sort(function(a, b){return b-a});
+              var jsPosition = pos.indexOf(result.overallScore);
+              var position = (jsPosition + 1);
 
-                resultArray.push({
-                    resultId: resultId,
-                    studentFirstName: studentFirstNameLong,
-                    studentLastName: studentLastName,
-                    studentRegistrationNumber: studentRegistrationNumber,
-                    subjectData: subjectData,
-                    overallScore: overallScore,
-                    overallGrade: overallGrade,
-                    meanGrade: meanGrade,
-                    position: position,
-                    streamName: streamName,
-                    studentGender: studentGender
-                });
-            });
+              resultArray.push({
+                  resultId: resultId,
+                  studentFirstName: studentFirstNameLong,
+                  studentLastName: studentLastName,
+                  studentRegistrationNumber: studentRegistrationNumber,
+                  subjectData: subjectData,
+                  overallScore: overallScore,
+                  overallGrade: overallGrade,
+                  meanGrade: meanGrade,
+                  position: position,
+                  points: ((meanGrade * 12) / 100).toFixed(1),
+                  streamName: streamName,
+                  streamNameLong: streamNameLong
+              });
+          });
+          resultArray.sort(function(a, b) {
+              return parseFloat(a.position) - parseFloat(b.position);
+          });
 
-            resultArray.sort(function(a, b) {
-                return parseFloat(a.position) - parseFloat(b.position);
-            });
+          var availableGrades = [
+              {grade: "A"},
+              {grade: "A-"},
+              {grade: "B+"},
+              {grade: "B"},
+              {grade: "B-"},
+              {grade: "C+"},
+              {grade: "C"},
+              {grade: "C-"},
+              {grade: "D+"},
+              {grade: "D"},
+              {grade: "D-"},
+              {grade: "E"}
+          ];
 
-            var tmp = [];
-            /* loop over all array items */
-            for(var index in resultArray){
-                if(resultArray[index].studentGender == gender){
-                    /* push to temporary resultArray if not like item */
-                    tmp.push(resultArray[index]);
-                }
-            }
+          var gradeDataArr = [];
+          var gradeDataSrc = resultArray.forEach(function(result){
+              var resultStream = result.streamNameLong;
+              var resultGrade = result.overallGrade;
+              var resultScore = result.overallScore;
+              gradeDataArr.push({
+                  resultStream: resultStream,
+                  resultGrade: resultGrade,
+                  resultScore: resultScore
+              });
+          });
+          gradeDataArr.sort(function(a, b) {
+              return parseFloat(a.resultStream) - parseFloat(b.resultStream);
+          });
+          var gradeAnalysisData = [];
+          gradeDataArr.forEach(function (a) {
+              if (!this[a.resultStream]) {
+                  this[a.resultStream] = { resultGrade: [], resultScore: [], resultStream: a.resultStream };
+                  gradeAnalysisData.push(this[a.resultStream]);
+              }
+              var grade = a.resultGrade;
+              this[a.resultStream].resultGrade.push(grade);
+              this[a.resultStream].resultScore.push(a.resultScore);
+          }, Object.create(null));
+
+          var gradeAnalysis = [];
+          gradeAnalysisData.map(function(data){
+              var stream = data.resultStream;
+              var gradeArray = data.resultGrade;
+              var scoreArray = data.resultScore;
+              var gradeObj = [];
+              for (var g = 0; g < availableGrades.length; g++){
+                  var currentGrade = availableGrades[g].grade;
+                  var currentCount = 0;
+                  for (var b = 0; b < gradeArray.length; b++){
+                      if (currentGrade == gradeArray[b]){
+                          currentCount++;
+                      }
+                  }
+                  gradeObj.push({
+                      grade: currentGrade,
+                      total: currentCount
+                  });
+              }
+              var scoreSum = 0;
+              for (var o = 0; o < scoreArray.length; o++){
+                  var currentScore = scoreArray[o];
+                  scoreSum = scoreSum + currentScore;
+              }
+              var meanMarks = scoreSum / scoreArray.length;
+              var meanScore = meanMarks / subject.length;
+
+              var meanGrade = function(){
+                  if (meanScore >= 80 && meanScore <= 100){
+                       return "A";
+                  } else if (meanScore >= 75 && meanScore <= 79.99){
+                       return "A-";
+                  } else if (meanScore >= 70 && meanScore <= 74.99){
+                       return "B+";
+                  } else if (meanScore >= 65 && meanScore <= 69.99){
+                       return "B";
+                  } else if (meanScore >= 60 && meanScore <= 64.99){
+                       return "B-";
+                  } else if (meanScore >= 55 && meanScore <= 59.99){
+                       return "C+";
+                  } else if (meanScore >= 50 && meanScore <= 54.99){
+                       return "C";
+                  } else if (meanScore >= 45 && meanScore <= 49.99){
+                       return "C-";
+                  } else if (meanScore >= 40 && meanScore <= 44.99){
+                       return "D+";
+                  } else if (meanScore >= 35 && meanScore <= 39.99){
+                       return "D";
+                  } else if (meanScore >= 30 && meanScore <= 34.99){
+                       return "D-";
+                  } else if (meanScore >= 0.1 && meanScore <= 29.99){
+                       return "E";
+                  }
+              };
 
 
-            var gradeDataArr = [];
-            var gradeDataSrc = tmp.forEach(function(result){
-                var resultGrade = result.overallGrade;
-                var resultGender = result.studentGender;
-                gradeDataArr.push({
-                    resultGrade: resultGrade,
-                    resultGender: resultGender
-                });
-            });
-            var gradeAnalysis = [];
-            var copy = gradeDataArr.slice(0);
-        	for (var i = 0; i < gradeDataArr.length; i++) {
-        		var myCount = 0;
-                var myGrade = "";
-        		for (var w = 0; w < copy.length; w++) {
-        			if (gradeDataArr[i].resultGrade == copy[w].resultGrade) {
-                        myGrade = copy[w].resultGrade;
-        				myCount++;
-        				delete copy[w].resultGrade;
-        			}
-        		}
-        		if (myCount > 0) {
-        			var a = new Object();
-        			a.grade = myGrade;
-        			a.total = myCount;
-        			gradeAnalysis.push(a);
-        		}
-        	}
-            gradeDataArr.sort(function(a, b) {
-                return parseFloat(a.grade) - parseFloat(b.grade);
-            });
+              gradeAnalysis.push({
+                  stream: stream,
+                  grade: gradeObj,
+                  totalStudents: gradeArray.length,
+                  meanMarks: meanMarks.toFixed(1),
+                  meanScore: meanScore.toFixed(1),
+                  meanGrade: meanGrade
+              })
+          });
 
             var data = {
                 examtype: examtype,
@@ -159,10 +221,10 @@ Meteor.methods({
                 examyear: examyear,
                 classForm: form,
                 subject: subject,
-                result: tmp,
+                result: resultArray,
                 gender: gender,
-                gradeAnalysis: gradeAnalysis,
-                totalStudents: tmp.length
+                allGrades: availableGrades,
+                streamScore: gradeAnalysis
             }
 
             var html_string = SSR.render('layout', {
@@ -175,11 +237,10 @@ Meteor.methods({
             // Setup Webshot options
             var options = {
                 "paperSize": {
-                    "format": "A4",
-                    "orientation": "landscape",
-                    "margin": "1cm"
+                    "height": "2480px",
+                    "width": "3508px",
+                    "margin": "150px"
                 },
-                //phantomPath: require('phantomjs').path,
                 "phantomPath": "/usr/local/bin/phantomjs",
                 siteType: 'html'
             };

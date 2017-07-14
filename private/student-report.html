@@ -23,13 +23,13 @@
                     </td>
                     <td><p>admission number:  {{studentRegistrationNumber}}</p></td>
                     <td><p>class:  {{studentClassForm}} {{studentClassStreamName}}</p></td>
-                    <td><p>class position: {{position}}</p></td>
+                    <td><p>class position: <strong>{{position}}</strong> of {{classNumber}}</p></td>
                 </tr>
                 <tr>
                     <td><p>total score: {{result.overallScore}}</p></td>
                     <td><p>grade: {{result.overallGrade}}</p></td>
                     <td><p>average:  {{averageScore}}</p></td>
-                    <td><p>stream position:  {{streamPosition}}</p></td>
+                    <td><p>stream position: <strong>{{streamPosition}}</strong> of {{streamNumber}}</p></td>
                 </tr>
             </tbody>
         </table>
@@ -40,20 +40,40 @@
             <p class="spacer"></p>
             <table class="u-full-width">
                 <thead>
-                    <th>subject</th>
-                    <th>score</th>
-                    <th>grade</th>
-                    <th>points</th>
-                    <th>remarks</th>
+                    <th>
+                        <p>subject</p>
+                    </th>
+                    <th>
+                        <p>score</p>
+                    </th>
+                    <th>
+                        <p>grade</p>
+                    </th>
+                    <th>
+                        <p>points</p>
+                    </th>
+                    <th>
+                        <p>remarks</p>
+                    </th>
                 </thead>
                 <tbody>
                     {{#each subjects}}
                         <tr>
-                            <td>{{subjectName}}</td>
-                            <td>{{score}}</td>
-                            <td>{{grade}}</td>
-                            <td>{{points}}</td>
-                            <td>{{comments}}</td>
+                            <td>
+                                <p>{{subjectName}}</p>
+                            </td>
+                            <td>
+                                <p>{{score}}</p>
+                            </td>
+                            <td>
+                                <p>{{grade}}</p>
+                            </td>
+                            <td>
+                                <p>{{points}}</p>
+                            </td>
+                            <td>
+                                <p>{{comments}}</p>
+                            </td>
                         </tr>
                     {{/each}}
                 </tbody>
@@ -91,6 +111,14 @@
             <p>
                 signature: ..........................    Date: ......../........../20.......
             </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <h4>Fee payment details</h4>
+            <p><strong>Account name:</strong> kiandangae secondary school</p>
+            <p><strong>A/c no:</strong> 0420290807847</p>
+            <p>Equity bank kagio branch</p>
         </div>
     </div>
 </div>

@@ -1,0 +1,140 @@
+<div class="container smaller">
+    <div class="row">
+        <div class="six columns">
+            <h2>
+                Kiandangae Secondary School
+            </h2>
+            <h4>P.O.Box 52, Kagio.</h4>
+            <p>
+                {{year}}, {{term}} Examination Results
+            </p>
+        </div>
+        <div class="six columns right">
+            <p style="text-align:right; text-transform: capitalize">
+                Form {{classForm}} results
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width class-results">
+                <thead>
+                    <th><p>#</p></th>
+                    <th><p>Student</p></th>
+                    <th class="border-right light">
+                        <p>Adm</p>
+                    </th>
+                    <th class="border-right">
+                        <p>Class</p>
+                    </th>
+                    {{#each availableExamType}}
+                        <th colspan="3" class="border-right light"><p>{{examType}}</p></th>
+                    {{/each}}
+                    <th><p>avg score</p></th>
+                    <th><p>avg mean</p></th>
+                    <th>
+                        <p>points</p>
+                    </th>
+                    <th><p>avg grade</p></th>
+                </thead>
+                <tbody>
+                    {{#each student}}
+                        <tr>
+                            <td>
+                                <p>{{position}}</p>
+                            </td>
+                            <td>
+                                <p style="text-transform: capitalize"><b>{{studentLastName}} {{studentFirstName}}.</b></p>
+                            </td>
+                            <td class="border-right light">
+                                <p><b>{{registrationNumber}}</b></p>
+                            </td>
+                            <td class="border-right">
+                                <p>{{stream}}</p>
+                            </td>
+                            {{#each exams}}
+                                {{#if exists}}
+                                    <td><p>{{marks}}</p></td>
+                                    <td><p>{{score}}</p></td>
+                                    <td class="border-right light"><p><strong>{{grade}}</strong></p></td>
+                                {{else}}
+                                    <td colspan="3" class="border-right light">
+                                        <p><strong>-</strong></p>
+                                    </td>
+                                {{/if}}
+                            {{/each}}
+                            <td><p>{{averageScore}}</p></td>
+                            <td><p>{{averageMean}}</p></td>
+                            <td>
+                                <p>{{points}}</p>
+                            </td>
+                            <td><p>{{averageGrade}}</p></td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <p>.</p>
+            <p>.</p>
+            <h3>Analysis</h3>
+        </div>
+    </div>
+
+    {{#each classAnalysis}}
+        <div class="row">
+            <div class="twelve columns">
+                <hr>
+                <p>.</p>
+                <p style="text-transform: uppercase;"><u><strong>{{form}} {{stream}}</strong></u></p>
+            </div>
+            <div class="twelve columns">
+                <table class="u-full-width">
+                    <thead>
+                        <th class="border-right">
+                            <p><strong>exam</strong></p>
+                        </th>
+                        {{#each availableGrades}}
+                            <th class="border-right light">
+                                <p><strong>{{grade}}</strong></p>
+                            </th>
+                        {{/each}}
+                        <th><p>total students</p></th>
+                        <th><p>overall score</p></th>
+                        <th><p>overall marks</p></th>
+                        <th><p>overall grade</p></th>
+                    </thead>
+                    <tbody>
+                        {{#each examResults}}
+                            <tr>
+                                <td class="border-right">
+                                    <p><strong>{{examName}}</strong></p>
+                                </td>
+                                {{#each gradeData}}
+                                    <td class="border-right light"><p>{{count}}</p></td>
+                                {{/each}}
+                                {{#if dataExists}}
+                                <td><p>{{totalStudents}}</p></td>
+                                <td><p>{{overallScore}}</p></td>
+                                <td><p>{{overallMarks}}</p></td>
+                                <td><p>{{overallGrade}}</p></td>
+                                {{else}}
+                                    <td colspan="4"><p>NO RESULTS</p></td>
+                                {{/if}}
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {{/each}}
+
+</div>

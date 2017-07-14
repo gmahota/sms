@@ -53,7 +53,7 @@ Meteor.methods({
                 var studentRegistrationNumber = stud.registrationNumber;
 
                 resultArray.push({
-                    studentFirstName: studentFirstName,
+                    studentFirstName: studentFirstNameLong,
                     studentLastName: studentLastName,
                     studentRegistrationNumber: studentRegistrationNumber,
                     subjectData: subject,
@@ -88,11 +88,10 @@ Meteor.methods({
             // Setup Webshot options
             var options = {
                 "paperSize": {
-                    "format": "A4",
-                    "orientation": "landscape",
-                    "margin": "1cm"
+                    "height": "2480px",
+                    "width": "3508px",
+                    "margin": "150px"
                 },
-                //phantomPath: require('phantomjs').path,
                 "phantomPath": "/usr/local/bin/phantomjs",
                 siteType: 'html'
             };

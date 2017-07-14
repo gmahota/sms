@@ -222,11 +222,10 @@ Meteor.methods({
             // Setup Webshot options
             var options = {
                 "paperSize": {
-                    "format": "A4",
-                    "orientation": "landscape",
-                    "margin": "1cm"
+                    "height": "2480px",
+                    "width": "3508px",
+                    "margin": "150px"
                 },
-                //phantomPath: require('phantomjs').path,
                 "phantomPath": "/usr/local/bin/phantomjs",
                 siteType: 'html'
             };

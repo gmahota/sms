@@ -75,21 +75,12 @@
                 </div>
             </div>
             <div class="row">
-                {{#if isCombined}}
-                <div class="six columns">
-                    <button class="button-primary u full-width print-male-combined-results">print results for <strong>male students</strong></button>
-                </div>
-                <div class="six columns">
-                    <button class="button-primary u full-width print-female-combined-results">print results for <strong>female students</strong></button>
-                </div>
-                {{else}}
                 <div class="six columns">
                     <button class="button-primary u full-width print-male-results">print results for <strong>male students</strong></button>
                 </div>
                 <div class="six columns">
                     <button class="button-primary u full-width print-female-results">print results for <strong>female students</strong></button>
                 </div>
-                {{/if}}
             </div>
             <div class="row">
                 <div class="twelve columns">
@@ -102,6 +93,7 @@
                 <div class="six columns">
                     <select name="subject-list" id="subjectList" class="u full-width subject-list">
                         <option value="">select a subject</option>
+                        <option value="all">ALL SUBJECTS</option>
                         {{#each subjects}}
                             <option value="{{_id}}">{{name}}</option>
                         {{/each}}

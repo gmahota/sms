@@ -14,7 +14,7 @@ Meteor.methods({
           // GENERATE HTML STRING
           var css = Assets.getText('merged-stylesheets.css');
 
-          SSR.compileTemplate('layout', Assets.getText('layout.html'));
+          SSR.compileTemplate('layout', Assets.getText('layoutPortrait.html'));
 
           Template.layout.helpers({
             getDocType: function() {
@@ -89,7 +89,7 @@ Meteor.methods({
             var streamClasses = Classes.find({Form: (studentClassForm * 1)}).map(function(cl){
                 return cl._id;
             });
-            var streamMatesIds = Students.find({class: streamClasses}).map(function(classmate){
+            var streamMatesIds = Students.find({class: {$in: streamClasses}}).map(function(classmate){
                 return classmate._id;
             });
             var streamScores = Results.find({ exam: examId, student: {$in: streamMatesIds}}).map(function(result){
@@ -117,8 +117,10 @@ Meteor.methods({
                 subjects: subjectsArray,
                 studentGender: studentGender,
                 position: position,
-                streamPosition: position,
-                averageScore: parseInt(averageScore)
+                streamPosition: streamPosition,
+                averageScore: parseInt(averageScore),
+                classNumber: scores.length,
+                streamNumber: streamScores.length
             }
 
             var html_string = SSR.render('layout', {
@@ -127,15 +129,14 @@ Meteor.methods({
                 data: data
             });
 
-            console.log(html_string);
+            console.log("everything is alright");
             // Setup Webshot options
             var options = {
                 "paperSize": {
-                    "format": "A4",
-                    "orientation": "portrait",
-                    "margin": "1cm"
+                    "width": "2480px",
+                    "height": "3508px",
+                    "margin": "150px"
                 },
-                //phantomPath: require('phantomjs').path,
                 "phantomPath": "/usr/local/bin/phantomjs",
                 siteType: 'html'
             };

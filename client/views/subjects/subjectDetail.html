@@ -140,10 +140,14 @@
         <div class="twelve columns">
             <hr>
             <p></p>
-            {{#if school.active}}
-                <button class="deactivate-subject delete">deactivate subject</button>
+            {{#if hasResults}}
+                {{#if subject.active}}
+                    <button class="deactivate-subject delete">deactivate subject</button>
+                {{else}}
+                    <button class="deactivate-subject">activate subject</button>
+                {{/if}}
             {{else}}
-                <button class="deactivate-subject">activate subject</button>
+                <button class="delete-subject delete">delete subject</button>
             {{/if}}
             <a href="/edit-subject/{{subject._id}}" class="button">edit</a>
         </div>

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container smaller">
     <div class="row">
         <div class="six columns">
             <h2>
@@ -29,15 +29,18 @@
                 <thead>
                     <th><p>#</p></th>
                     <th><p>Student</p></th>
-                    <th>
-                        <p>Adm no</p>
+                    <th class="border-right light">
+                        <p>Adm</p>
                     </th>
-                    <th><p>str</p></th>
+                    <th class="border-right"><p>str</p></th>
                     {{#each subject}}
-                        <th><p>{{shortName}}</p></th>
+                        <th colspan="2" class="border-right light"><p>{{shortName}}</p></th>
                     {{/each}}
                     <th><p>score</p></th>
                     <th><p>mean</p></th>
+                    <th>
+                        <p></p>
+                    </th>
                     <th><p>grade</p></th>
                 </thead>
                 <tbody>
@@ -49,21 +52,25 @@
                             <td>
                                 <p style="text-transform: capitalize"><b>{{studentLastName}} {{studentFirstName}}.</b></p>
                             </td>
-                            <td>
+                            <td class="border-right light">
                                 <p><b>{{studentRegistrationNumber}}</b></p>
                             </td>
-                            <td>
+                            <td class="border-right">
                                 <p style="text-transform: uppercase;"><b>{{streamName}}</b></p>
                             </td>
                             {{#each subjectData}}
                                 {{#if graded}}
-                                <td><p>{{subjectScore}}</p></td>
+                                    <td><p>{{subjectScore}}</p></td>
+                                    <td class="border-right light"><p><strong>{{subjectGrade}}</strong></p></td>
                                 {{else}}
-                                <td><p>-</p></td>
+                                <td colspan="2" class="border-right light"><p>-</p></td>
                                 {{/if}}
                             {{/each}}
                             <td><p>{{overallScore}}</p></td>
                             <td><p>{{meanGrade}}</p></td>
+                            <td>
+                                <p>{{points}}</p>
+                            </td>
                             <td><p>{{overallGrade}}</p></td>
                         </tr>
                     {{/each}}
@@ -71,4 +78,73 @@
             </table>
         </div>
     </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <p>.</p>
+            <p>.</p>
+            <p>Analysis of the number of students per grade in the various streams</p>
+            <p>.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <table class="u-full-width">
+                <thead>
+                    <th class="border-right"><p><strong>stream:</strong></p></th>
+                    {{#each allGrades}}
+                        <th class="border-right light">
+                            <p>{{grade}}</p>
+                        </th>
+                    {{/each}}
+                    <th class="border-right">
+                        <p>
+                            <strong>total students graded:</strong>
+                        </p>
+                    </th>
+                    <th>
+                        <p>mean marks</p>
+                    </th>
+                    <th>
+                        <p>mean score</p>
+                    </th>
+                    <th>
+                        <p>mean grade</p>
+                    </th>
+                </thead>
+                <tbody>
+                    {{#each streamScore}}
+                        <tr>
+                            <td class="border-right">
+                                <p>{{stream}}</p>
+                            </td>
+                            {{#each grade}}
+                                <td class="border-right light">
+                                    <p>{{total}}</p>
+                                </td>
+                            {{/each}}
+                            <td class="border-right">
+                                <p>
+                                    <strong>
+                                        {{totalStudents}}
+                                    </strong>
+                                </p>
+                            </td>
+                            <td>
+                                <p>{{meanMarks}}</p>
+                            </td>
+                            <td>
+                                <p>{{meanScore}}</p>
+                            </td>
+                            <td>
+                                <p>{{meanGrade}}</p>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 </div>

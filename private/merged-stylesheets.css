@@ -5,19 +5,23 @@ body {
 	margin: 0px;
 	font-family: Helvetica, Arial, sans-serif;
 	color: rgb(34, 34, 34);
+    zoom: 0.53; /* using 0.55 or higher results in the elements not lining up correctly */
+}
+.zoomed-out{
+	zoom:1;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	margin-top: 0px;
-	margin-bottom: 4px;
+	margin-bottom: 8px;
 }
 
 hr {
 	height: 0px;
 	box-sizing: content-box;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	border-width: 1px 0px 0px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-width: 2px 0px 0px;
 	border-right-style: initial;
 	border-bottom-style: initial;
 	border-left-style: initial;
@@ -34,14 +38,14 @@ table {
 	margin-bottom: 1em;
 }
 td {
-	padding: 5px;
+	padding: 10px;
 	text-align: left;
-	border-bottom: 1px solid rgb(225, 225, 225);
+	border-bottom: 2px solid rgb(225, 225, 225);
 }
 th{
-	padding: 5px;
+	padding: 10px;
 	text-align: left;
-	border-bottom: 1px solid rgb(50, 50, 50);
+	border-bottom: 2px solid rgb(50, 50, 50);
 }
 th:first-child, td:first-child {
 	padding-left: 0px;
@@ -63,7 +67,7 @@ b, strong {
 	font-weight: bold;
 }
 p {
-	margin: 0px 0px 4px;
+	margin: 0px 0px 8px;
 }
 .container {
 	padding-right: 0;
@@ -75,10 +79,30 @@ p {
 	margin: 0px auto;
 	padding: 0px;
 	box-sizing: border-box;
-	font-size: 80%;
+	font-size: 36px;
 }
+
+.container p{
+	font-size: 36px;
+}
+.container h1 {
+	font-size: 96px;
+}
+.container h2 {
+	font-size: 76px;
+}
+.container h3 {
+	font-size: 56px;
+}
+.container h4 {
+	font-size: 44px;
+}
+.container h5, .container h6 {
+	font-size: 36px;
+}
+
 .smaller{
-	font-size: 70%
+	font-size: 90%;
 }
 .row {
 	margin-right: 0;
@@ -146,19 +170,22 @@ body .body-container .content table tbody td a {
 .class-results{
 	margin-top: 2em;
 }
-.empty-list td, .empty-list th{
-	border-right: 1px solid #777;
+.empxy-list td, .empxy-list th{
+	border-right: 2px solid #777;
 }
 
 .border-right{
-	border-right: 1px solid #333;
+	border-right: 2px solid #333;
 }
 .border-right.light{
-	border-right: 1px solid #777;
+	border-right: 2px solid #777;
 }
 
 
 .dotted tbody tr td{
 	border:0;
-	border-bottom:1px dotted black;
+	border-bottom:2px dotted black;
+}
+.white{
+	color:#fff;
 }

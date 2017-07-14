@@ -6,15 +6,15 @@
             </h2>
             <h4>P.O.Box 52, Kagio.</h4>
             <p>
-                Examination Results
+                {{year}}, {{term}} Examination Results
             </p>
         </div>
         <div class="six columns right">
             <p style="text-align:right; text-transform: capitalize">
-                {{examtype}} exams, {{examterm}}, {{examyear}}
+                Class: {{classForm}} {{classStream}}
             </p>
             <p style="text-align:right; text-transform: capitalize">
-                Class: {{classForm}} {{classStreamName}}
+                <strong>Subject: {{subject}}</strong>
             </p>
         </div>
     </div>
@@ -32,18 +32,15 @@
                     <th class="border-right">
                         <p>Adm</p>
                     </th>
-                    {{#each subject}}
-                        <th colspan="2" class="border-right light"><p>{{shortName}}</p></th>
+                    {{#each availableExamType}}
+                        <th colspan="3" class="border-right light"><p>{{examType}}</p></th>
                     {{/each}}
-                    <th><p>score</p></th>
-                    <th><p>mean</p></th>
-                    <th>
-                        <p>points</p>
-                    </th>
-                    <th><p>grade</p></th>
+                    <th><p>avg score</p></th>
+                    <th><p>avg points</p></th>
+                    <th><p>avg grade</p></th>
                 </thead>
                 <tbody>
-                    {{#each result}}
+                    {{#each student}}
                         <tr>
                             <td>
                                 <p>{{position}}</p>
@@ -52,30 +49,28 @@
                                 <p style="text-transform: capitalize"><b>{{studentLastName}} {{studentFirstName}}.</b></p>
                             </td>
                             <td class="border-right">
-                                <p><b>{{studentRegistrationNumber}}</b></p>
+                                <p><b>{{registrationNumber}}</b></p>
                             </td>
-                            {{#each subjectData}}
-                                {{#if graded}}
-                                <td><p>{{subjectScore}}</p></td>
-                                <td class="border-right light"><p><strong>{{subjectGrade}}</strong></p></td>
+                            {{#each exams}}
+                                {{#if exists}}
+                                    <td><p>{{score}}</p></td>
+                                    <td><p>{{points}}</p></td>
+                                    <td class="border-right light"><p><strong>{{grade}}</strong></p></td>
                                 {{else}}
-                                <td colspan="2" class="border-right light"><p>-</p></td>
+                                    <td colspan="3" class="border-right light">
+                                        <p><strong>-</strong></p>
+                                    </td>
                                 {{/if}}
                             {{/each}}
-                            <td><p>{{overallScore}}</p></td>
-                            <td><p>{{meanGrade}}</p></td>
-                            <td>
-                                <p>{{points}}</p>
-                            </td>
-                            <td><p>{{overallGrade}}</p></td>
+                            <td><p>{{averageScore}}</p></td>
+                            <td><p>{{averagePoints}}</p></td>
+                            <td><p>{{averageGrade}}</p></td>
                         </tr>
                     {{/each}}
                 </tbody>
             </table>
         </div>
     </div>
-
-
 
     <div class="row">
         <div class="twelve columns">
@@ -90,7 +85,7 @@
             <table class="u-full-width">
                 <thead>
                     <th class="border-right">
-                        <p><strong>grades:</strong></p>
+                        <p><strong>exam</strong></p>
                     </th>
                     {{#each availableGrades}}
                         <th class="border-right light">
@@ -98,23 +93,29 @@
                         </th>
                     {{/each}}
                     <th><p>total students</p></th>
+                    <th><p>overall points</p></th>
                     <th><p>overall score</p></th>
-                    <th><p>overall marks</p></th>
                     <th><p>overall grade</p></th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="border-right">
-                            <p><strong>scores:</strong></p>
-                        </td>
-                        {{#each gradeData}}
-                            <td class="border-right light"><p>{{count}}</p></td>
-                        {{/each}}
-                        <td><p>{{totalStudents}}</p></td>
-                        <td><p>{{overallScore}}</p></td>
-                        <td><p>{{overallMarks}}</p></td>
-                        <td><p>{{overallGrade}}</p></td>
-                    </tr>
+                    {{#each examResults}}
+                        <tr>
+                            <td class="border-right">
+                                <p><strong>{{examName}}</strong></p>
+                            </td>
+                            {{#each gradeData}}
+                                <td class="border-right light"><p>{{count}}</p></td>
+                            {{/each}}
+                            {{#if dataExists}}
+                            <td><p>{{totalStudents}}</p></td>
+                            <td><p>{{overallPoints}}</p></td>
+                            <td><p>{{overallScore}}</p></td>
+                            <td><p>{{overallGrade}}</p></td>
+                            {{else}}
+                                <td colspan="4"><p>NO RESULTS</p></td>
+                            {{/if}}
+                        </tr>
+                    {{/each}}
                 </tbody>
             </table>
         </div>
