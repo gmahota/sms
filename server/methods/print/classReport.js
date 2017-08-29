@@ -54,8 +54,14 @@ Meteor.methods({
                 var studentRegistrationNumber = Students.findOne({_id: result.student}).registrationNumber;
                 var studentGender = Students.findOne({_id: result.student}).gender;
                 var overallScore = result.overallScore;
+                var overallPoints = result.overallPoints;
                 var overallGrade = result.overallGrade;
-                var meanGrade = parseInt((overallScore / result.subjects.length) * 1);
+                var meanGrade = 0;
+                if (result.overallMean){
+                    meanGrade = parseInt(result.overallMean);
+                } else {
+                    meanGrade = parseInt((overallScore / result.subjects.length) * 1);
+                }
                 var subjectData = [];
                 var subjectMainData = Subjects.find().map(function(subj){
                     var subjectId = subj._id;
@@ -63,6 +69,8 @@ Meteor.methods({
                     var graded = false;
                     var score = 0;
                     var grade = "";
+                    var points = 0;
+                    var selected = false;
 
                     var sense = doneSubjects.map(function(dsub){
                         if (dsub){
@@ -70,6 +78,8 @@ Meteor.methods({
                                 graded = true;
                                 score = dsub.score;
                                 grade = dsub.grade;
+                                points = dsub.points;
+                                selected = dsub.selected;
                             }
                         }
                     });
@@ -77,7 +87,9 @@ Meteor.methods({
                     subjectData.push({
                         graded: graded,
                         subjectScore: score,
-                        subjectGrade: grade
+                        subjectGrade: grade,
+                        subjectPoints: points,
+                        selected: selected
                     });
                 });
 
@@ -100,7 +112,7 @@ Meteor.methods({
                     overallScore: overallScore,
                     overallGrade: overallGrade,
                     meanGrade: meanGrade,
-                    points: ((meanGrade * 12) / 100).toFixed(1),
+                    points: overallPoints,
                     studentGender: studentGender,
                     position: position
                 });
@@ -134,8 +146,8 @@ Meteor.methods({
                 var count = 0;
                 for(var s = 0; s < resultArray.length; s++){
                     if (resultArray[s].overallGrade == currentGrade){
-                        combinedScore = combinedScore + resultArray[s].meanGrade;
-                        combinedMarks = combinedMarks + resultArray[s].overallScore;
+                        combinedScore += resultArray[s].meanGrade;
+                        combinedMarks += resultArray[s].overallScore;
                         count++;
                         totalStudentCount++;
                     }
@@ -146,8 +158,8 @@ Meteor.methods({
                 });
             }
 
-            var overallScore = combinedScore / totalStudentCount;
-            var overallMarks = combinedMarks / totalStudentCount;
+            var overallScore = parseInt(combinedScore / totalStudentCount);
+            var overallMarks = parseInt(combinedMarks / totalStudentCount);
             var overallGrade = "";
             if (overallScore >= 80 && overallScore <= 100){
                 overallGrade = "A";

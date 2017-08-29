@@ -54,7 +54,13 @@ Meteor.methods({
               var studentRegistrationNumber = Students.findOne({_id: result.student}).registrationNumber;
               var overallScore = result.overallScore;
               var overallGrade = result.overallGrade;
-              var meanGrade = parseInt((overallScore / result.subjects.length) * 1);
+              var overallPoints = result.overallPoints;
+              var meanGrade = 0;
+              if (result.overallMean){
+                  meanGrade = (result.overallMean).toFixed(1);
+              } else {
+                  meanGrade = parseInt((overallScore / result.subjects.length) * 1);
+              }
               var subjectData = [];
               var subjectMainData = Subjects.find().map(function(subj){
                   var subjectId = subj._id;
@@ -62,6 +68,7 @@ Meteor.methods({
                   var graded = false;
                   var score = 0;
                   var grade = "";
+                  var selected = false;
 
                   var sense = doneSubjects.map(function(dsub){
                       if (dsub){
@@ -69,6 +76,7 @@ Meteor.methods({
                               graded = true;
                               score = dsub.score;
                               grade = dsub.grade
+                              selected = dsub.selected;
                           }
                       }
                   });
@@ -76,7 +84,8 @@ Meteor.methods({
                   subjectData.push({
                       graded: graded,
                       subjectScore: score,
-                      subjectGrade: grade
+                      subjectGrade: grade,
+                      selected: selected
                   });
               });
 
@@ -100,7 +109,7 @@ Meteor.methods({
                   overallGrade: overallGrade,
                   meanGrade: meanGrade,
                   position: position,
-                  points: ((meanGrade * 12) / 100).toFixed(1),
+                  points: overallPoints,
                   streamName: streamName,
                   streamNameLong: streamNameLong
               });

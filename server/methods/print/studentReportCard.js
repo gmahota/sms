@@ -61,6 +61,7 @@ Meteor.methods({
                 var points = subject.points;
                 var grade = subject.grade;
                 var comments = subject.comments;
+                var selected = subject.selected;
 
                 subjectsArray.push({
                     subjectName: subjectName,
@@ -68,9 +69,15 @@ Meteor.methods({
                     points: points,
                     grade: grade,
                     comments: comments,
-                    subject: subjId
+                    subject: subjId,
+                    selected: selected
                 });
             });
+
+            var validSubjects = subjectsArray.filter(function( scienceObj ) {
+              return scienceObj.selected == true;
+            });
+            var validSubjectCount = validSubjects.length;
 
             var studentGender = Students.findOne({_id: studentId}).gender;
 
@@ -99,7 +106,12 @@ Meteor.methods({
     		var jsStreamPosition = streamPos.indexOf(result.overallScore);
     		var streamPosition = (jsStreamPosition + 1);
 
-            var averageScore = result.overallScore / subjectCount;
+            var averageScore = 0;
+            if (result.overallMean){
+                averageScore = (result.overallMean).toFixed(1);
+            } else {
+                averageScore = parseInt((result.overallScore / validSubjectCount) * 1);
+            }
 
             var data = {
                 result: result,

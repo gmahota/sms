@@ -47,12 +47,14 @@ Meteor.methods({
                 var subjectPoints = 0;
                 var subjectGrade = "-";
                 var graded = false;
+                var selected = false;
                 var subjectDataCalc = result.subjects.map(function(subj){
                     if(subj.subject == subjectId){
                         graded = true;
                         subjectScore = subj.score;
                         subjectGrade = subj.grade;
                         subjectPoints = subj.points;
+                        selected = subj.selected;
                     }
                 });
                 resultDataArray.push({
@@ -65,7 +67,8 @@ Meteor.methods({
                     subjectScore: subjectScore,
                     subjectPoints: subjectPoints,
                     subjectGrade: subjectGrade,
-                    graded: graded
+                    graded: graded,
+                    selected: selected
                 });
             });
 

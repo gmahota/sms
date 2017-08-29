@@ -42,7 +42,7 @@ Meteor.methods({
                     shortName: shortName
                 });
             });
-            var studentIdArray = Students.find({class: classId}).map(function(student){
+            var studentIdArray = Students.find({class: classId, active: true}).map(function(student){
                 return student._id;
             });
             var resultArray = [];
@@ -65,7 +65,7 @@ Meteor.methods({
             });
 
             resultArray.sort(function(a, b) {
-                return parseFloat(a.studentFirstName) - parseFloat(b.studentFirstName);
+                return parseFloat(a.studentRegistrationNumber) - parseFloat(b.studentRegistrationNumber);
             });
 
             var data = {

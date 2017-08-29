@@ -82,7 +82,7 @@ Meteor.methods({
                     });
                 }
                 var overallScore = totalDump / countDump;
-                var overallPoints = pointsDump / countDump;
+                var overallPoints = ((overallScore / 100) * 12).toFixed(1)
                 var overallGrade = "";
                 if (overallScore >= 80 && overallScore <= 100){
                     overallGrade = "A";
@@ -115,7 +115,7 @@ Meteor.methods({
                     studentCount: countDump,
                     score: overallScore.toFixed(1),
                     grade: overallGrade,
-                    points: overallPoints.toFixed(1),
+                    points: overallPoints,
                     gradeData: gradeData
                 });
             }

@@ -48,12 +48,14 @@ Meteor.methods({
                 var subjectPoints = 0;
                 var subjectGrade = "-";
                 var graded = false;
+                var selected = false;
                 var subjectDataCalc = result.subjects.map(function(subj){
                     if(subj.subject == subjectId){
                         graded = true;
                         subjectScore = subj.score;
                         subjectGrade = subj.grade;
                         subjectPoints = subj.points;
+                        selected = subj.selected;
                     }
                 });
                 resultDataArray.push({
@@ -65,7 +67,8 @@ Meteor.methods({
                     subjectScore: subjectScore,
                     subjectPoints: subjectPoints,
                     subjectGrade: subjectGrade,
-                    graded: graded
+                    graded: graded,
+                    selected: selected
                 });
             });
 
@@ -133,7 +136,7 @@ Meteor.methods({
             }
 
             var overallScore = combinedScore / totalStudentCount;
-            var overallPoints = combinedPoints / totalStudentCount;
+            var overallPoints = ((overallScore / 100) * 12).toFixed(1)
             var overallGrade = "";
             if (overallScore >= 80 && overallScore <= 100){
                 overallGrade = "A";
@@ -174,7 +177,7 @@ Meteor.methods({
                 gradeData: gradeData,
                 totalStudents:totalStudentCount,
                 overallScore: overallScore.toFixed(1),
-                overallPoints: overallPoints.toFixed(1),
+                overallPoints: overallPoints,
                 overallGrade: overallGrade
             }
 

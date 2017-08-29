@@ -36,6 +36,7 @@ Meteor.methods({
             var resultsObjs = Results.find({exam: {$in: examIdArray}, student: {$in: studentIdArray}}).map(function(res){
                 return res.exam;
             });
+            console.log("results array", resultsObjs);
             for (var w = 0; w < examIdArray.length; w++){
                 var current = examIdArray[w];
                 var miniExamCount = 0;
@@ -60,33 +61,14 @@ Meteor.methods({
                 var className = Classes.findOne({_id: classIdOne}).streamName;
                 var registrationNumber = Students.findOne({_id: studentId}).registrationNumber;
                 var marks = result.overallScore;
-                var score = marks / result.subjects.length;
-                var grade = "";
-                if (score >= 80 && score <= 100){
-                    grade = "A";
-                } else if (score >= 75 && score <= 79.99){
-                    grade = "A-";
-                } else if (score >= 70 && score <= 74.99){
-                    grade = "B+";
-                } else if (score >= 65 && score <= 69.99){
-                    grade = "B";
-                } else if (score >= 60 && score <= 64.99){
-                    grade = "B-";
-                } else if (score >= 55 && score <= 59.99){
-                    grade = "C+";
-                } else if (score >= 50 && score <= 54.99){
-                    grade = "C";
-                } else if (score >= 45 && score <= 49.99){
-                    grade = "C-";
-                } else if (score >= 40 && score <= 44.99){
-                    grade = "D+";
-                } else if (score >= 35 && score <= 39.99){
-                    grade = "D";
-                } else if (score >= 30 && score <= 34.99){
-                    grade = "D-";
-                } else if (score >= 0.1 && score <= 29.99){
-                    grade = "E";
+                var score = 0;
+                var points = result.overallPoints;
+                if (result.overallMean){
+                    score = (result.overallMean).toFixed(1);
+                } else {
+                    score = parseInt((marks / result.subjects.length) * 1);
                 }
+                var grade = result.overallGrade;
                 var examType = Exams.findOne({_id: result.exam}).type;
                 resultData.push({
                     studentLastName: lastName,
@@ -97,6 +79,7 @@ Meteor.methods({
                         marks: marks,
                         score: score,
                         grade: grade,
+                        points: points,
                         examType: examType
                     }
                 });
@@ -119,11 +102,13 @@ Meteor.methods({
                 var examData = [];
                 var addedScore = 0;
                 var addedMarks = 0;
+                var addedPoints = 0;
                 for (var e = 0; e < availableExamType.length; e++){
                     var currentExamType = availableExamType[e].examType;
                     var exists = false;
                     var marks = 0;
                     var score = 0;
+                    var points = 0;
                     var grade = "";
                     for (var r = 0; r < data.exams.length; r++){
                         if (data.exams[r].examType == currentExamType){
@@ -131,45 +116,51 @@ Meteor.methods({
                             marks = data.exams[r].marks;
                             score = data.exams[r].score;
                             grade = data.exams[r].grade;
+                            points = data.exams[r].points;
                             addedScore = addedScore + data.exams[r].marks;
                             addedMarks = addedMarks + data.exams[r].score;
+                            addedPoints = addedPoints + data.exams[r].points;
                         }
                     }
                     examData.push({
                         examType: currentExamType,
                         marks: marks,
-                        score: (score.toFixed(1)) * 1,
+                        score: parseInt((score) * 1),
                         grade: grade,
+                        points: points,
                         exists: exists
                     });
                 }
 
                 var averageScore = addedScore / examCount;
                 var averageMean = addedMarks / examCount;
+                var averagepoints = addedPoints / examCount;
                 var averageGrade = "";
-                if (averageMean >= 80 && averageMean <= 100){
+
+                var integerPoints = averagepoints.toFixed(1);
+                if (integerPoints >= 11.5 && integerPoints <= 12){
                     averageGrade = "A";
-                } else if (averageMean >= 75 && averageMean <= 79.99){
+                } else if (integerPoints >= 10.5 && integerPoints <= 11){
                     averageGrade = "A-";
-                } else if (averageMean >= 70 && averageMean <= 74.99){
+                } else if (integerPoints >= 9.5 && integerPoints <= 10){
                     averageGrade = "B+";
-                } else if (averageMean >= 65 && averageMean <= 69.99){
+                } else if (integerPoints >= 8.5 && integerPoints <= 9){
                     averageGrade = "B";
-                } else if (averageMean >= 60 && averageMean <= 64.99){
+                } else if (integerPoints >= 7.5 && integerPoints <= 8){
                     averageGrade = "B-";
-                } else if (averageMean >= 55 && averageMean <= 59.99){
+                } else if (integerPoints >= 6.5 && integerPoints <= 7){
                     averageGrade = "C+";
-                } else if (averageMean >= 50 && averageMean <= 54.99){
+                } else if (integerPoints >= 5.5 && integerPoints <= 6){
                     averageGrade = "C";
-                } else if (averageMean >= 45 && averageMean <= 49.99){
+                } else if (integerPoints >= 4.5 && integerPoints <= 5){
                     averageGrade = "C-";
-                } else if (averageMean >= 40 && averageMean <= 44.99){
+                } else if (integerPoints >= 3.5 && integerPoints <= 4){
                     averageGrade = "D+";
-                } else if (averageMean >= 35 && averageMean <= 39.99){
+                } else if (integerPoints >= 2.5 && integerPoints <= 3){
                     averageGrade = "D";
-                } else if (averageMean >= 30 && averageMean <= 34.99){
+                } else if (integerPoints >= 1.5 && integerPoints <= 2){
                     averageGrade = "D-";
-                } else if (averageMean >= 0.1 && averageMean <= 29.99){
+                } else if (integerPoints >= 0 && integerPoints <= 1){
                     averageGrade = "E";
                 }
 
@@ -181,16 +172,18 @@ Meteor.methods({
                     stream: data.className,
                     averageScore: averageScore.toFixed(1),
                     averageMean: averageMean.toFixed(1),
-                    averageGrade: averageGrade
+                    averageGrade: averageGrade,
+                    averagePoints: averagepoints.toFixed(3)
                 });
             });
             students.sort(function(a, b) {
-                return parseFloat(b.averageScore) - parseFloat(a.averageScore);
+                return parseFloat(b.averageMean) - parseFloat(a.averageMean);
             });
 
             var studentFinalData = [];
             students.map(function(stud){
                 var position = students.findIndex(x => x.registrationNumber == stud.registrationNumber);
+
                 studentFinalData.push({
                     position: (position + 1),
                     exams: stud.exams,
@@ -200,12 +193,10 @@ Meteor.methods({
                     stream: stud.stream,
                     averageScore: stud.averageScore,
                     averageMean: stud.averageMean,
-                    points: ((stud.averageMean * 12) / 100).toFixed(1),
+                    points: stud.averagePoints,
                     averageGrade: stud.averageGrade
                 });
             });
-
-
 
             //ANALYSIS TIME
             var availableGrades = [

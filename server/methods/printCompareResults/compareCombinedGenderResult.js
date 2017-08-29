@@ -30,7 +30,7 @@ Meteor.methods({
             var examIdArray = Exams.find({term: termName, year: (yearId * 1)}).map(function(exam){
                 return exam._id;
             });
-            var studentIdArray = Students.find({gender: gender, class: {$in: classIdArray}}).map(function(student){
+            var studentIdArray = Students.find({gender: gender, class: {$in: classIdArray}, active: true}).map(function(student){
                 return student._id;
             });
 
@@ -60,45 +60,29 @@ Meteor.methods({
                 var lastName = Students.findOne({_id: studentId}).surname;
                     var classIdOne = Students.findOne({_id: studentId}).class;
                 var className = Classes.findOne({_id: classIdOne}).streamName;
+                var studentForm = Classes.findOne({_id: classIdOne}).Form;
                 var registrationNumber = Students.findOne({_id: studentId}).registrationNumber;
                 var marks = result.overallScore;
-                var score = marks / result.subjects.length;
-                var grade = "";
-                if (score >= 80 && score <= 100){
-                    grade = "A";
-                } else if (score >= 75 && score <= 79.99){
-                    grade = "A-";
-                } else if (score >= 70 && score <= 74.99){
-                    grade = "B+";
-                } else if (score >= 65 && score <= 69.99){
-                    grade = "B";
-                } else if (score >= 60 && score <= 64.99){
-                    grade = "B-";
-                } else if (score >= 55 && score <= 59.99){
-                    grade = "C+";
-                } else if (score >= 50 && score <= 54.99){
-                    grade = "C";
-                } else if (score >= 45 && score <= 49.99){
-                    grade = "C-";
-                } else if (score >= 40 && score <= 44.99){
-                    grade = "D+";
-                } else if (score >= 35 && score <= 39.99){
-                    grade = "D";
-                } else if (score >= 30 && score <= 34.99){
-                    grade = "D-";
-                } else if (score >= 0.1 && score <= 29.99){
-                    grade = "E";
+                var score = 0;
+                if (result.overallMean){
+                    score = (result.overallMean).toFixed(1);
+                } else {
+                    score = parseInt((marks / result.subjects.length) * 1);
                 }
+                var grade = result.overallGrade;
+                var points = result.overallPoints;
                 var examType = Exams.findOne({_id: result.exam}).type;
                 resultData.push({
                     studentLastName: lastName,
                     studentFirstName: firstName,
                     className: className,
+                    studentForm: studentForm,
                     registrationNumber: registrationNumber,
                     examData: {
                         marks: marks,
                         score: score,
                         grade: grade,
+                        points: points,
                         examType: examType
                     }
                 });
@@ -107,7 +91,7 @@ Meteor.methods({
             var studentData = [];
             resultData.forEach(function (a) {
                 if (!this[a.registrationNumber]) {
-                    this[a.registrationNumber] = { exams: [], registrationNumber: a.registrationNumber, studentLastName: a.studentLastName, studentFirstName: a.studentFirstName , className: a.className};
+                    this[a.registrationNumber] = { exams: [], registrationNumber: a.registrationNumber, studentLastName: a.studentLastName, studentFirstName: a.studentFirstName , className: a.className, studentForm: a.studentForm};
                     studentData.push(this[a.registrationNumber]);
                 }
                 var exams = a.examData;
@@ -121,20 +105,24 @@ Meteor.methods({
                 var examData = [];
                 var addedScore = 0;
                 var addedMarks = 0;
+                var addedPoints = 0;
                 for (var e = 0; e < availableExamType.length; e++){
                     var currentExamType = availableExamType[e].examType;
                     var exists = false;
                     var marks = 0;
                     var score = 0;
                     var grade = "";
+                    var points = 0;
                     for (var r = 0; r < data.exams.length; r++){
                         if (data.exams[r].examType == currentExamType){
                             exists = true;
                             marks = data.exams[r].marks;
                             score = data.exams[r].score;
                             grade = data.exams[r].grade;
+                            points = data.exams[r].points;
                             addedScore = addedScore + data.exams[r].marks;
                             addedMarks = addedMarks + data.exams[r].score;
+                            addedPoints = addedPoints + data.exams[r].points;
                         }
                     }
                     examData.push({
@@ -142,36 +130,39 @@ Meteor.methods({
                         marks: marks,
                         score: (score.toFixed(1)) * 1,
                         grade: grade,
+                        points: points,
                         exists: exists
                     });
                 }
 
                 var averageScore = addedScore / examCount;
                 var averageMean = addedMarks / examCount;
+                var averagepoints = addedPoints / examCount;
                 var averageGrade = "";
-                if (averageMean >= 80 && averageMean <= 100){
+                var integerPoints = averagepoints.toFixed(1);
+                if (integerPoints >= 11.5 && integerPoints <= 12){
                     averageGrade = "A";
-                } else if (averageMean >= 75 && averageMean <= 79.99){
+                } else if (integerPoints >= 10.5 && integerPoints <= 11){
                     averageGrade = "A-";
-                } else if (averageMean >= 70 && averageMean <= 74.99){
+                } else if (integerPoints >= 9.5 && integerPoints <= 10){
                     averageGrade = "B+";
-                } else if (averageMean >= 65 && averageMean <= 69.99){
+                } else if (integerPoints >= 8.5 && integerPoints <= 9){
                     averageGrade = "B";
-                } else if (averageMean >= 60 && averageMean <= 64.99){
+                } else if (integerPoints >= 7.5 && integerPoints <= 8){
                     averageGrade = "B-";
-                } else if (averageMean >= 55 && averageMean <= 59.99){
+                } else if (integerPoints >= 6.5 && integerPoints <= 7){
                     averageGrade = "C+";
-                } else if (averageMean >= 50 && averageMean <= 54.99){
+                } else if (integerPoints >= 5.5 && integerPoints <= 6){
                     averageGrade = "C";
-                } else if (averageMean >= 45 && averageMean <= 49.99){
+                } else if (integerPoints >= 4.5 && integerPoints <= 5){
                     averageGrade = "C-";
-                } else if (averageMean >= 40 && averageMean <= 44.99){
+                } else if (integerPoints >= 3.5 && integerPoints <= 4){
                     averageGrade = "D+";
-                } else if (averageMean >= 35 && averageMean <= 39.99){
+                } else if (integerPoints >= 2.5 && integerPoints <= 3){
                     averageGrade = "D";
-                } else if (averageMean >= 30 && averageMean <= 34.99){
+                } else if (integerPoints >= 1.5 && integerPoints <= 2){
                     averageGrade = "D-";
-                } else if (averageMean >= 0.1 && averageMean <= 29.99){
+                } else if (integerPoints >= 0 && integerPoints <= 1){
                     averageGrade = "E";
                 }
 
@@ -181,18 +172,21 @@ Meteor.methods({
                     studentLastName: data.studentLastName,
                     studentFirstName: data.studentFirstName,
                     stream: data.className,
+                    studentForm: data.studentForm,
                     averageScore: averageScore.toFixed(1),
                     averageMean: averageMean.toFixed(1),
-                    averageGrade: averageGrade
+                    averageGrade: averageGrade,
+                    averagePoints: averagepoints.toFixed(13)
                 });
             });
             students.sort(function(a, b) {
-                return parseFloat(b.averageScore) - parseFloat(a.averageScore);
+                return parseFloat(b.averageMean) - parseFloat(a.averageMean);
             });
 
             var studentFinalData = [];
             students.map(function(stud){
                 var position = students.findIndex(x => x.registrationNumber == stud.registrationNumber);
+
                 studentFinalData.push({
                     position: (position + 1),
                     exams: stud.exams,
@@ -200,9 +194,10 @@ Meteor.methods({
                     studentLastName: stud.studentLastName,
                     studentFirstName: stud.studentFirstName,
                     stream: stud.stream,
+                    studentForm: stud.studentForm,
                     averageScore: stud.averageScore,
                     averageMean: stud.averageMean,
-                    points: ((stud.averageMean * 12) / 100).toFixed(1),
+                    points: stud.averagePoints,
                     averageGrade: stud.averageGrade
                 });
             });

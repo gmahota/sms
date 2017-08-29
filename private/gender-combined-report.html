@@ -60,8 +60,8 @@
                             </td>
                             {{#each subjectData}}
                                 {{#if graded}}
-                                    <td><p>{{subjectScore}}</p></td>
-                                    <td class="border-right light"><p><strong>{{subjectGrade}}</strong></p></td>
+                                    <td><p style="{{#if selected}} {{else}} text-decoration: line-through; {{/if}}">{{subjectScore}}</p></td>
+                                    <td class="border-right light"><p style="{{#if selected}} {{else}} text-decoration: line-through; {{/if}}"><strong>{{subjectGrade}}</strong></p></td>
                                 {{else}}
                                 <td colspan="2" class="border-right light"><p>-</p></td>
                                 {{/if}}

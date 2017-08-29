@@ -35,7 +35,7 @@ Meteor.methods({
             });
 
             var examCount = 0;
-            var resultsObjs = Results.find({exam: {$in: examIdArray}, student: {$in: studentIdArray}}).map(function(res){
+            var resultsObjs = Results.find({exam: {$in: examIdArray}, student: {$in: studentIdArray}, active: true}).map(function(res){
                 return res.exam;
             });
             for (var w = 0; w < examIdArray.length; w++){
@@ -125,29 +125,31 @@ Meteor.methods({
                 var averageScore = addedScore / examCount;
                 var averagePoints = addedPoints / examCount;
                 var averageGrade = "";
-                if (averageScore >= 80 && averageScore <= 100){
+
+                var integerPoints = averagePoints.toFixed(1);
+                if (integerPoints >= 11.5 && integerPoints <= 12){
                     averageGrade = "A";
-                } else if (averageScore >= 75 && averageScore <= 79.99){
+                } else if (integerPoints >= 10.5 && integerPoints <= 11){
                     averageGrade = "A-";
-                } else if (averageScore >= 70 && averageScore <= 74.99){
+                } else if (integerPoints >= 9.5 && integerPoints <= 10){
                     averageGrade = "B+";
-                } else if (averageScore >= 65 && averageScore <= 69.99){
+                } else if (integerPoints >= 8.5 && integerPoints <= 9){
                     averageGrade = "B";
-                } else if (averageScore >= 60 && averageScore <= 64.99){
+                } else if (integerPoints >= 7.5 && integerPoints <= 8){
                     averageGrade = "B-";
-                } else if (averageScore >= 55 && averageScore <= 59.99){
+                } else if (integerPoints >= 6.5 && integerPoints <= 7){
                     averageGrade = "C+";
-                } else if (averageScore >= 50 && averageScore <= 54.99){
+                } else if (integerPoints >= 5.5 && integerPoints <= 6){
                     averageGrade = "C";
-                } else if (averageScore >= 45 && averageScore <= 49.99){
+                } else if (integerPoints >= 4.5 && integerPoints <= 5){
                     averageGrade = "C-";
-                } else if (averageScore >= 40 && averageScore <= 44.99){
+                } else if (integerPoints >= 3.5 && integerPoints <= 4){
                     averageGrade = "D+";
-                } else if (averageScore >= 35 && averageScore <= 39.99){
+                } else if (integerPoints >= 2.5 && integerPoints <= 3){
                     averageGrade = "D";
-                } else if (averageScore >= 30 && averageScore <= 34.99){
+                } else if (integerPoints >= 1.5 && integerPoints <= 2){
                     averageGrade = "D-";
-                } else if (averageScore >= 0.1 && averageScore <= 29.99){
+                } else if (integerPoints >= 0 && integerPoints <= 1){
                     averageGrade = "E";
                 }
 
@@ -158,7 +160,7 @@ Meteor.methods({
                     studentFirstName: data.studentFirstName,
                     stream: data.className,
                     averageScore: averageScore.toFixed(1),
-                    averagePoints: averagePoints.toFixed(1),
+                    averagePoints: averagePoints.toFixed(3),
                     averageGrade: averageGrade
                 });
             });
@@ -229,32 +231,32 @@ Meteor.methods({
                 if (totalStudentCount > 0) {
                     dataExists = true;
                 }
-                var overallPoints = combinedPoints / totalStudentCount;
                 var overallScore = combinedScore / totalStudentCount;
+                var overallPoints = ((overallScore / 100) * 12).toFixed(1)
                 var overallGrade = "";
-                if (overallPoints >= 80 && overallPoints <= 100){
+                if (overallScore >= 80 && overallScore <= 100){
                     overallGrade = "A";
-                } else if (overallPoints >= 75 && overallPoints <= 79.99){
+                } else if (overallScore >= 75 && overallScore <= 79.99){
                     overallGrade = "A-";
-                } else if (overallPoints >= 70 && overallPoints <= 74.99){
+                } else if (overallScore >= 70 && overallScore <= 74.99){
                     overallGrade = "B+";
-                } else if (overallPoints >= 65 && overallPoints <= 69.99){
+                } else if (overallScore >= 65 && overallScore <= 69.99){
                     overallGrade = "B";
-                } else if (overallPoints >= 60 && overallPoints <= 64.99){
+                } else if (overallScore >= 60 && overallScore <= 64.99){
                     overallGrade = "B-";
-                } else if (overallPoints >= 55 && overallPoints <= 59.99){
+                } else if (overallScore >= 55 && overallScore <= 59.99){
                     overallGrade = "C+";
-                } else if (overallPoints >= 50 && overallPoints <= 54.99){
+                } else if (overallScore >= 50 && overallScore <= 54.99){
                     overallGrade = "C";
-                } else if (overallPoints >= 45 && overallPoints <= 49.99){
+                } else if (overallScore >= 45 && overallScore <= 49.99){
                     overallGrade = "C-";
-                } else if (overallPoints >= 40 && overallPoints <= 44.99){
+                } else if (overallScore >= 40 && overallScore <= 44.99){
                     overallGrade = "D+";
-                } else if (overallPoints >= 35 && overallPoints <= 39.99){
+                } else if (overallScore >= 35 && overallScore <= 39.99){
                     overallGrade = "D";
-                } else if (overallPoints >= 30 && overallPoints <= 34.99){
+                } else if (overallScore >= 30 && overallScore <= 34.99){
                     overallGrade = "D-";
-                } else if (overallPoints >= 0.1 && overallPoints <= 29.99){
+                } else if (overallScore >= 0.1 && overallScore <= 29.99){
                     overallGrade = "E";
                 }
                 analysisInitialData.push({
@@ -262,7 +264,7 @@ Meteor.methods({
                     gradeData: gradeData,
                     dataExists: dataExists,
                     totalStudents: totalStudentCount,
-                    overallPoints: overallPoints.toFixed(1),
+                    overallPoints: overallPoints,
                     overallScore: overallScore.toFixed(1),
                     overallGrade: overallGrade
                 });

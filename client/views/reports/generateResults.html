@@ -108,6 +108,27 @@
                     <hr>
                 </div>
             </div>
+            {{#if isCombined}}
+            {{else}}
+                <div class="row">
+                    <div class="twelve columns">
+                        <p>Bulk print student report cards for the selected class in the selected exam:</p>
+                        <p>.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="six columns">
+                        <button class="button-primary u full-width bulk-reports">bulk print report cards</button>
+                    </div>
+                    <div class="six columns">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="twelve columns">
+                        <hr>
+                    </div>
+                </div>
+            {{/if}}
             {{> graphicalReports}}
         {{/if}}
     {{/if}}

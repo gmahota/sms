@@ -180,8 +180,8 @@ Template.generateResults.events({
         var form = Session.get('formNumber');
         var stream = Session.get('streamName');
 		if (examId && form && stream ){
-            if (stream == "combined") {
-                var classId = Classes.find({_id: {$in: classIdArr}}, {Form: form}).map(function(classObject){
+			if (stream == "combined") {
+                var classId = Classes.find({_id: {$in: classIdArr}, Form: (form * 1) }).map(function(classObject){
                     return classObject._id;
                 });
                 Meteor.call('combinedResultsPdf', classId, examId, form, function(err, res) {
@@ -208,7 +208,6 @@ Template.generateResults.events({
     		      	}
     		    })
             }
-
 		} else {
 			$('.processing').removeClass('show');
 			Bert.alert('select the exam and class', 'danger');
@@ -225,7 +224,7 @@ Template.generateResults.events({
         var stream = Session.get('streamName');
 		if (examId && form && stream ){
             if (stream == "combined") {
-                var classId = Classes.find({_id: {$in: classIdArr}}, {Form: form}).map(function(classObject){
+                var classId = Classes.find({_id: {$in: classIdArr}, Form: (form * 1)}).map(function(classObject){
                     return classObject._id;
                 });
                 Meteor.call('combinedGenderResultsPdf', classId, examId, form, "male", function(err, res) {
@@ -268,7 +267,7 @@ Template.generateResults.events({
         var stream = Session.get('streamName');
 		if (examId && form && stream ){
             if (stream == "combined") {
-                var classId = Classes.find({_id: {$in: classIdArr}}, {Form: form}).map(function(classObject){
+                var classId = Classes.find({_id: {$in: classIdArr}, Form: (form * 1)}).map(function(classObject){
                     return classObject._id;
                 });
                 Meteor.call('combinedGenderResultsPdf', classId, examId, form, "female", function(err, res) {
@@ -329,7 +328,6 @@ Template.generateResults.events({
 			Bert.alert('select the exam and class', 'danger');
 		}
 	},
-
 	'click .print-subject-results': function(e){
 		e.preventDefault();
 		$('.processing').addClass('show');
@@ -343,7 +341,7 @@ Template.generateResults.events({
 		if (examId && form && stream ){
             if (subjectId){
 				if (stream == "combined") {
-	                var classId = Classes.find({_id: {$in: classIdArr}}, {Form: form}).map(function(classObject){
+	                var classId = Classes.find({_id: {$in: classIdArr}, Form: (form * 1)}).map(function(classObject){
 	                    return classObject._id;
 	                });
 					if (subjectId == "all"){
@@ -401,6 +399,36 @@ Template.generateResults.events({
 				$('.processing').removeClass('show');
 				Bert.alert('select the subject', 'danger');
 			}
+		} else {
+			$('.processing').removeClass('show');
+			Bert.alert('select the exam and class', 'danger');
+		}
+	},
+	'click .bulk-reports': function(e){
+		e.preventDefault();
+		$('.processing').addClass('show');
+		var examId = Session.get('examId');
+        var classIdArr = Exams.findOne({_id: examId}).classes;
+        var form = Session.get('formNumber');
+        var stream = Session.get('streamName');
+		if (examId && form && stream ){
+			if (stream == "combined") {
+				$('.processing').removeClass('show');
+				Bert.alert('select a single class instead of "combined"', 'danger');
+            } else {
+                var classObj = Classes.findOne({"_id": {$in: classIdArr}, "streamName": stream, "Form": (form * 1)});
+                var classId = classObj._id;
+                Meteor.call('bulkStudentExamReport', examId, classId, function(err, res) {
+    		    	if (err) {
+    					$('.processing').removeClass('show');
+    					Bert.alert(err.reason, 'danger');
+    		      	} else if (res) {
+    					$('.processing').removeClass('show');
+    					Bert.alert('the file is ready', 'success');
+    					window.open("data:application/pdf;base64, " + res, '_blank');
+    		      	}
+    		    })
+            }
 		} else {
 			$('.processing').removeClass('show');
 			Bert.alert('select the exam and class', 'danger');

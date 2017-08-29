@@ -53,8 +53,8 @@
                             </td>
                             {{#each exams}}
                                 {{#if exists}}
-                                    <td><p>{{marks}}</p></td>
-                                    <td><p>{{score}}</p></td>
+                                    <td><p style="{{#if selected}} {{else}} text-decoration: line-through; {{/if}}">{{marks}}</p></td>
+                                    <td><p style="{{#if selected}} {{else}} text-decoration: line-through; {{/if}}">{{score}}</p></td>
                                     <td class="border-right light"><p><strong>{{grade}}</strong></p></td>
                                 {{else}}
                                     <td colspan="3" class="border-right light">

@@ -1,3 +1,4 @@
+{{#each singleData}}
 <div class="container">
     <div class="row">
         <div class="title">
@@ -6,8 +7,8 @@
             </h2>
             <h4>P.O.Box 52, Kagio.</h4>
             <p>{{examType}}, {{examTerm}}, {{examYear}}</p>
-            <p class="spacer"></p>
-            <p class="spacer"></p>
+            <p class="white">.</p>
+            <p class="white">.</p>
             <hr>
         </div>
     </div>
@@ -83,8 +84,8 @@
 
     <div class="row">
         <div class="twelve columns">
-            <div class="spacer"></div>
-            <div class="spacer"></div>
+            <div class="spacer white">.</div>
+            <div class="spacer white">.</div>
             <h4>Remarks</h4>
             <p class="spacer"></p>
             <p>
@@ -115,6 +116,8 @@
     </div>
     <div class="row">
         <div class="twelve columns">
+            <div class="spacer white">.</div>
+            <div class="spacer white">.</div>
             <h4>Fee payment details</h4>
             <p><strong>Account name:</strong> kiandangae secondary school</p>
             <p><strong>A/c no:</strong> 0420290807847</p>
@@ -122,3 +125,5 @@
         </div>
     </div>
 </div>
+<br><div style="page-break-after:always;"></div>
+{{/each}}

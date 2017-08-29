@@ -28,7 +28,7 @@ Meteor.methods({
             var classForm = Classes.findOne({_id: classId}).Form;
             var classStreamName = Classes.findOne({_id: classId}).streamName;
             var subjectName = Subjects.findOne({_id: subjectId}).name;
-            var student = Students.find({class: classId});
+            var student = Students.find({class: classId, active: true}, sort: { registrationNumber: 1 });
             var teacherFirstname = Meteor.users.findOne({_id: teacherId}).profile.firstname;
             var teacherLastname = Meteor.users.findOne({_id: teacherId}).profile.lastname;
 

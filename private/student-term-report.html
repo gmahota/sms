@@ -71,10 +71,10 @@
                             </td>
                             {{#each exam}}
                                 <td>
-                                    <p>{{score}}</p>
+                                    <p style="{{#if selected}} {{else}} text-decoration: line-through; {{/if}}">{{score}}</p>
                                 </td>
                                 <td class="border-right">
-                                    <p>{{grade}}</p>
+                                    <p style="{{#if selected}} {{else}} text-decoration: line-through; {{/if}}">{{grade}}</p>
                                 </td>
                             {{/each}}
                             <td>
@@ -131,6 +131,7 @@
     </div>
     <div class="row">
         <div class="twelve columns">
+            <p class="white">.</p>
             <h4>Fee payment details</h4>
             <p><strong>Account name:</strong> kiandangae secondary school</p>
             <p><strong>A/c no:</strong> 0420290807847</p>

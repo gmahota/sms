@@ -51,7 +51,8 @@ Meteor.methods({
                             examName: examName,
                             grade: subj.grade,
                             score: subj.score,
-                            points: subj.points
+                            points: subj.points,
+                            selected: subj.selected
                         }
                     });
                 });
@@ -81,55 +82,58 @@ Meteor.methods({
             var finalGroupedSubjectData = [];
             groupedSubjectData.forEach(function(item){
                 var scoreArr = item.exam.map(function(scor){
-                    return scor.score;
+                    return {
+                        score:scor.score,
+                        points:scor.points
+                    }
                 });
-                var averageScore = parseInt((scoreArr.reduce((x, y) => x + y))/availableExams.length);
-                var points = (12 * averageScore)/100;
+                var averageScore = parseInt((scoreArr.score.reduce((x, y) => x + y))/availableExams.length);
+                var points = ((scoreArr.points.reduce((x, y) => x + y))/availableExams.length).toFixed(1);
                 var comments = "";
                 var grade = "";
                 if (item.exam.length < availableExams.length){
                     item.exam.push({
-                        examName: "check for this infuture",
+                        examName: "check for this in future",
                         grade: "-",
                         score: "0",
                         points: "0"
                     });
                 }
-
-                if (averageScore >= 80 && averageScore <= 100){
+                var integerPoints = parseInt(points);
+                if (integerPoints == 12){
                     grade = "A";
                     comments = "EXCELLENT";
-                } else if (averageScore >= 75 && averageScore <= 79.99){
+                } else if (integerPoints == 11){
                     grade = "A-";
                     comments = "EXCELLENT";
-                } else if (averageScore >= 70 && averageScore <= 74.99){
+                } else if (integerPoints == 10){
                     grade = "B+";
                     comments = "V-GOOD";
-                } else if (averageScore >= 65 && averageScore <= 69.99){
+                } else if (integerPoints == 9){
                     grade = "B";
                     comments = "GOOD";
-                } else if (averageScore >= 60 && averageScore <= 64.99){
+                } else if (integerPoints == 8){
                     grade = "B-";
                     comments = "GOOD";
-                } else if (averageScore >= 55 && averageScore <= 59.99){
+                } else if (integerPoints == 7){
                     grade = "C+";
                     comments = "FAIR";
-                } else if (averageScore >= 50 && averageScore <= 54.99){
+                } else if (integerPoints == 6){
                     grade = "C";
                     comments = "FAIR";
-                } else if (averageScore >= 45 && averageScore <= 49.99){
+                } else if (integerPoints == 5){
                     grade = "C-";
                     comments = "FAIR";
-                } else if (averageScore >= 40 && averageScore <= 44.99){
+                } else if (integerPoints == 4){
                     grade = "D+";
                     comments = "TRIAL";
-                } else if (averageScore >= 35 && averageScore <= 39.99){
+                } else if (integerPoints == 3){
                     grade = "D";
                     comments = "TRIAL";
-                } else if (averageScore >= 30 && averageScore <= 34.99){
+                } else if (integerPoints == 2){
                     grade = "D-";
                     comments = "POOR";
-                } else if (averageScore >= 0.1 && averageScore <= 29.99){
+                } else if (integerPoints == 1){
                     grade = "E";
                     comments = "V-POOR";
                 }

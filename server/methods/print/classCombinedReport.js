@@ -20,7 +20,7 @@ Meteor.methods({
           });
 
           SSR.compileTemplate('combined_report', Assets.getText('combined-report.html'));
-
+            console.log("class ids", classId);
             var examtype = Exams.findOne({_id: examId}).type;
             var examterm = Exams.findOne({_id: examId}).term;
             var examyear = Exams.findOne({_id: examId}).year;
@@ -44,12 +44,19 @@ Meteor.methods({
                 var studentLastName = Students.findOne({_id: result.student}).surname;
                 var classIdStud = Students.findOne({_id: result.student}).class;
                 var streamNameLong = Classes.findOne({_id: classIdStud}).streamName;
+                var studentForm = Classes.findOne({_id: classIdStud}).Form;
                 var streamName = streamNameLong.substring(0, 1)
                 var studentFirstName = studentFirstNameLong.substring(0, 1);
                 var studentRegistrationNumber = Students.findOne({_id: result.student}).registrationNumber;
                 var overallScore = result.overallScore;
                 var overallGrade = result.overallGrade;
-                var meanGrade = parseInt((overallScore / result.subjects.length) * 1);
+                var overallPoints = result.overallPoints;
+                var meanGrade = 0;
+                if (result.overallMean){
+                    meanGrade = (result.overallMean).toFixed(1);
+                } else {
+                    meanGrade = parseInt((overallScore / result.subjects.length) * 1);
+                }
                 var subjectData = [];
                 var subjectMainData = Subjects.find().map(function(subj){
                     var subjectId = subj._id;
@@ -57,13 +64,15 @@ Meteor.methods({
                     var graded = false;
                     var score = 0;
                     var grade = "";
+                    var selected = true;
 
                     var sense = doneSubjects.map(function(dsub){
                         if (dsub){
                             if (subjectId == dsub.subject){
                                 graded = true;
                                 score = dsub.score;
-                                grade = dsub.grade
+                                grade = dsub.grade;
+                                selected = dsub.selected;
                             }
                         }
                     });
@@ -71,7 +80,8 @@ Meteor.methods({
                     subjectData.push({
                         graded: graded,
                         subjectScore: score,
-                        subjectGrade: grade
+                        subjectGrade: grade,
+                        selected: selected
                     });
                 });
 
@@ -81,27 +91,45 @@ Meteor.methods({
                 var scores = Results.find({ exam: examId, student: {$in: classMatesIds}}).map(function(result){
                     return result.overallScore;
                 });
-                var pos = scores.sort(function(a, b){return b-a});
-        		var jsPosition = pos.indexOf(result.overallScore);
-        		var position = (jsPosition + 1);
 
                 resultArray.push({
                     resultId: resultId,
                     studentFirstName: studentFirstNameLong,
                     studentLastName: studentLastName,
+                    studentForm: studentForm,
                     studentRegistrationNumber: studentRegistrationNumber,
                     subjectData: subjectData,
                     overallScore: overallScore,
                     overallGrade: overallGrade,
                     meanGrade: meanGrade,
-                    points: ((meanGrade * 12) / 100).toFixed(1),
-                    position: position,
+                    points: overallPoints,
                     streamName: streamName,
                     streamNameLong: streamNameLong
                 });
             });
             resultArray.sort(function(a, b) {
-                return parseFloat(a.position) - parseFloat(b.position);
+                return parseFloat(b.overallScore) - parseFloat(a.overallScore);
+            });
+
+            var studentFinalData = [];
+            resultArray.map(function(stud){
+                var position = resultArray.findIndex(x => x.studentRegistrationNumber == stud.studentRegistrationNumber);
+
+                studentFinalData.push({
+                    position: (position + 1),
+                    resultId: stud.resultId,
+                    studentFirstName: stud.studentFirstName,
+                    studentLastName: stud.studentLastName,
+                    studentForm: stud.studentForm,
+                    studentRegistrationNumber: stud.studentRegistrationNumber,
+                    subjectData: stud.subjectData,
+                    overallScore: stud.overallScore,
+                    overallGrade: stud.overallGrade,
+                    meanGrade: stud.meanGrade,
+                    points: stud.points,
+                    streamName: stud.streamName,
+                    streamNameLong: stud.streamNameLong
+                });
             });
 
             var availableGrades = [
@@ -216,7 +244,7 @@ Meteor.methods({
                 examyear: examyear,
                 classForm: form,
                 subject: subject,
-                result: resultArray,
+                result: studentFinalData,
                 allGrades: availableGrades,
                 streamScore: gradeAnalysis
             }
@@ -227,7 +255,7 @@ Meteor.methods({
                 data: data
             });
 
-            console.log(html_string);
+            console.log("all set");
             // Setup Webshot options
             var options = {
                 "paperSize": {
